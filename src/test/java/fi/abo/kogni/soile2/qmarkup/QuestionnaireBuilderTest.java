@@ -1,10 +1,6 @@
 package fi.abo.kogni.soile2.qmarkup;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.StringWriter;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -39,14 +35,12 @@ public class QuestionnaireBuilderTest extends TestCase {
     @Test
     public void testTitle() throws Exception {
         String result = buildForm("titleTest.qmarkup");
-        System.out.println(result);
         assertTrue(succeeded);
     }
 
     @Test
          public void testAllWidgets() throws Exception {
         String result = buildForm("fullWidgetTest.qmarkup");
-        System.out.println(result);
         assertTrue(succeeded);
     }
 
@@ -67,7 +61,6 @@ public class QuestionnaireBuilderTest extends TestCase {
     @Test
     public void testIf() throws Exception {
         String result = buildForm("testIf.qmarkup");
-        System.out.println(result);
         assertTrue(succeeded);
 
     }
@@ -75,7 +68,6 @@ public class QuestionnaireBuilderTest extends TestCase {
     @Test
     public void testTemplateIf() throws Exception {
         String result = buildForm("testTemplateIf.qmarkup");
-        System.out.println(result);
         assertTrue(succeeded);
 
     }
@@ -83,7 +75,6 @@ public class QuestionnaireBuilderTest extends TestCase {
     @Test
     public void testNumberFieldEmpty() throws Exception {
         String result = buildForm("testNumberField.qmarkup");
-        System.out.println(result);
         assertTrue(succeeded);
 
     }
@@ -91,7 +82,6 @@ public class QuestionnaireBuilderTest extends TestCase {
     @Test
     public void testRadioOptional() throws Exception {
         String result = buildForm("testRadioOptional.qmarkup");
-        System.out.println(result);
         assertTrue(succeeded);
 
     }

@@ -1,6 +1,5 @@
 package fi.abo.kogni.soile2.qmarkup;
 
-import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayDeque;
@@ -11,12 +10,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 //import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
+import org.stringtemplate.v4.STGroupFile;
 
 import fi.abo.kogni.soile2.qmarkup.typespec.MalformedCommandException;
 import fi.abo.kogni.soile2.qmarkup.typespec.Validator;
-import fi.abo.kogni.soile2.qmarkup.verticle.QuestionnaireRenderVerticle;
 import fi.abo.kogni.soile2.utils.generator.UniqueStringGenerator;
-import org.stringtemplate.v4.STGroupFile;
 
 
 public class QuestionnaireBuilder implements QuestionnaireProcessor {
@@ -463,10 +461,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                         value.getValue("dbcolumn").toString());
                 String label = value.getValue("label").toString();
                 Boolean required = false;
-                System.out.println(required);
                 required = !((BooleanValue) value.getValue("optional")).asBoolean();
-
-                System.out.println("after: " +required);
                 String separator = "&nbsp;";
                 if (linebreak) {
                     separator = Tag.newEmptyTag(Tag.LINEBREAK).toString();
