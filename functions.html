@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Function Reference &#8212; Soile 1.1 documentation</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="_static/js/jquery-1.12.4.min.js "></script>
+<script type="text/javascript" src="_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="_static/bootstrap-3.4.1/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-inverse navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">
+          Soile</a>
+        <span class="navbar-text navbar-version pull-left"><b>1.1</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Soile Document <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="qml.html">Questionnaire Docs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="qml.html#plain-text">Plain text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qml.html#stack-arguments">Stack arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qml.html#text-styles">Text styles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qml.html#widgets">Widgets</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
+<li><a class="reference internal" href="#">Function Reference</a><ul>
+<li><a class="reference internal" href="#stimuli">Stimuli</a></li>
+<li><a class="reference internal" href="#display">Display</a><ul>
+<li><a class="reference internal" href="#displayobjects">DisplayObjects</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#text-input">Text input</a></li>
+<li><a class="reference internal" href="#mouse-input">Mouse input</a></li>
+<li><a class="reference internal" href="#drag-and-drop">Drag and drop</a></li>
+<li><a class="reference internal" href="#audio">Audio</a></li>
+<li><a class="reference internal" href="#keyboard-input">Keyboard Input</a><ul>
+<li><a class="reference internal" href="#keycodes">KeyCodes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#arithmetic">Arithmetic</a></li>
+<li><a class="reference internal" href="#logic">Logic</a></li>
+<li><a class="reference internal" href="#lists-string-manipulation">Lists/String Manipulation</a></li>
+<li><a class="reference internal" href="#random-numbers">Random numbers</a></li>
+<li><a class="reference internal" href="#time-and-timers">Time and timers</a></li>
+<li><a class="reference internal" href="#result-storage">Result storage</a></li>
+<li><a class="reference internal" href="#data-processing-and-aggregation">Data processing and aggregation</a></li>
+<li><a class="reference internal" href="#traning-specific-functions">Traning specific functions</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    <div class="body col-md-9 content" role="main">
+      
+  <div class="section" id="function-reference">
+<h1>Function Reference<a class="headerlink" href="#function-reference" title="Permalink to this headline">¶</a></h1>
+<p>Elang comes with a set of built in functions for performing common tasks. These functions are pretty much necessary when building tests so it’s usefull to be familiar with them.</p>
+<dl class="js function">
+<dt id="helptext">
+<code class="sig-name descname">helptext</code><span class="sig-paren">(</span><em class="sig-param">data*</em><span class="sig-paren">)</span><a class="headerlink" href="#helptext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes every parameter given to the debug log.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>anything</strong> (<em>data</em>) – Things(s) to write to the debug log</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="section" id="stimuli">
+<h2>Stimuli<a class="headerlink" href="#stimuli" title="Permalink to this headline">¶</a></h2>
+<p>Stimuli is a special list that controls the interaction phase. The iteration in an interaction phase is run once for each element in the stimuli list.</p>
+<dl class="js function">
+<dt id="setstimuli">
+<code class="sig-name descname">setstimuli</code><span class="sig-paren">(</span><em class="sig-param">stimuli</em><span class="sig-paren">)</span><a class="headerlink" href="#setstimuli" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the stimuli to the given list. Overwrites previously defined stimuli.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stimuli</strong> (<em>list</em>) – List of stimuli objects to set as the stimuli.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt id="shufflestimuli">
+<code class="sig-name descname">shufflestimuli</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shufflestimuli" title="Permalink to this definition">¶</a></dt>
+<dd><p>Randomly shuffles the order of the stimuli.</p>
+</dd></dl>
+
+<dl class="js function">
+<dt id="id0">
+<code class="sig-name descname">shufflestimuli</code><span class="sig-paren">(</span><em class="sig-param">stimulicount</em><span class="sig-paren">)</span><a class="headerlink" href="#id0" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a randomized subset of the stimuli containing the number specified in <code class="docutils literal notranslate"><span class="pre">stimulicount</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stimulicount</strong> (<em>number</em>) – The number of stimuli to select.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt id="emptystimuli">
+<code class="sig-name descname">emptystimuli</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#emptystimuli" title="Permalink to this definition">¶</a></dt>
+<dd><p>Empties the stimuli list, and ends an interaction phase when the current iteration ends when called from inside an interaction phase.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="display">
+<h2>Display<a class="headerlink" href="#display" title="Permalink to this headline">¶</a></h2>
+<p>Display positions are defined as the number of pixels from the top-left corner of the display. Positions are defined as a json object with two variables; top and left, .e.g. the position {top:50 left:100} is located 100 pixels to the right and 50 pixels below the topleft corner.</p>
+<dl class="js function">
+<dt id="show">
+<code class="sig-name descname">show</code><span class="sig-paren">(</span><em class="sig-param">item position</em><span class="sig-paren">)</span><a class="headerlink" href="#show" title="Permalink to this definition">¶</a></dt>
+<dd><p>Displays an object at the specified position.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>item</strong> (<em>displayobject</em>) – The object that should be shown.</p></li>
+<li><p><strong>position</strong> (<em>position</em>) – Where to displat the object, as an object e.g. {top:100 left:200}</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt id="id1">
+<code class="sig-name descname">show</code><span class="sig-paren">(</span><em class="sig-param">item &quot;center&quot;</em><span class="sig-paren">)</span><a class="headerlink" href="#id1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Displays the object at the absolute center of the screen.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>item</strong> (<em>displayobject</em>) – The object that should be shown.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt id="hide">
+<code class="sig-name descname">hide</code><span class="sig-paren">(</span><em class="sig-param">item*</em><span class="sig-paren">)</span><a class="headerlink" href="#hide" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hides the specified object(s).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>item*</strong> (<em>displayobject</em>) – The object(s) that should be hidden.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt id="hideall">
+<code class="sig-name descname">hideall</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hideall" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hides every visible element on the screen, including text shown with showmsg().</p>
+</dd></dl>
+
+<div class="section" id="displayobjects">
+<h3>DisplayObjects<a class="headerlink" href="#displayobjects" title="Permalink to this headline">¶</a></h3>
+<p>All displayobjects share the same functionality regarding showing and hiding them. And they must be defined and assigned to a variable before being used.</p>
+<dl class="js function">
+<dt id="msgbox">
+<code class="sig-name descname">msgbox</code><span class="sig-paren">(</span><em class="sig-param">message</em>, <em class="sig-param">fontsize=20</em><span class="sig-paren">)</span><a class="headerlink" href="#msgbox" title="Permalink to this definition">¶</a></dt>
+<dd><p>Displayobject for displaying text at any location. Fontsize is an optional argument and it defaults to 20</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> (<em>string</em>) – The text to display in the messagebox.</p></li>
+<li><p><strong>fontsize</strong> (<em>int</em>) – Fontsize, defaults to 20.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Displayobject</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt id="textbox">
+<code class="sig-name descname">textbox</code><span class="sig-paren">(</span><em class="sig-param">width</em><span class="sig-paren">)</span><a class="headerlink" href="#textbox" title="Permalink to this definition">¶</a></dt>
+<dd><p>Displays a one line textbox with the specified width.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>width</strong> (<em>int</em>) – Width of the textbox</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt id="textarea">
+<code class="sig-name descname">textarea</code><span class="sig-paren">(</span><em class="sig-param">width</em>, <em class="sig-param">height</em><span class="sig-paren">)</span><a class="headerlink" href="#textarea" title="Permalink to this definition">¶</a></dt>
+<dd><p>Displays a  multilined text area, for reading longer responses as well as enabling the user to press enter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>width</strong> (<em>int</em>) – Width of the textarea</p></li>
+<li><p><strong>width</strong> – Height of the textarea</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt id="imagefile">
+<code class="sig-name descname">imagefile</code><span class="sig-paren">(</span><em class="sig-param">imageurl</em><span class="sig-paren">)</span><a class="headerlink" href="#imagefile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Object containing a image specified by the url, so images can either be uploaded to the testeditor or fetched from the internet. Note that images on the net can disappear or change at any time.  The image is displayed without any scaling so make sure that the image is the right size.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>imageurl</strong> (<em>string</em>) – Absoulute or relative url to the image.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Displayobject</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt id="rectangle">
+<code class="sig-name descname">rectangle</code><span class="sig-paren">(</span><em class="sig-param">width height borderwidth=2</em><span class="sig-paren">)</span><a class="headerlink" href="#rectangle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Displays a rectangle with a white background and black border using the given width height and borderwidth.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>width</strong> (<em>int</em>) – Width of the rectangle.</p></li>
+<li><p><strong>height</strong> (<em>int</em>) – Height if the rectangle.</p></li>
+<li><p><strong>borderwidth</strong> (<em>int</em>) – Defines the borderwidth in pixels.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Displayobject</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt id="button">
+<code class="sig-name descname">button</code><span class="sig-paren">(</span><em class="sig-param">text</em><span class="sig-paren">)</span><a class="headerlink" href="#button" title="Permalink to this definition">¶</a></dt>
+<dd><p>Displays a button with the specified text. The button animates when a user clicks or hovers the mouse above it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> (<em>string</em>) – Text to show on the button</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Displayobject</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt id="countdownbar">
+<code class="sig-name descname">countdownbar</code><span class="sig-paren">(</span><em class="sig-param">width time</em><span class="sig-paren">)</span><a class="headerlink" href="#countdownbar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Displays a fully filled countdown bar with the specified width and time(ms).The countdown animation is started by calling animate(countdownbar)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="n">countdown</span> <span class="o">&lt;-</span> <span class="n">countdownbar</span><span class="p">(</span><span class="mi">200</span> <span class="mi">5000</span><span class="p">)</span> <span class="c1">#</span>
+<span class="n">show</span><span class="p">(</span><span class="n">countdown</span> <span class="s2">&quot;center&quot;</span><span class="p">)</span>                <span class="c1"># Create and show a countdownbar, with a 5 second countdown</span>
+<span class="n">wait</span><span class="p">(</span><span class="mi">2000</span><span class="p">)</span>                              <span class="c1"># Wait two seconds</span>
+<span class="n">animate</span><span class="p">(</span><span class="n">countdown</span><span class="p">)</span>                      <span class="c1"># Countdownbar starts counting down</span>
+<span class="n">wait</span><span class="p">(</span><span class="mi">5000</span><span class="p">)</span>
+<span class="n">hideall</span><span class="p">()</span>                               <span class="c1">#Hide it after 5 seconds -&gt; when it&#39;s empty</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>width</strong> (<em>int</em>) – Width of the bar.</p></li>
+<li><p><strong>time</strong> (<em>int</em>) – Define how long it takse for the bar to reach the end in milliseconds.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Displayobject</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>It’s also possible to display simple text messages using showmsg(message) and hidemsg() without any further specifications. This just shows/hides a message at location {top:50 left:50}</p>
+<dl class="js function">
+<dt id="showmsg">
+<code class="sig-name descname">showmsg</code><span class="sig-paren">(</span><em class="sig-param">message</em><span class="sig-paren">)</span><a class="headerlink" href="#showmsg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Displays a message at the standard message location in the top right corner, using the standard size and a standard margin.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> (<em>string</em>) – The message to display.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt id="hidemsg">
+<code class="sig-name descname">hidemsg</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hidemsg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hides the standard message.</p>
+</dd></dl>
+
+<dl class="js function">
+<dt id="emptymsg">
+<code class="sig-name descname">emptymsg</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#emptymsg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Empties the standard message. The same thing can be done by calling <a class="reference internal" href="#showmsg" title="showmsg"><code class="xref js js-func docutils literal notranslate"><span class="pre">showmsg()</span></code></a> with an empty string.</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="text-input">
+<h2>Text input<a class="headerlink" href="#text-input" title="Permalink to this headline">¶</a></h2>
+<dl class="js function">
+<dt id="settext">
+<code class="sig-name descname">settext</code><span class="sig-paren">(</span><em class="sig-param">object text</em><span class="sig-paren">)</span><a class="headerlink" href="#settext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes the text inside a textbox or textarea. The textbox/area can also be emptied by giving it an empty string (“”). Settext can also be used to change the text in a msgbox, thus avoiding recreating the a box at every change.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>object</strong> (<em>int</em>) – Which object to change</p></li>
+<li><p><strong>text</strong> (<em>string</em>) – What to chagne the text to</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt id="readtext">
+<code class="sig-name descname">readtext</code><span class="sig-paren">(</span><em class="sig-param">object</em><span class="sig-paren">)</span><a class="headerlink" href="#readtext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns what is currently written in the specified <a class="reference internal" href="#textbox" title="textbox"><code class="xref js js-func docutils literal notranslate"><span class="pre">textbox()</span></code></a> or <a class="reference internal" href="#textarea" title="textarea"><code class="xref js js-func docutils literal notranslate"><span class="pre">textarea()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>width</strong> (<em>int</em>) – Width of the textarea</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Current text in the <a class="reference internal" href="#textbox" title="textbox"><code class="xref js js-func docutils literal notranslate"><span class="pre">textbox()</span></code></a> or <a class="reference internal" href="#textbox" title="textbox"><code class="xref js js-func docutils literal notranslate"><span class="pre">textbox()</span></code></a></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>text</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt id="focus">
+<code class="sig-name descname">focus</code><span class="sig-paren">(</span><em class="sig-param">object</em><span class="sig-paren">)</span><a class="headerlink" href="#focus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes the selected textbox/area focused, meaning that the specified box will be highlighted and that the user can start typing without having to select it first.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>object</strong> (<em>id</em>) – The textbox/area to focus on</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="mouse-input">
+<h2>Mouse input<a class="headerlink" href="#mouse-input" title="Permalink to this headline">¶</a></h2>
+<dl class="js function">
+<dt id="onmouseclick">
+<code class="sig-name descname">onmouseclick</code><span class="sig-paren">(</span><em class="sig-param">displayobject {action:function inputid: number}</em><span class="sig-paren">)</span><a class="headerlink" href="#onmouseclick" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a mouseclick listener for the object/image, which will be triggered when the image is clicked. The function specified in “action” is executed on each click.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>displayobject</strong> (<em>object</em>) – Displayobject that should respond to clicks.</p></li>
+<li><p><strong>action</strong> (<em>function</em>) – Function to call when a click is made. Can be either a builtin function or one defined in the test.</p></li>
+<li><p><strong>inputid</strong> (<em>int</em>) – Assign a number that will be passed to the function when the object is clicked.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">boxClick</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+    <span class="n">showmsg</span><span class="p">(</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Clicked box&quot;</span> <span class="nb">id</span><span class="p">))</span>
+<span class="n">end</span>
+
+<span class="n">var</span> <span class="n">box</span> <span class="o">&lt;-</span> <span class="n">rectangle</span><span class="p">(</span><span class="mi">50</span> <span class="mi">50</span><span class="p">)</span>
+<span class="n">show</span><span class="p">(</span><span class="n">box</span> <span class="s2">&quot;center&quot;</span><span class="p">)</span>
+<span class="n">onmouseclick</span><span class="p">(</span><span class="n">box</span><span class="p">,</span> <span class="p">{</span><span class="n">action</span><span class="p">:</span><span class="n">boxClick</span> <span class="n">inputid</span><span class="p">:</span><span class="mi">55</span><span class="p">)</span>
+<span class="c1">#Clicking the box show a messag containing -Clicked box 55-</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="js function">
+<dt id="id2">
+<code class="sig-name descname">onmouseclick</code><span class="sig-paren">(</span><em class="sig-param">displayobject false</em><span class="sig-paren">)</span><a class="headerlink" href="#id2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes all mouseclick functions bound to the specified object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>displayobject</strong> (<em>object</em>) – Displayobject that should not respond to click any more.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="drag-and-drop">
+<h2>Drag and drop<a class="headerlink" href="#drag-and-drop" title="Permalink to this headline">¶</a></h2>
+<p>Drag&amp;drop works by setting objects to draggable, and defining dropzones that the draggable objects can interact with (can be dropped on). Any displayobject can be designated as draggable or as a dropzone.</p>
+<dl class="js function">
+<dt id="draggable">
+<code class="sig-name descname">draggable</code><span class="sig-paren">(</span><em class="sig-param">object data</em><span class="sig-paren">)</span><a class="headerlink" href="#draggable" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>object</strong> (<em>displayobject</em>) – Displayobject to make draggable.</p></li>
+<li><p><strong>data</strong> (<em>object</em>) – The data that is passed to the dropfunction when the object is dropped.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt id="dropzone">
+<code class="sig-name descname">dropzone</code><span class="sig-paren">(</span><em class="sig-param">object ondrop dropdata</em><span class="sig-paren">)</span><a class="headerlink" href="#dropzone" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>object</strong> (<em>displayobject</em>) – Displayobject to designate as a dropzone</p></li>
+<li><p><strong>ondrop</strong> (<em>function</em>) – Function to call when an object is dropped on the dropzone</p></li>
+<li><p><strong>dropdata</strong> (<em>object</em>) – The second parameter to sen to the ondrop function</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="n">box1</span> <span class="o">=</span> <span class="n">rectangle</span><span class="p">(</span><span class="mi">10</span> <span class="mi">10</span> <span class="mi">2</span> <span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+<span class="n">var</span> <span class="n">box2</span> <span class="o">=</span> <span class="n">rectangle</span><span class="p">(</span><span class="mi">10</span> <span class="mi">10</span> <span class="mi">2</span> <span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+
+<span class="n">var</span> <span class="n">text1</span> <span class="o">=</span> <span class="n">msgbox</span><span class="p">(</span><span class="s2">&quot;Text1&quot;</span><span class="p">)</span>
+<span class="n">var</span> <span class="n">text2</span> <span class="o">=</span> <span class="n">msgbox</span><span class="p">(</span><span class="s2">&quot;Text2&quot;</span><span class="p">)</span>
+
+<span class="n">function</span> <span class="n">dropbox</span><span class="p">(</span><span class="n">text</span> <span class="n">box</span><span class="p">)</span>
+    <span class="n">showmsg</span><span class="p">(</span><span class="n">text</span> <span class="s2">&quot;was dropped on&quot;</span> <span class="n">box</span><span class="p">)</span>
+<span class="n">end</span>
+
+<span class="n">dropzone</span><span class="p">(</span><span class="n">box1</span> <span class="n">dropbox</span> <span class="s2">&quot;Box1&quot;</span><span class="p">)</span>
+<span class="n">dropzone</span><span class="p">(</span><span class="n">box2</span> <span class="n">dropbox</span> <span class="s2">&quot;Box2&quot;</span><span class="p">)</span>
+
+<span class="n">draggable</span><span class="p">(</span><span class="n">text1</span> <span class="s2">&quot;Text1&quot;</span><span class="p">)</span>
+<span class="n">draggable</span><span class="p">(</span><span class="n">text2</span> <span class="s2">&quot;Text2&quot;</span><span class="p">)</span>
+
+<span class="c1"># Dropping text1 box1 prints &quot;text1 was dropped on box1&quot;</span>
+<span class="c1"># Dropping text2 box1 prints &quot;text2 was dropped on box1&quot;</span>
+<span class="c1"># Dropping text1 box2 prints &quot;text1 was dropped on box2&quot;</span>
+<span class="c1"># Dropping text2 box2 prints &quot;text2 was dropped on box2&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="audio">
+<h2>Audio<a class="headerlink" href="#audio" title="Permalink to this headline">¶</a></h2>
+<p>Audio works the same way as images. You upload an audio file(.mp3 or .ogg), or find one on the Internet. It can then be used after being loaded with the <a class="reference internal" href="#audiofile" title="audiofile"><code class="xref js js-func docutils literal notranslate"><span class="pre">audiofile()</span></code></a> command. Note that there’s no guarantee that the user will hear what is being played, as he might have turned of/down his speakers/headphones or his device might not even have any audio output. So it’s a good idea to check that the users hears the audio, for example asking the user to type in a word that is played, before starting the actual task.</p>
+<dl class="js function">
+<dt id="audiofile">
+<code class="sig-name descname">audiofile</code><span class="sig-paren">(</span><em class="sig-param">url</em><span class="sig-paren">)</span><a class="headerlink" href="#audiofile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads an audiofile, from soile or from the Internet and stores it in the specified variable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>url</strong> (<em>string</em>) – Url to the audiofile</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt id="play-audiofile">
+<span id="play(audiofile):"></span><code class="sig-name descname">play(audiofile):</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#play-audiofile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plays the specified audiofile from the last location.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>audiofile</strong> (<a class="reference internal" href="#audiofile" title="audiofile"><em>audiofile</em></a>) – Audiofile to use.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt id="pause">
+<code class="sig-name descname">pause</code><span class="sig-paren">(</span><em class="sig-param">audiofile</em><span class="sig-paren">)</span><a class="headerlink" href="#pause" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pauses the specified audiofile.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>audiofile</strong> (<a class="reference internal" href="#audiofile" title="audiofile"><em>audiofile</em></a>) – Audiofile to use.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt id="jumpto">
+<code class="sig-name descname">jumpto</code><span class="sig-paren">(</span><em class="sig-param">audiofile seconds</em><span class="sig-paren">)</span><a class="headerlink" href="#jumpto" title="Permalink to this definition">¶</a></dt>
+<dd><p>Skips to the specified location in the audiofile. Can be called for both playing and paused audiofiles.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>audiofile</strong> (<a class="reference internal" href="#audiofile" title="audiofile"><em>audiofile</em></a>) – Audiofile to use.</p></li>
+<li><p><strong>seconds</strong> (<em>number</em>) – Which location to skip to.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="keyboard-input">
+<h2>Keyboard Input<a class="headerlink" href="#keyboard-input" title="Permalink to this headline">¶</a></h2>
+<dl class="js function">
+<dt id="onkeypress">
+<code class="sig-name descname">onkeypress</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">func</em><span class="sig-paren">)</span><a class="headerlink" href="#onkeypress" title="Permalink to this definition">¶</a></dt>
+<dd><p>Binds the specified key to a function so that the function is run every time when the key is pressed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> (<em>string</em>) – Which keyboard key to use.</p></li>
+<li><p><strong>func</strong> (<em>function</em>) – Function to call when a click is made</p></li>
+</ul>
+</dd>
+</dl>
+<p>Example: the function leftclick is run each time when the left arrow is clicked on the keyboard.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">leftclick</span><span class="p">()</span>
+    <span class="n">showmsg</span><span class="p">(</span><span class="s2">&quot;left was clicked&quot;</span><span class="p">)</span>
+<span class="n">end</span>
+
+<span class="n">onkeypress</span><span class="p">(</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="n">leftclick</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="js function">
+<dt id="id3">
+<code class="sig-name descname">onkeypress</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="headerlink" href="#id3" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes all actionss bound to the specified key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> (<em>string</em>) – Which keyboard key to use.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt id="onanykey">
+<code class="sig-name descname">onanykey</code><span class="sig-paren">(</span><em class="sig-param">func ignore=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#onanykey" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executes the specified function when any keyboeard key except keys specified ignore are pressed. Ignored keys should be sent as a list of individual keynames, for example [“a” “enter”] ignores the keys <strong>a</strong> and <strong>enter</strong>, see the keycode table for the correct key names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>func</strong> (<em>function</em>) – Which function to call.</p></li>
+<li><p><strong>ignore</strong> (<em>string</em>) – A list of keys to ignore</p></li>
+<li><p><strong>ignore</strong> – A specific ignore command</p></li>
+</ul>
+</dd>
+</dl>
+<p>Supported ignore commands:</p>
+<ul class="simple">
+<li><p>“onlyletters”  - ignores everything but a-z.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="js function">
+<dt id="id4">
+<code class="sig-name descname">onanykey</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#id4" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes all actions bound with <a class="reference internal" href="#id4" title="onanykey"><code class="xref js js-func docutils literal notranslate"><span class="pre">onanykey()</span></code></a></p>
+</dd></dl>
+
+<dl class="js function">
+<dt id="resumeonkey">
+<code class="sig-name descname">resumeonkey</code><span class="sig-paren">(</span><em class="sig-param">keycode</em><span class="sig-paren">)</span><a class="headerlink" href="#resumeonkey" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs <a class="reference internal" href="#resume" title="resume"><code class="xref js js-func docutils literal notranslate"><span class="pre">resume()</span></code></a> once when the specified key is pressed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>keycode</strong> (<em>string</em>) – Key to resume on</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt id="id5">
+<code class="sig-name descname">resumeonkey</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#id5" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs <a class="reference internal" href="#resume" title="resume"><code class="xref js js-func docutils literal notranslate"><span class="pre">resume()</span></code></a> on any keypress once.</p>
+</dd></dl>
+
+<dl class="js function">
+<dt id="getlastkey">
+<code class="sig-name descname">getlastkey</code><span class="sig-paren">(</span><em class="sig-param">active=true</em><span class="sig-paren">)</span><a class="headerlink" href="#getlastkey" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the most recent keypress, as long as there an active <a class="reference internal" href="#id3" title="onkeypress"><code class="xref js js-func docutils literal notranslate"><span class="pre">onkeypress()</span></code></a> , <a class="reference internal" href="#id4" title="onanykey"><code class="xref js js-func docutils literal notranslate"><span class="pre">onanykey()</span></code></a> or <a class="reference internal" href="#id5" title="resumeonkey"><code class="xref js js-func docutils literal notranslate"><span class="pre">resumeonkey()</span></code></a>.</p>
+</dd></dl>
+
+<div class="section" id="keycodes">
+<h3>KeyCodes<a class="headerlink" href="#keycodes" title="Permalink to this headline">¶</a></h3>
+<p>Keys are specified using keycodes where keycode corrsepsonds to a certain key, keycodes should be defined as strings e.g. (“a”). Alphanumerical keys(a-ö 0-9) simply uses the keys letter, so the keycode “a” corresponds to the button a key on the keyboard. All other keycodes are defined in the following table.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 34%" />
+<col style="width: 66%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>“backspace”</p></td>
+<td><p>Backspace</p></td>
+</tr>
+<tr class="row-even"><td><p>“tab”</p></td>
+<td><p>Tab</p></td>
+</tr>
+<tr class="row-odd"><td><p>“enter”</p></td>
+<td><p>Enter/Return</p></td>
+</tr>
+<tr class="row-even"><td><p>“shift”</p></td>
+<td><p>Left and Right shift</p></td>
+</tr>
+<tr class="row-odd"><td><p>“ctrl”</p></td>
+<td><p>Left and right control</p></td>
+</tr>
+<tr class="row-even"><td><p>“alt”</p></td>
+<td><p>Alt</p></td>
+</tr>
+<tr class="row-odd"><td><p>“capslock”</p></td>
+<td><p>Capslock</p></td>
+</tr>
+<tr class="row-even"><td><p>“escape”</p></td>
+<td><p>Esc</p></td>
+</tr>
+<tr class="row-odd"><td><p>“pageup”</p></td>
+<td><p>Page Up</p></td>
+</tr>
+<tr class="row-even"><td><p>“pagedown”</p></td>
+<td><p>Page Down</p></td>
+</tr>
+<tr class="row-odd"><td><p>“end”</p></td>
+<td><p>End</p></td>
+</tr>
+<tr class="row-even"><td><p>“home”</p></td>
+<td><p>Home</p></td>
+</tr>
+<tr class="row-odd"><td><p>“insert”</p></td>
+<td><p>Insert</p></td>
+</tr>
+<tr class="row-even"><td><p>“delete”</p></td>
+<td><p>Delete</p></td>
+</tr>
+<tr class="row-odd"><td><p>“left”</p></td>
+<td><p>Arrow Left</p></td>
+</tr>
+<tr class="row-even"><td><p>“up”</p></td>
+<td><p>Arrow Up</p></td>
+</tr>
+<tr class="row-odd"><td><p>“right”</p></td>
+<td><p>Arrow Right</p></td>
+</tr>
+<tr class="row-even"><td><p>“down”</p></td>
+<td><p>Arrow Down</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="arithmetic">
+<h2>Arithmetic<a class="headerlink" href="#arithmetic" title="Permalink to this headline">¶</a></h2>
+<p>Basic arithmetic operations that takes on two or more numbers as arguments, so plus(5 5 5 5) is equivalent with 5 + 5 + 5 + 5. Note that the inner function is evaluated before the outer one when performing mulitple nested operations so <strong>multiply(2 plus(5 5)) = 2 * (5+5)</strong> while <strong>plus(2 multiply(5 5)) = 2 + (5*5)</strong>.</p>
+<dl class="js function">
+<dt id="plus">
+<code class="sig-name descname">plus</code><span class="sig-paren">(</span><em class="sig-param">number1 number2 numbers*</em><span class="sig-paren">)</span><a class="headerlink" href="#plus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds together all the given numbers number1 + number2 + … numberX</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>number1</strong> (<em>number</em>) – Number1</p></li>
+<li><p><strong>number2</strong> (<em>number</em>) – Number2</p></li>
+<li><p><strong>numbers</strong> (<em>number</em>) – Number3, and so on…</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Result</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>number</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt id="minus">
+<code class="sig-name descname">minus</code><span class="sig-paren">(</span><em class="sig-param">number1 number2</em><span class="sig-paren">)</span><a class="headerlink" href="#minus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates number1 - number2</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>number1</strong> (<em>number</em>) – Number to subtract from</p></li>
+<li><p><strong>number2</strong> (<em>number</em>) – Number to subtract</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>integer Result</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>number</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt id="multiply">
+<code class="sig-name descname">multiply</code><span class="sig-paren">(</span><em class="sig-param">number1 number2 numbers*</em><span class="sig-paren">)</span><a class="headerlink" href="#multiply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates number1 * number2 … numberX</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>number1</strong> (<em>number</em>) – Number1</p></li>
+<li><p><strong>number2</strong> (<em>number</em>) – Number2</p></li>
+<li><p><strong>numbers</strong> (<em>number</em>) – Number3, and so on…</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Result</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>number</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt id="divide">
+<code class="sig-name descname">divide</code><span class="sig-paren">(</span><em class="sig-param">number1 number2</em><span class="sig-paren">)</span><a class="headerlink" href="#divide" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates number1 / number2</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Number</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>number</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt id="modulo-number1-number2-number1-number2">
+<span id="modulo(number1 number2) = number1 % number2"></span><code class="sig-name descname">modulo(number1 number2) = number1 % number2</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#modulo-number1-number2-number1-number2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the remainder when dividing number1 with number2 (number1/number2)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>number1</strong> (<em>number</em>) – First number</p></li>
+<li><p><strong>number2</strong> (<em>number</em>) – Second number</p></li>
+</ul>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="n">a</span> <span class="o">&lt;-</span> <span class="n">modulo</span><span class="p">(</span><span class="mi">5</span> <span class="mi">9</span><span class="p">)</span>  <span class="c1"># a = 4</span>
+<span class="n">var</span> <span class="n">b</span> <span class="o">&lt;-</span> <span class="n">module</span><span class="p">(</span><span class="mi">8</span> <span class="mi">64</span><span class="p">)</span> <span class="c1"># b = 0</span>
+<span class="n">var</span> <span class="n">c</span> <span class="o">&lt;-</span> <span class="n">module</span><span class="p">(</span><span class="mi">8</span> <span class="mi">45</span><span class="p">)</span> <span class="c1"># c = 4</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>result</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>number</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt id="round">
+<code class="sig-name descname">round</code><span class="sig-paren">(</span><em class="sig-param">number</em><span class="sig-paren">)</span><a class="headerlink" href="#round" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rounds the number to the nearest whole number</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>number</strong> (<em>number</em>) – Number to round</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Number</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt id="id6">
+<code class="sig-name descname">round</code><span class="sig-paren">(</span><em class="sig-param">number mode</em><span class="sig-paren">)</span><a class="headerlink" href="#id6" title="Permalink to this definition">¶</a></dt>
+<dd><p>Round a number down when mode = “floor” and up when mode = “ceil”</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>number</strong> (<em>number</em>) – Number to round</p></li>
+<li><p><strong>mode</strong> (<em>string</em>) – “floor” to round down or “ceil” to round up</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Number</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="logic">
+<h2>Logic<a class="headerlink" href="#logic" title="Permalink to this headline">¶</a></h2>
+<p>Basic logic functions that return a boolean value(true or false)</p>
+<dl class="js function">
+<dt id="not">
+<code class="sig-name descname">not</code><span class="sig-paren">(</span><em class="sig-param">boolean</em><span class="sig-paren">)</span><a class="headerlink" href="#not" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logic NOT</p>
+</dd></dl>
+
+<dl class="js function">
+<dt id="and">
+<code class="sig-name descname">and</code><span class="sig-paren">(</span><em class="sig-param">bool1 bool2</em><span class="sig-paren">)</span><a class="headerlink" href="#and" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logic AND</p>
+</dd></dl>
+
+<dl class="js function">
+<dt id="or">
+<code class="sig-name descname">or</code><span class="sig-paren">(</span><em class="sig-param">bool1 bool2</em><span class="sig-paren">)</span><a class="headerlink" href="#or" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logic OR</p>
+</dd></dl>
+
+<dl class="js function">
+<dt id="lessthan">
+<code class="sig-name descname">lessthan</code><span class="sig-paren">(</span><em class="sig-param">number1 number2</em><span class="sig-paren">)</span><a class="headerlink" href="#lessthan" title="Permalink to this definition">¶</a></dt>
+<dd><p>number1 &lt; number2</p>
+</dd></dl>
+
+<dl class="js function">
+<dt id="lt">
+<code class="sig-name descname">lt</code><span class="sig-paren">(</span><em class="sig-param">number1 number2)</em><span class="sig-paren">)</span><a class="headerlink" href="#lt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Short version of <a class="reference internal" href="#lessthan" title="lessthan"><code class="xref js js-func docutils literal notranslate"><span class="pre">lessthan()</span></code></a></p>
+</dd></dl>
+
+<dl class="js function">
+<dt id="greaterthan">
+<code class="sig-name descname">greaterthan</code><span class="sig-paren">(</span><em class="sig-param">number1 number2</em><span class="sig-paren">)</span><a class="headerlink" href="#greaterthan" title="Permalink to this definition">¶</a></dt>
+<dd><p>number1 &gt; number2</p>
+</dd></dl>
+
+<dl class="js function">
+<dt id="gt">
+<code class="sig-name descname">gt</code><span class="sig-paren">(</span><em class="sig-param">number1 number2</em><span class="sig-paren">)</span><a class="headerlink" href="#gt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Short version of <a class="reference internal" href="#greaterthan" title="greaterthan"><code class="xref js js-func docutils literal notranslate"><span class="pre">greaterthan()</span></code></a></p>
+</dd></dl>
+
+<dl class="js function">
+<dt id="equals">
+<code class="sig-name descname">equals</code><span class="sig-paren">(</span><em class="sig-param">number1 number2</em><span class="sig-paren">)</span><a class="headerlink" href="#equals" title="Permalink to this definition">¶</a></dt>
+<dd><p>number1 == number2</p>
+</dd></dl>
+
+<dl class="js function">
+<dt id="eq">
+<code class="sig-name descname">eq</code><span class="sig-paren">(</span><em class="sig-param">number1 number2</em><span class="sig-paren">)</span><a class="headerlink" href="#eq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Short version of <a class="reference internal" href="#equals" title="equals"><code class="xref js js-func docutils literal notranslate"><span class="pre">equals()</span></code></a></p>
+</dd></dl>
+
+<dl class="js function">
+<dt id="fuzzyequal">
+<code class="sig-name descname">fuzzyequal</code><span class="sig-paren">(</span><em class="sig-param">string1 string2 ignoreCases</em><span class="sig-paren">)</span><a class="headerlink" href="#fuzzyequal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes how different two strings are from each other. The difference is defined by how many single character edits are required to change string1 into string2.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>string</strong> (<em>string2</em>) – String to compare</p></li>
+<li><p><strong>string</strong> – String to compare with</p></li>
+<li><p><strong>boolean</strong> (<em>ignoreCases</em>) – Specify if upper/lower case letters should be taken into account, defaults to true.</p></li>
+</ul>
+</dd>
+</dl>
+<p>For example, the difference between “kitten” and “sitting” is 3, since the following three edits change one into the other, and there is no way to do it with fewer than three edits:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>kitten → sitten (substitution of &quot;s&quot; for &quot;k&quot;)
+sitten → sittin (substitution of &quot;i&quot; for &quot;e&quot;)
+sittin → sitting (insertion of &quot;g&quot; at the end).
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>0 if the strings are equal</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A number greater than 1 specifying how different the strings are</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="lists-string-manipulation">
+<h2>Lists/String Manipulation<a class="headerlink" href="#lists-string-manipulation" title="Permalink to this headline">¶</a></h2>
+<dl class="js function">
+<dt id="append">
+<code class="sig-name descname">append</code><span class="sig-paren">(</span><em class="sig-param">string1 string2..stringn</em><span class="sig-paren">)</span><a class="headerlink" href="#append" title="Permalink to this definition">¶</a></dt>
+<dd><p>Appends two or more strings</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>string</strong> (<em>stringn</em>) – String to append to</p></li>
+<li><p><strong>string</strong> – String to append to ´string1´</p></li>
+<li><p><strong>string</strong> – String to append to ´string1´</p></li>
+</ul>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Hello &quot;</span> <span class="s2">&quot;World&quot;</span> <span class="s2">&quot;!&quot;</span><span class="p">)</span> <span class="c1">#= &quot;Hello World!&quot;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="js function">
+<dt id="length">
+<code class="sig-name descname">length</code><span class="sig-paren">(</span><em class="sig-param">object</em><span class="sig-paren">)</span><a class="headerlink" href="#length" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the number of elements/letters in list or string including whitespaces.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>object</strong> (<em>array/string</em>) – Var to get length of</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns number</dt>
+<dd class="field-even"><p>Length of variable</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt id="elementatindex">
+<code class="sig-name descname">elementatindex</code><span class="sig-paren">(</span><em class="sig-param">object</em>, <em class="sig-param">index</em><span class="sig-paren">)</span><a class="headerlink" href="#elementatindex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the element at the specified index a list/string where the index starts from 0. Equivalent to  object[index]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>object</strong> (<em>array</em>) – Object to select an element from.</p></li>
+<li><p><strong>index</strong> (<em>number</em>) – Index</p></li>
+</ul>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">elementatindex</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span> <span class="mi">0</span><span class="p">)</span> <span class="c1">#= &quot;H&quot;</span>
+<span class="n">elementatindex</span><span class="p">(</span><span class="s2">&quot;Test&quot;</span> <span class="mi">3</span><span class="p">)</span> <span class="c1">#= t</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="js function">
+<dt id="range">
+<code class="sig-name descname">range</code><span class="sig-paren">(</span><em class="sig-param">word start end</em><span class="sig-paren">)</span><a class="headerlink" href="#range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Round a number down when mode = “floor” and up when mode = “ceil”</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>word</strong> (<em>string/list</em>) – The string or array to select a range from</p></li>
+<li><p><strong>start</strong> (<em>number</em>) – Index at which to begin selection. Start can be omitted in which case the selections begins from the first index i.e. 0.</p></li>
+<li><p><strong>number</strong> (<em>end</em>) – Index at which to end the selection, values up to but not including end are selected.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Range</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt id="split">
+<code class="sig-name descname">split</code><span class="sig-paren">(</span><em class="sig-param">text separator</em><span class="sig-paren">)</span><a class="headerlink" href="#split" title="Permalink to this definition">¶</a></dt>
+<dd><p>Splits a string into a list of string at every occurance of the separator in the string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> (<em>string</em>) – The string to be split</p></li>
+<li><p><strong>separator</strong> (<em>string</em>) – Specifies the character to use when splitting the string</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of strings</p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">split</span><span class="p">([</span><span class="s2">&quot;1..2..3..4..5], &quot;</span><span class="o">..</span><span class="s2">&quot;) # = [1 2 3 4 5]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="js function">
+<dt id="join">
+<code class="sig-name descname">join</code><span class="sig-paren">(</span><em class="sig-param">list separator</em><span class="sig-paren">)</span><a class="headerlink" href="#join" title="Permalink to this definition">¶</a></dt>
+<dd><p>Joins all elements of a list into a string, separated by the sperator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>list</strong> (<em>list</em>) – The array to be joined.</p></li>
+<li><p><strong>separator</strong> (<em>string</em>) – Specifies a string to separate each element in the list</p></li>
+</ul>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">join</span><span class="p">([</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span><span class="p">],</span> <span class="s2">&quot;..&quot;</span><span class="p">)</span> <span class="c1"># = 1..2..3..4..5</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="js function">
+<dt id="shuffle">
+<code class="sig-name descname">shuffle</code><span class="sig-paren">(</span><em class="sig-param">list</em><span class="sig-paren">)</span><a class="headerlink" href="#shuffle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a new shuffled/randomized version of the list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>list</strong> (<em>list</em>) – The list tp be shuffled.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Shuffled list</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="random-numbers">
+<h2>Random numbers<a class="headerlink" href="#random-numbers" title="Permalink to this headline">¶</a></h2>
+<dl class="js function">
+<dt id="randominteger">
+<code class="sig-name descname">randominteger</code><span class="sig-paren">(</span><em class="sig-param">min max not</em><span class="sig-paren">)</span><a class="headerlink" href="#randominteger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a pseudorandom non decimal number within the specified range, and which is not equal to any of the numbers specified in <em>not</em>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>min</strong> (<em>number</em>) – Range min number</p></li>
+<li><p><strong>max</strong> (<em>number</em>) – Range max number</p></li>
+<li><p><strong>not</strong> (<em>number/list</em>) – Number(s) that are not allowed</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt id="randomnumber">
+<code class="sig-name descname">randomnumber</code><span class="sig-paren">(</span><em class="sig-param">min max</em><span class="sig-paren">)</span><a class="headerlink" href="#randomnumber" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a pseudorandom number value within the range</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>min</strong> (<em>number</em>) – Range min number</p></li>
+<li><p><strong>max</strong> (<em>number</em>) – Range max number</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt id="seedrandom">
+<code class="sig-name descname">seedrandom</code><span class="sig-paren">(</span><em class="sig-param">seed</em><span class="sig-paren">)</span><a class="headerlink" href="#seedrandom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Seeds the random generator with  a value. A certain seed will always produce the same sequence of random values.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="time-and-timers">
+<h2>Time and timers<a class="headerlink" href="#time-and-timers" title="Permalink to this headline">¶</a></h2>
+<p>Time is measured in milliseconds with a precision of +-2 milliseconds in most cases. Time is measured in Epoch time, i.e. the number of milliseconds since 00:00:00 1.1.1970.</p>
+<dl class="js function">
+<dt id="recordts">
+<code class="sig-name descname">recordts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#recordts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a timestamp with the current time with millisecond precision.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Current timestamp</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>number</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt id="starttimer">
+<code class="sig-name descname">starttimer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#starttimer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts the timer.</p>
+</dd></dl>
+
+<dl class="js function">
+<dt id="elapsedtime">
+<code class="sig-name descname">elapsedtime</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#elapsedtime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns elapsed time, in ms, since the last call to <a class="reference internal" href="#starttimer" title="starttimer"><code class="xref js js-func docutils literal notranslate"><span class="pre">starttimer()</span></code></a>. Reuturns 0 if the timer hasn’t been started.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Elapsed time, in milliseconds.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt id="wait">
+<code class="sig-name descname">wait</code><span class="sig-paren">(</span><em class="sig-param">time=undefined</em><span class="sig-paren">)</span><a class="headerlink" href="#wait" title="Permalink to this definition">¶</a></dt>
+<dd><p>Halts the program for a certain amount of time, or until <a class="reference internal" href="#resume" title="resume"><code class="xref js js-func docutils literal notranslate"><span class="pre">resume()</span></code></a> is called. Waits forever if no time is specified.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>time</strong> (<em>number</em>) – Number of milliseconds to wait.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt id="resume">
+<code class="sig-name descname">resume</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#resume" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resumes program execution if the program is currently halted. Does nothing if the program is running.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="result-storage">
+<h2>Result storage<a class="headerlink" href="#result-storage" title="Permalink to this headline">¶</a></h2>
+<p>Results are stored as .csv spredsheet files that can easily be imported into Excel or any other spreadsheet software. Data can be stored in two different files:
+-   Aggregate data from the whole experiment, can only contain one row per user.
+-   “Raw data”, test specific data, so each test (in the same experiment) writes to a separate file. Allows for multiple rows per user. It’s possible to compute e.g. an average over all rows and store this value in the aggregate datatable.</p>
+<dl class="js function">
+<dt id="storeSingle">
+<code class="sig-name descname">storeSingle</code><span class="sig-paren">(</span><em class="sig-param">field data</em><span class="sig-paren">)</span><a class="headerlink" href="#storeSingle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stores a single value with the specified fieldname in the aggregated datatable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>field</strong> (<em>string</em>) – The name of the field</p></li>
+<li><p><strong>data</strong> (<em>anything</em>) – Data to store.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt id="storeRow">
+<code class="sig-name descname">storeRow</code><span class="sig-paren">(</span><em class="sig-param">field data</em><span class="sig-paren">)</span><a class="headerlink" href="#storeRow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stores a value with the given fieldname in the current raw datarow.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>field</strong> (<em>string</em>) – The name of the field</p></li>
+<li><p><strong>data</strong> (<em>anything</em>) – Data to store.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt id="newRow">
+<code class="sig-name descname">newRow</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#newRow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a new empty row to write raw data to.</p>
+</dd></dl>
+
+<p>The example produces the following result:</p>
+</div>
+<div class="section" id="data-processing-and-aggregation">
+<h2>Data processing and aggregation<a class="headerlink" href="#data-processing-and-aggregation" title="Permalink to this headline">¶</a></h2>
+<p>Raw data can be processed to something more usable. An aggregation function loops through the whole raw data table and performs the specified function on every field that it finds. Rows that don’t have any value in the specific field are simply omitted. Aggregation functions can also be used to aggregate data in lists.</p>
+<dl class="js function">
+<dt id="count">
+<code class="sig-name descname">count</code><span class="sig-paren">(</span><em class="sig-param">field</em><span class="sig-paren">)</span><a class="headerlink" href="#count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Counts how many rows contain the specific field.</p>
+</dd></dl>
+
+<dl class="js function">
+<dt id="id7">
+<code class="sig-name descname">count</code><span class="sig-paren">(</span><em class="sig-param">field</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#id7" title="Permalink to this definition">¶</a></dt>
+<dd><p>Counts how many rows contain a specific field with a specific value.</p>
+</dd></dl>
+
+<dl class="js function">
+<dt id="average">
+<code class="sig-name descname">average</code><span class="sig-paren">(</span><em class="sig-param">field</em><span class="sig-paren">)</span><a class="headerlink" href="#average" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the average value from all rows containing this field.</p>
+</dd></dl>
+
+<dl class="js function">
+<dt id="median">
+<code class="sig-name descname">median</code><span class="sig-paren">(</span><em class="sig-param">field</em><span class="sig-paren">)</span><a class="headerlink" href="#median" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the median from all rows containing this field.</p>
+</dd></dl>
+
+<dl class="js function">
+<dt id="standarddeviation">
+<code class="sig-name descname">standarddeviation</code><span class="sig-paren">(</span><em class="sig-param">field</em><span class="sig-paren">)</span><a class="headerlink" href="#standarddeviation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the standard deviation from all rows containing ths field.</p>
+</dd></dl>
+
+<dl class="js function">
+<dt id="outliers">
+<code class="sig-name descname">outliers</code><span class="sig-paren">(</span><em class="sig-param">field multiplier</em><span class="sig-paren">)</span><a class="headerlink" href="#outliers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes values that deviate more than multiplier*standarddefinition from the average value.</p>
+</dd></dl>
+
+<dl class="js function">
+<dt id="id8">
+<code class="sig-name descname">outliers</code><span class="sig-paren">(</span><em class="sig-param">field multiplier standarddeviation average</em><span class="sig-paren">)</span><a class="headerlink" href="#id8" title="Permalink to this definition">¶</a></dt>
+<dd><p>You can also provid your own standarddeviation and average for example when computing outliers of   a subset of you data when you still want to use for example the whole dataset for average and standarddeviation.</p>
+</dd></dl>
+
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Example</span>
+
+<span class="c1">#Adding values to first row</span>
+<span class="n">storeRow</span><span class="p">(</span><span class="s2">&quot;Row number&quot;</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">storeRow</span><span class="p">(</span><span class="s2">&quot;TestValue&quot;</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">storeRow</span><span class="p">(</span><span class="s2">&quot;Message&quot;</span> <span class="s2">&quot;Hello&quot;</span><span class="p">)</span>
+
+<span class="n">newRow</span><span class="p">()</span>
+<span class="n">storeRow</span><span class="p">(</span><span class="s2">&quot;Row number&quot;</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">storeRow</span><span class="p">(</span><span class="s2">&quot;TestValue&quot;</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">storeRow</span><span class="p">(</span><span class="s2">&quot;Message&quot;</span> <span class="s2">&quot;Hello&quot;</span><span class="p">)</span>
+
+<span class="n">newRow</span><span class="p">()</span>
+<span class="n">storeRow</span><span class="p">(</span><span class="s2">&quot;Row number 3&quot;</span><span class="p">)</span>
+<span class="n">storeRow</span><span class="p">(</span><span class="s2">&quot;TestValue&quot;</span> <span class="mi">14</span><span class="p">)</span>
+<span class="n">storeRow</span><span class="p">(</span><span class="s2">&quot;Message&quot;</span> <span class="s2">&quot;Goodbye&quot;</span><span class="p">)</span>
+<span class="n">storeRow</span><span class="p">(</span><span class="s2">&quot;ExtraValue&quot;</span> <span class="s2">&quot;Extra&quot;</span><span class="p">)</span>
+
+<span class="n">storesingle</span><span class="p">(</span><span class="s2">&quot;countrows&quot;</span> <span class="n">count</span><span class="p">(</span><span class="s2">&quot;RowNumber&quot;</span><span class="p">))</span>       <span class="c1"># How many rows in coloumn &quot;RowNumber&quot; contain a value</span>
+<span class="n">storesingle</span><span class="p">(</span><span class="s2">&quot;countExtra&quot;</span> <span class="n">count</span><span class="p">(</span><span class="s2">&quot;ExtraValue&quot;</span><span class="p">))</span>      <span class="c1"># How many rows in coloumn &quot;ExtraValue&quot; contain a value</span>
+<span class="n">storesingle</span><span class="p">(</span><span class="s2">&quot;countHello&quot;</span> <span class="n">count</span><span class="p">(</span><span class="s2">&quot;Message&quot;</span> <span class="s2">&quot;Hello&quot;</span><span class="p">))</span> <span class="c1"># How many rows in coloumn &quot;Message&quot; contain the value &quot;Hello&quot;</span>
+<span class="n">storesingle</span><span class="p">(</span><span class="s2">&quot;average&quot;</span> <span class="n">average</span><span class="p">(</span><span class="s2">&quot;TestValue&quot;</span><span class="p">))</span>     <span class="c1"># Avarage of all values in the TestValue coloumn</span>
+
+<span class="n">storeSingle</span><span class="p">(</span><span class="s2">&quot;Single Value&quot;</span> <span class="mi">1234567</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Raw Data</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 27%" />
+<col style="width: 24%" />
+<col style="width: 22%" />
+<col style="width: 27%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Row Number</p></th>
+<th class="head"><p>TestValue</p></th>
+<th class="head"><p>Message</p></th>
+<th class="head"><p>ExtraValue</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>5</p></td>
+<td><p>“Hello”</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>5</p></td>
+<td><p>“Hello”</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>14</p></td>
+<td><p>“Goodbye”</p></td>
+<td><p>“Extra”</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Aggregate Data</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 21%" />
+<col style="width: 21%" />
+<col style="width: 14%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>countrows</p></th>
+<th class="head"><p>countExtra</p></th>
+<th class="head"><p>countHello</p></th>
+<th class="head"><p>average</p></th>
+<th class="head"><p>Single Value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>8</p></td>
+<td><p>1234567</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="traning-specific-functions">
+<h2>Traning specific functions<a class="headerlink" href="#traning-specific-functions" title="Permalink to this headline">¶</a></h2>
+<p>Tests that are run as part of a trainingstudy have access to a few functions for storing variables bwtween trainingrounds and for displaying a score to the test person.</p>
+<dl class="js function">
+<dt id="savevariable">
+<code class="sig-name descname">savevariable</code><span class="sig-paren">(</span><em class="sig-param">variablename value</em><span class="sig-paren">)</span><a class="headerlink" href="#savevariable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves a variable with the specified name and value. This value can then be accessed using the <a class="reference internal" href="#loadvariable" title="loadvariable"><code class="xref js js-func docutils literal notranslate"><span class="pre">loadvariable()</span></code></a> function in the next training round.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>variablename</strong> (<em>string</em>) – The name with which to store the variable</p></li>
+<li><p><strong>value</strong> (<em>value</em>) – Value to store in the variable</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt id="loadvariable">
+<code class="sig-name descname">loadvariable</code><span class="sig-paren">(</span><em class="sig-param">variablename defaultValue</em><span class="sig-paren">)</span><a class="headerlink" href="#loadvariable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the previously stored variable. The default value is returned if the variable doesnt exist yet.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>variablename</strong> (<em>string</em>) – The name of the variable to be loaded</p></li>
+<li><p><strong>defaultValue</strong> (<em>value</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#This codesnippet prints 1 the first time the test is run, 2 the second time,</span>
+<span class="c1">#3 the third time, and so on.</span>
+<span class="n">var</span> <span class="nb">round</span> <span class="o">&lt;-</span> <span class="n">loadvariable</span><span class="p">(</span><span class="s2">&quot;persistantRound&quot;</span> <span class="mi">1</span><span class="p">)</span>
+<span class="o">.</span>
+<span class="o">.</span>
+<span class="o">.</span>
+<span class="n">helptext</span><span class="p">(</span><span class="nb">round</span><span class="p">)</span>
+<span class="o">.</span>
+<span class="o">.</span>
+<span class="o">.</span>
+<span class="n">savevariable</span><span class="p">(</span><span class="s2">&quot;persistantRound&quot;</span> <span class="n">plus</span><span class="p">(</span><span class="nb">round</span> <span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+<dl class="js function">
+<dt id="savescore">
+<code class="sig-name descname">savescore</code><span class="sig-paren">(</span><em class="sig-param">score</em><span class="sig-paren">)</span><a class="headerlink" href="#savescore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save a score that is displayed to the user at the end of a training session, and summed score for a whole trainingsession is also shown to the test person in the form of a graph, so that he can view how he has improved during the training. Its a good idea to make sure that all test in a trainingexperiment produce a score with the same order of magnitude.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>score</strong> (<em>number</em>) – The value of the score to be saved.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+        <br/>
+        
+<div id="sourcelink">
+  <a href="_sources/functions.rst.txt"
+     rel="nofollow">Source</a>
+</div>
+      
+    </p>
+    <p>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.4.3.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Elang Documentation &#8212; Soile 1.1 documentation</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="_static/js/jquery-1.12.4.min.js "></script>
+<script type="text/javascript" src="_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="_static/bootstrap-3.4.1/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-inverse navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">
+          Soile</a>
+        <span class="navbar-text navbar-version pull-left"><b>1.1</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Soile Document <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="qml.html">Questionnaire Docs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="qml.html#plain-text">Plain text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qml.html#stack-arguments">Stack arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qml.html#text-styles">Text styles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qml.html#widgets">Widgets</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
+<li><a class="reference internal" href="#">Elang Documentation</a><ul>
+<li><a class="reference internal" href="#structure">Structure</a></li>
+<li><a class="reference internal" href="#variables">Variables</a></li>
+<li><a class="reference internal" href="#values">Values</a><ul>
+<li><a class="reference internal" href="#boolean">Boolean</a></li>
+<li><a class="reference internal" href="#numbers">Numbers</a></li>
+<li><a class="reference internal" href="#strings">Strings</a></li>
+<li><a class="reference internal" href="#lists">Lists</a></li>
+<li><a class="reference internal" href="#objects">Objects</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#phases-and-transitions">Phases and transitions</a><ul>
+<li><a class="reference internal" href="#phases">Phases</a></li>
+<li><a class="reference internal" href="#transitions">Transitions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#functions">Functions</a><ul>
+<li><a class="reference internal" href="#using-functions">Using functions</a></li>
+<li><a class="reference internal" href="#defining-functions">Defining functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#getting-started">Getting Started</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    <div class="body col-md-9 content" role="main">
+      
+  <div class="section" id="elang-documentation">
+<h1>Elang Documentation<a class="headerlink" href="#elang-documentation" title="Permalink to this headline">¶</a></h1>
+<p>This document contains documentation for the experiment language.</p>
+<div class="section" id="structure">
+<h2>Structure<a class="headerlink" href="#structure" title="Permalink to this headline">¶</a></h2>
+<p>The following structure/order is enforced on programs:</p>
+<ol class="arabic simple">
+<li><p>Val and gvar definitons</p></li>
+<li><p>Function definitons</p></li>
+<li><p>Phase definitions</p></li>
+<li><p>Transitions</p></li>
+</ol>
+<p><strong>Example</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Val and gvar definitions&quot;</span>
+<span class="n">gvar</span> <span class="n">g1</span> <span class="o">&lt;-</span> <span class="s2">&quot;global var&quot;</span>
+<span class="n">gvar</span> <span class="n">g2</span> <span class="o">&lt;-</span> <span class="mi">56</span>
+<span class="n">val</span> <span class="n">a</span> <span class="o">&lt;-</span> <span class="s2">&quot;a&quot;</span>
+<span class="o">.</span>
+<span class="o">.</span>
+<span class="o">.</span>
+<span class="c1">#end of definitions</span>
+
+<span class="c1">#Function definitions</span>
+<span class="n">function</span> <span class="n">test</span><span class="p">()</span>
+  <span class="n">helptext</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">)</span>
+<span class="n">end</span>
+
+<span class="n">function</span> <span class="n">helloworld</span><span class="p">()</span>
+  <span class="n">showmsg</span><span class="p">(</span><span class="s2">&quot;Hello world&quot;</span><span class="p">)</span>
+ <span class="n">end</span>
+ <span class="o">.</span>
+ <span class="o">.</span>
+ <span class="o">.</span>
+<span class="c1">#end of function definitions</span>
+
+<span class="c1">#Phase definitions</span>
+<span class="n">intermezzo</span><span class="o">-</span><span class="n">phase</span> <span class="n">phase1</span>
+  <span class="n">showmsg</span><span class="p">(</span><span class="s2">&quot;In phase1&quot;</span><span class="p">)</span>
+  <span class="n">wait</span><span class="p">(</span><span class="mi">5000</span><span class="p">)</span>
+<span class="n">end</span>
+
+<span class="n">information</span><span class="o">-</span><span class="n">phase</span> <span class="n">phase2</span>
+  <span class="n">showmsg</span><span class="p">(</span><span class="s2">&quot;In phase2&quot;</span><span class="p">)</span>
+  <span class="n">wait</span><span class="p">(</span><span class="mi">5000</span><span class="p">)</span>
+<span class="n">end</span>
+
+<span class="n">intermezzo</span><span class="o">-</span><span class="n">phase</span> <span class="n">phase3</span>
+  <span class="n">showmsg</span><span class="p">(</span><span class="s2">&quot;In phase3&quot;</span><span class="p">)</span>
+  <span class="n">wait</span><span class="p">(</span><span class="mi">5000</span><span class="p">)</span>
+<span class="n">end</span>
+<span class="c1">#End of phase definitions</span>
+
+
+<span class="c1">#Transitions</span>
+<span class="n">transition</span>
+  <span class="n">start</span><span class="p">(</span><span class="n">phase1</span><span class="p">)</span>
+  <span class="n">phase1</span> <span class="o">-&gt;</span> <span class="n">phase2</span>
+  <span class="n">phase2</span> <span class="o">-&gt;</span> <span class="n">phase3</span>
+  <span class="n">final</span><span class="p">(</span><span class="n">phase3</span><span class="p">)</span>
+<span class="n">end</span>
+
+<span class="c1">##End of program</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="variables">
+<h2>Variables<a class="headerlink" href="#variables" title="Permalink to this headline">¶</a></h2>
+<p>Variables are containers that can store a value. A variable is created by using the approperiate keyword and assigning a value to it. “val a &lt;- “abc” creates a variable named a that contains the value “abc”. The value can then be used by using the variables name. Variable definitions should be in the beginning of a function.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="n">a</span> <span class="o">&lt;-</span> <span class="s2">&quot;abc&quot;</span>
+<span class="n">showmsg</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>  <span class="c1"># Displays abc on the screen</span>
+</pre></div>
+</div>
+<p>A existing variable can be given a new value by using the assignment operator &lt;-.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="n">a</span> <span class="o">&lt;-</span> <span class="mi">41</span>  <span class="c1"># a contains the number 41</span>
+<span class="n">a</span> <span class="o">&lt;-</span> <span class="mi">66</span>      <span class="c1"># 66 is assign to a, the old value(41) is forgotten</span>
+</pre></div>
+</div>
+<p>There are three different types of variables;</p>
+<ul class="simple">
+<li><p><strong>gvar</strong> Global variable, useable everywhere</p></li>
+<li><p><strong>val</strong> static global value, cannot be modified after definition</p></li>
+<li><p><strong>var</strong> Normal variable, usable only inside the function/phase where it’s defined.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gvar</span> <span class="n">a</span> <span class="o">&lt;-</span> <span class="mi">55</span>
+
+<span class="n">information</span><span class="o">-</span><span class="n">phase</span> <span class="n">Phase1</span>
+  <span class="n">var</span> <span class="n">b</span> <span class="o">&lt;-</span> <span class="s2">&quot;Variable b&quot;</span>
+  <span class="c1">#Both  a and b are visible here</span>
+<span class="n">end</span>
+
+<span class="n">information</span><span class="o">-</span><span class="n">phse</span> <span class="n">Phase2</span>
+  <span class="c1"># A is visible but b isn&#39;t</span>
+<span class="n">end</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="values">
+<h2>Values<a class="headerlink" href="#values" title="Permalink to this headline">¶</a></h2>
+<p>Elang supports 5 different values or data types; boolean values, numbers, strings, lists and objects.</p>
+<div class="section" id="boolean">
+<h3>Boolean<a class="headerlink" href="#boolean" title="Permalink to this headline">¶</a></h3>
+<p>A boolean value can be either true or false.</p>
+</div>
+<div class="section" id="numbers">
+<h3>Numbers<a class="headerlink" href="#numbers" title="Permalink to this headline">¶</a></h3>
+<p>Numbers can be any whole or decimal number where . is used as the decimal.</p>
+</div>
+<div class="section" id="strings">
+<h3>Strings<a class="headerlink" href="#strings" title="Permalink to this headline">¶</a></h3>
+<p>A string is a sequence of characters defined by being surrounded by ” “. For example “This is a string”.</p>
+</div>
+<div class="section" id="lists">
+<h3>Lists<a class="headerlink" href="#lists" title="Permalink to this headline">¶</a></h3>
+<p>A list is a list like structure that contains a set of values in a certain order. A list is defined with space separated values surrounded by square brackets, eg. ** var list &lt;- [1 5 10 15 20]. Accessing of a individual value in the list is done with list[index] where index is a number corresponding to the values position in the list starting from 0.´So list[0] corresponds to the value 1 while list[3] corresponds to 15. The lists values and indexes is shown in the table below.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 28%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>list</p></td>
+<td><p>1</p></td>
+<td><p>5</p></td>
+<td><p>10</p></td>
+<td><p>15</p></td>
+<td><p>20</p></td>
+</tr>
+<tr class="row-even"><td><p>index</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="n">aList</span> <span class="o">&lt;-</span> <span class="p">[</span><span class="s2">&quot;oh&quot;</span> <span class="s2">&quot;hi&quot;</span> <span class="s2">&quot;there&quot;</span><span class="p">]</span>
+<span class="c1"># index    [  0    1      2 ]</span>
+<span class="c1"># aList contains 3 elemts &quot;oh&quot;, &quot;hi&quot; and &quot;there&quot;.</span>
+<span class="c1">#</span>
+<span class="n">helptext</span><span class="p">(</span><span class="n">aList</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="c1"># Writes &quot;hi&quot; ti the</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="objects">
+<h3>Objects<a class="headerlink" href="#objects" title="Permalink to this headline">¶</a></h3>
+<p>An object is a value that can contain mulitple values using a key value structure. An object is defined using curly brackets { }, and an simple object definition would look like this:  <strong>var obj &lt;- {name:”Jon Doe”}</strong>, where <em>name</em> is the key and “Jon Doe” is the value. Value is then accessed with <em>obj.name</em> . Values in objects cannot be changed after it’s been defined, but a new value can ofcourse be assigned to the variable</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Object example</span>
+<span class="n">var</span> <span class="n">person</span> <span class="o">&lt;-</span> <span class="p">{</span><span class="n">firstname</span><span class="p">:</span><span class="s2">&quot;Jon&quot;</span> <span class="n">lastname</span><span class="p">:</span><span class="s2">&quot;Doe&quot;</span><span class="p">}</span>
+<span class="n">helptext</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">firstname</span><span class="p">)</span> <span class="c1"># Logs &quot;Jon&quot;</span>
+<span class="n">helptext</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">lastname</span><span class="p">)</span>  <span class="c1"># Logs &quot;Doe&quot;</span>
+
+<span class="c1"># This is illegal since values can&#39;t be changes</span>
+<span class="n">person</span><span class="o">.</span><span class="n">firstname</span> <span class="o">&lt;-</span> <span class="s2">&quot;Kat&quot;</span> <span class="c1">#Doesn&#39;t work</span>
+
+<span class="c1"># This is fine</span>
+<span class="n">person</span> <span class="o">&lt;-</span> <span class="p">{</span><span class="n">firstname</span><span class="p">:</span><span class="s2">&quot;Kat&quot;</span> <span class="n">lastname</span><span class="p">:</span><span class="n">person</span><span class="o">.</span><span class="n">lastname</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="phases-and-transitions">
+<h2>Phases and transitions<a class="headerlink" href="#phases-and-transitions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="phases">
+<h3>Phases<a class="headerlink" href="#phases" title="Permalink to this headline">¶</a></h3>
+<p>Program flow is contolled with phases and phase transitions. There are two types of phases; intermezzo-phases and interaction phases. The intermezzo phase is more simple and is just run from the beginning to the end while the interaction phase has more support for repeating actions. Phases are defined with the correscponding keyword followed a name, and the phases is ended with the <strong>end</strong> command.</p>
+<p>An simple intermezzophase is shown below. This phase, named helloPhase, displays a simple greeting to the user and quites after that.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Simple intermezzo phase definition</span>
+<span class="n">intermezzo</span><span class="o">-</span><span class="n">phase</span> <span class="n">helloPhase</span>
+  <span class="n">showmsg</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span><span class="p">)</span>
+  <span class="n">wait</span><span class="p">(</span><span class="n">seconds</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+  <span class="n">showmsg</span><span class="p">(</span><span class="s2">&quot;How are you today?&quot;</span><span class="p">)</span>
+  <span class="n">wait</span><span class="p">(</span><span class="n">seconds</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+  <span class="n">hidemsg</span><span class="p">()</span>
+<span class="n">end</span>
+
+<span class="n">Result</span><span class="p">:</span>
+<span class="n">Displays</span> <span class="n">Hello</span> <span class="k">for</span> <span class="n">two</span> <span class="n">seconds</span> <span class="o">-&gt;</span> <span class="n">displays</span> <span class="s2">&quot;How are you&quot;</span> <span class="k">for</span> <span class="mi">4</span> <span class="n">seconds</span> <span class="o">-&gt;</span> <span class="n">hides</span> <span class="n">the</span> <span class="n">message</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>The interaction phase should be used when the same task is repeated with slighly different input, typically when building a test where the test person repeats a task multiple times. Theses inputs are defined using the <em>setstimuli(_list of stimuli_)</em> function, which is a functions that takes a list([]) of values and stores them until an interaction phase is reached.</p>
+<p>A minimal interaction-phase definition would look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">interaction</span><span class="o">-</span><span class="n">phase</span> <span class="n">simpleInteraction</span>
+  <span class="n">iteration</span>
+    <span class="n">showmsg</span><span class="p">(</span><span class="n">stimulus</span><span class="p">())</span>
+    <span class="n">wait</span><span class="p">(</span><span class="n">seconds</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+  <span class="n">end</span>
+<span class="n">end</span>
+</pre></div>
+</div>
+<p>There’s two things that separate this from the intermezzo-phase. The <em>iteration</em> block and the <em>stimulus()</em> function. The code inside the iteration block is run once for every stimuli stored using setstimuli(). The current stimulus value can be accessed using the stimulus() function inside the iteration block. So in the example above we’re displaying each stimuli as a message to the user. So for example if we set the stimuli (using setstimuli()) to for example [“Hello” “How are you today?”] (two string) the iteration will run two times, displaying “Hello” at the first iteration and “How are you” at the second, and then we’re out of stimuli so the phase will end.</p>
+<p>We could expand the interactionphase a little by storing objects in the list instead of strings, for example [{message:”Hello” time:2} {message:”How are you today” time:4}, and changing the iteration block a little:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">interaction</span><span class="o">-</span><span class="n">phase</span> <span class="n">simpleInteraction</span>
+  <span class="n">iteration</span>
+    <span class="n">showmsg</span><span class="p">(</span><span class="n">stimulus</span><span class="p">()</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
+    <span class="n">wait</span><span class="p">(</span><span class="n">seconds</span><span class="p">(</span><span class="n">stimulus</span><span class="p">()</span><span class="o">.</span><span class="n">time</span><span class="p">))</span>
+  <span class="n">end</span>
+<span class="n">end</span>
+</pre></div>
+</div>
+<p>Our phase will now do the same thing as the intermezzo-phase we looked at above. It’s also very easy to add more stimuli by just adding more values to the list when setting the stimuli.</p>
+<p>The interaction phase as some extra control structures, <strong>enterphase</strong>, <strong>leavephase</strong>, <strong>beforeiteration</strong>, <strong>afteriteration</strong> and <strong>iteration</strong>. Commands inside enterphase are run once when the phase starts and leavephase is run once at the end of the whole iteration phase. Before and after iteration is run before/after each time the iteration step is run.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">interaction</span><span class="o">-</span><span class="n">phase</span> <span class="n">MainPhase</span>
+    <span class="n">enterphase</span>
+        <span class="n">showmsg</span><span class="p">(</span><span class="s2">&quot;Entering phase&quot;</span><span class="p">)</span>
+        <span class="c1"># Setting 3 stimuli, 1, 2 and 3</span>
+        <span class="n">setstimuli</span><span class="p">([</span><span class="mi">1</span> <span class="mi">2</span><span class="p">)])</span>
+    <span class="n">end</span>
+
+    <span class="n">leavephase</span>
+        <span class="n">showmsg</span><span class="p">(</span><span class="s2">&quot;Leaving phase&quot;</span><span class="p">)</span>
+    <span class="n">end</span>
+
+    <span class="n">beforeiteration</span>
+        <span class="n">showmsg</span><span class="p">(</span><span class="s2">&quot;Before iteration&quot;</span><span class="p">)</span>
+    <span class="n">end</span>
+
+    <span class="n">afteriteration</span>
+        <span class="n">showmsg</span><span class="p">(</span><span class="s2">&quot;After iteration&quot;</span><span class="p">)</span>
+    <span class="n">end</span>
+
+    <span class="n">iteration</span>
+        <span class="c1"># Stimulus returns the current stimuli, 1 in the first iteration</span>
+        <span class="c1"># and 2 in the second one.</span>
+        <span class="n">showmsg</span><span class="p">(</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;In iteration, at stimulus number &quot;</span> <span class="n">stimulus</span><span class="p">()))</span>
+    <span class="n">end</span>
+<span class="n">end</span>
+
+<span class="c1"># Output:</span>
+<span class="c1"># Entering phase</span>
+<span class="c1"># Before iteration</span>
+<span class="c1"># In iteration, at stimulus number 1</span>
+<span class="c1"># After iteration</span>
+<span class="c1"># Before iteration</span>
+<span class="c1"># In iteration, at stimulus number 2</span>
+<span class="c1"># After iteration</span>
+<span class="c1"># Before iteration</span>
+<span class="c1"># In iteration, at stimulus number 3</span>
+<span class="c1"># After iteration</span>
+<span class="c1"># Leaving phase</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="transitions">
+<h3>Transitions<a class="headerlink" href="#transitions" title="Permalink to this headline">¶</a></h3>
+<p>The order in which phases are run is defined in the transition block that should be placed after all phase definitions in the code (at the buttom of the program). A very simple transitions definition could look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">transition</span>
+  <span class="n">start</span><span class="p">(</span><span class="n">firstPhase</span><span class="p">),</span>
+  <span class="n">firstPhase</span> <span class="o">-&gt;</span> <span class="n">secondPhase</span><span class="p">,</span>
+  <span class="n">secondPhase</span> <span class="o">-&gt;</span> <span class="n">lastPhase</span><span class="p">,</span>
+  <span class="n">final</span><span class="p">(</span><span class="n">lastPhase</span><span class="p">)</span>
+<span class="n">end</span>
+</pre></div>
+</div>
+<p>The transition definition starts with the keyword <strong>transition</strong>, followed by a list of phase tranistion separated by a commas (,). The starting phase is defined first using the <strong>start(_phaseName_)</strong> command and the last phase is lastly defined in the same way with the <strong>final(phaseName)</strong> command. These phases (start, final) should <strong>only</strong> be reachable once, ie at the beginning end of the program.</p>
+<p>Phases transition are  defined in any order using the <em>fromPhase</em> -&gt; <em>toPhase</em> command, until all phases have been visited atleast once.</p>
+<p>It’s also possible to include a conditional transition by adding <strong>if</strong> <em>boolean expression</em> after the transition, e.g. phase1 -&gt; phase2 if(<em>boolean expression</em>). This transition will only occure if the boolean expression returns true, making it possible to choose how a program should progress.</p>
+<p>In the example below the phase <em>add_a</em> is repeated as long as a is less than 5, and add a transitions into lastPhase when a is greater than 4, i.e. when it reaches 5.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gvar</span> <span class="n">a</span> <span class="o">&lt;-</span> <span class="mi">0</span>
+
+<span class="n">intermezzo</span><span class="o">-</span><span class="n">phase</span> <span class="n">first</span>
+  <span class="n">a</span> <span class="o">&lt;-</span> <span class="mi">0</span>
+<span class="n">end</span>
+
+<span class="n">intermezzo</span><span class="o">-</span><span class="n">phase</span> <span class="n">add_a</span>
+    <span class="n">helptext</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">&lt;-</span> <span class="n">plus</span><span class="p">(</span><span class="n">a</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">end</span>
+
+<span class="n">intermezzo</span><span class="o">-</span><span class="n">phase</span> <span class="n">lastPhase</span>
+    <span class="n">helptext</span><span class="p">(</span><span class="s2">&quot;Reached lastphase&quot;</span><span class="p">)</span>
+<span class="n">end</span>
+
+<span class="n">transition</span>
+  <span class="n">start</span><span class="p">(</span><span class="n">first</span><span class="p">),</span>
+  <span class="n">first</span> <span class="o">-&gt;</span> <span class="n">increment_a</span><span class="p">,</span>
+  <span class="n">add_a</span> <span class="o">-&gt;</span> <span class="n">add_a</span> <span class="k">if</span><span class="p">(</span><span class="n">lt</span><span class="p">(</span><span class="n">a</span> <span class="mi">5</span><span class="p">)),</span>
+  <span class="n">add_a</span> <span class="o">-&gt;</span> <span class="n">lastPhase</span> <span class="k">if</span><span class="p">(</span><span class="n">gt</span><span class="p">(</span><span class="n">a</span> <span class="mi">4</span><span class="p">)),</span>
+  <span class="n">final</span><span class="p">(</span><span class="n">lastPhase</span><span class="p">)</span>
+<span class="n">end</span>
+
+<span class="n">Result</span><span class="p">:</span>
+<span class="mi">0</span>
+<span class="mi">1</span>
+<span class="mi">2</span>
+<span class="mi">3</span>
+<span class="mi">4</span>
+<span class="n">Reached</span> <span class="n">lastphae</span>
+
+<span class="n">Tranisitions</span>
+<span class="n">first</span><span class="o">-&gt;</span><span class="n">add_a</span><span class="o">-&gt;</span><span class="n">add_a</span><span class="o">-&gt;</span><span class="n">add_a</span><span class="o">-&gt;</span><span class="n">add_a</span><span class="o">-&gt;</span><span class="n">add_a</span><span class="o">-&gt;</span><span class="n">lastPhase</span>
+</pre></div>
+</div>
+<p><strong>Warning:</strong> It’s up to the user to make sure that test don’t end up in a so calle infinite loop, where it never reaches the final tranisiton and just repeats something <em>ad infinum</em>.</p>
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<p>A function is a named sequence of a program that performs a specific task, packaged as a unit. This unit can the be used, or called, whenever this task need to be performed. Elang comes with a set of predefined functions for common task (documented below) and users can also define their own functions.</p>
+<div class="section" id="using-functions">
+<h3>Using functions<a class="headerlink" href="#using-functions" title="Permalink to this headline">¶</a></h3>
+<p>A function is called or excecuted using it’s name, followed by function arguments surrounded by parntheses, e.g. <strong>add(1 2)</strong>. Functions can also return a result which can be used in the same way as a value. The <strong>add(a b)</strong> accepts two arguments, a and b, and returns the addition of theses valuse (a + b).</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="n">a</span> <span class="o">&lt;-</span> <span class="mi">5</span>
+<span class="n">var</span> <span class="n">b</span> <span class="o">&lt;-</span> <span class="mi">10</span>
+
+<span class="n">var</span> <span class="n">c</span> <span class="o">&lt;-</span> <span class="n">add</span><span class="p">(</span><span class="n">a</span> <span class="n">b</span><span class="p">)</span>
+<span class="n">c</span> <span class="n">will</span> <span class="n">contain</span> <span class="mf">15.</span>
+
+<span class="n">var</span> <span class="n">d</span> <span class="o">&lt;-</span> <span class="n">add</span><span class="p">(</span><span class="mi">10</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">d</span> <span class="n">contains</span> <span class="mi">20</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="defining-functions">
+<h3>Defining functions<a class="headerlink" href="#defining-functions" title="Permalink to this headline">¶</a></h3>
+<p>Functions should be defined in the function definitn block, after variables and before phases. A example function could look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Functions that computes number^2</span>
+<span class="n">function</span> <span class="n">powerOfTwo</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+  <span class="n">var</span> <span class="n">result</span> <span class="o">&lt;-</span> <span class="n">multiply</span><span class="p">(</span><span class="n">number</span> <span class="n">number</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">result</span>
+<span class="n">end</span>
+
+<span class="c1"># usage</span>
+<span class="n">var</span> <span class="n">b</span> <span class="o">&lt;-</span> <span class="n">powerOfTwo</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="c1"># b = 25</span>
+</pre></div>
+</div>
+<p>So a function is defined with the keyword function followed by it’s name. A function can accept any number of parameters or no parameters at all, contained inside the bracket separated by a space. The function body should start with variable definitions, same way as in phases, and can then perform any number of commands. The <strong>return</strong> keyword specifies that a value is returned from the function and the function stops executing.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">returnZero</span><span class="p">()</span>
+    <span class="k">return</span> <span class="mi">0</span>
+
+    <span class="c1"># The function stops executing after the return statement</span>
+    <span class="c1"># so return 10 is never run</span>
+    <span class="k">return</span> <span class="mi">10</span>
+<span class="n">end</span>
+
+<span class="n">var</span> <span class="n">a</span> <span class="o">&lt;-</span> <span class="n">returnZero</span><span class="p">()</span>
+<span class="c1"># a = 0</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<p>We’ll start by creating a minimal experiment that displays “Hello Test” for 3 seconds and exits.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">intermezzo</span><span class="o">-</span><span class="n">phase</span> <span class="n">hello</span>
+  <span class="n">showmsg</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span><span class="p">)</span>
+  <span class="n">wait</span><span class="p">(</span><span class="mi">3000</span><span class="p">)</span>
+<span class="n">end</span>
+
+<span class="n">interezzo</span><span class="o">-</span><span class="n">phase</span> <span class="n">test</span>
+  <span class="n">showmsg</span><span class="p">(</span><span class="s2">&quot;Test!&quot;</span><span class="p">)</span>
+  <span class="n">wait</span><span class="p">(</span><span class="mi">3000</span><span class="p">)</span>
+<span class="n">end</span>
+
+<span class="n">transition</span>
+  <span class="n">start</span><span class="p">(</span><span class="n">hello</span><span class="p">),</span>
+  <span class="n">hello</span> <span class="o">-&gt;</span> <span class="n">test</span><span class="p">,</span>
+  <span class="n">final</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+<span class="n">end</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+        <br/>
+        
+<div id="sourcelink">
+  <a href="_sources/elang.rst.txt"
+     rel="nofollow">Source</a>
+</div>
+      
+    </p>
+    <p>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.4.3.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

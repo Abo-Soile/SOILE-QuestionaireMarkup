@@ -1,0 +1,2699 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Elang Examples &#8212; Soile 1.1 documentation</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="_static/js/jquery-1.12.4.min.js "></script>
+<script type="text/javascript" src="_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="_static/bootstrap-3.4.1/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-inverse navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">
+          Soile</a>
+        <span class="navbar-text navbar-version pull-left"><b>1.1</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Soile Document <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="qml.html">Questionnaire Docs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="qml.html#plain-text">Plain text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qml.html#stack-arguments">Stack arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qml.html#text-styles">Text styles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qml.html#widgets">Widgets</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
+<li><a class="reference internal" href="#">Elang Examples</a><ul>
+<li><a class="reference internal" href="#reaction-test">Reaction Test</a></li>
+<li><a class="reference internal" href="#letter-memory">Letter memory</a></li>
+<li><a class="reference internal" href="#boxes">Boxes</a></li>
+<li><a class="reference internal" href="#number-letter">Number-Letter</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    <div class="body col-md-9 content" role="main">
+      
+  <div class="section" id="elang-examples">
+<h1>Elang Examples<a class="headerlink" href="#elang-examples" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="reaction-test">
+<h2>Reaction Test<a class="headerlink" href="#reaction-test" title="Permalink to this headline">¶</a></h2>
+<p>Description</p>
+<p><a class="reference external" href="http://http://soile.braintrain.fi/test/d4039e00-e452-4303-bc13-689318167d18">link to reaction test</a></p>
+<div class="highlight-none notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149</pre></div></td><td class="code"><div class="highlight"><pre><span></span> # This test tests the reaction time of a user. The user is asked to press
+ # the key &quot;h&quot; as fast as possible when a yellow box appears on the screen.
+
+ # The users reactiontime is logged and stored and an average is also calculated.
+
+ # Loading a image from the internet.
+ val imgurl &lt;- &quot;http://placehold.it/350x150/fffff&amp;text=x&amp;c&quot;
+
+ # And creating a displayable image.
+ gvar reactimg &lt;- imagefile(imgurl)
+
+ # Number of games played thus far, starting from 0
+ gvar games &lt;- 0
+
+ # Users is done after 15 games.
+ gvar maxgames &lt;- 15
+
+ # Did the user react or not 0 - No,   1 - Yes
+ gvar reacted &lt;- 0
+
+
+ # Function that sets reacted ti 1 and resumes execution
+ function userReacted()
+   reacted &lt;- 1
+   resume()
+ end
+
+ # Funtion that checks if the user is done
+ function gamedone()
+   # Showing number of games played
+   helptext(&quot;games played&quot;)
+   helptext(games)
+
+   # Adding 1 to games played
+   games &lt;- plus(games 1)
+
+   # Check if games played is greater than maxgames(15), return true or false
+   return gt(games maxgames)
+ end
+
+ # First phase, writes stuff to the log and wait 2000ms
+ intermezzo-phase Alpha
+   helptext(&quot;Starting Test&quot;)
+   wait(2000)
+ end
+
+ # Second phase, shows some text for the user
+ intermezzo-phase Info
+   # Show some instructions to the user
+   showmsg(&quot;Press h when the yellow box appears&quot;)
+   helptext(&quot;Displaying instructions&quot;)
+
+   wait(seconds(7))
+   # Hide the text after waiting
+   hidemsg()
+
+   helptext(&quot;Hiding instructions&quot;)
+ end
+
+ # This is the last phase, calculating and storing results
+ intermezzo-phase FinalPhase
+   helptext(&quot;Final phase, storing results&quot;)
+
+   count(&quot;reacted&quot; 1)
+   count(&quot;reacted&quot; 0)
+   average(&quot;rt&quot;)
+
+ end
+
+
+ # Gamephase, is run
+ interaction-phase MainPhase
+
+   enterphase
+     helptext(&quot;Starting Mainphase&quot;)
+     # Setting reacted to &quot;no&quot;,
+     reacted &lt;- 0
+
+     # Computing a random number between 2 and 3 and setting it as stimuli
+     setstimuli([randomnumber(2 3)])
+   end
+
+   # Is run at the end of the phase
+   leavephase
+     helptext(&quot;&quot;)
+   end
+
+   # Is run for each stimuli, only once in this case since there&#39;s only one stimuli
+   beforeiteration
+     helptext(&quot;&quot;)
+   end
+
+   # Is run after each stimuli,
+   afteriteration
+     helptext(&quot;&quot;)
+     # Starting a new datarow
+     newrow()
+   end
+
+   # Is run once for each stimuli,
+   iteration
+     #Declaring variables
+     var i &lt;- 0
+     var s &lt;- 0
+
+     # Storing the current stimuli in s
+     s &lt;- stimulus()
+
+     # Wait s seconds, is the random number that was stored in row 81
+     wait(seconds(s))
+
+     # Run the function userReacted when &quot;h&quot; is pressed
+     onkeypress(&quot;h&quot; userReacted)
+
+     # Starting timer
+     starttimer()
+
+     # Showing the red box to the user
+     show(reactimg {top:100 left:300})
+
+     # Wait and allow the user to reactr
+     wait(seconds(3))
+
+     helptext(&quot;Hiding image&quot;)
+     hide(reactimg)
+
+     # Store time since starttimer in i
+     i &lt;- elapsedtime()
+
+     # Stop listening for keypresses
+     onkeypress(&quot;h&quot;)
+
+     # Store reaction as rt, stimuli as waittime and if the user reacted in the results
+     storerow(&quot;rt&quot; i)
+     storerow(&quot;waittime&quot; s)
+     storerow(&quot;reacted&quot; reacted)
+
+     helptext(&quot;Enditeration&quot;)
+   end
+ end
+
+ # Tranition table
+ transition
+   start(Alpha),
+   Alpha -&gt; Info,
+   Info -&gt; MainPhase if (not(gamedone())),
+   MainPhase -&gt; FinalPhase if (gamedone()),
+   final(FinalPhase)
+ end
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="letter-memory">
+<h2>Letter memory<a class="headerlink" href="#letter-memory" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="http://http://soile.braintrain.fi/test/ad088132-438f-4a4f-a65a-dafc6b6c4bea">link to Letter Memory</a></p>
+<div class="highlight-none notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367</pre></div></td><td class="code"><div class="highlight"><pre><span></span> # Loading images
+ gvar crosshair &lt;- imagefile(&quot;http://ocean.danielwarna.com:8081/testimages/a578c12d-4951-488d-90a6-e230b10950fa/crosshair.jpg&quot;)
+ gvar fortsatt &lt;- imagefile(&quot;http://ocean.danielwarna.com:8081/testimages/ad088132-438f-4a4f-a65a-dafc6b6c4bea/fortsatt.png&quot;)
+
+ #gvar rounds &lt;- 4
+ gvar clicked &lt;- false
+
+ # Defining position to avoid repetition later
+ val center &lt;- {top:200 left:500}
+ val leftpos &lt;- {top:200 left:200}
+ val rightpos &lt;- {top:200 left:600}
+
+ val upPos &lt;- {top:100 left:500}
+ val downPos &lt;- {top:300 left:500}
+
+ val keypadpos &lt;- {top:350 left:400}
+ val rectpos &lt;- {top:345 left:395}
+
+ # Defining globals
+ gvar userinput &lt;- &quot;a&quot;
+ gvar in &lt;- &quot;&quot;
+
+ # How long should a letter be shown
+ gvar delay &lt;- 1500
+
+ # The box that goes around the input
+ gvar inputBox &lt;- rectangle(210 60 2)
+
+ # The roccect answer is shown only on the first letterserie so we should track this
+ gvar firstSerie &lt;- true
+
+ function click(a)
+   helptext(a)
+   clicked &lt;- true
+ end
+
+ # First phase, showing instructions to user
+ intermezzo-phase Start
+   wait(seconds(2))
+
+   # Showing instructions
+   showmsg(&quot;I denna uppgift ser du serier med bokstäver som visas ett i taget på datorskärmen. Din uppgift är att hela tiden hålla i minnet de fyra senaste siffrorna. Bokstavsserierna kan vara mycket långa, så försök att hela tiden hålla i minnet endast de fyra sista bokstäverna som presenterats i exakt den ordning de visats. Då serien tar slut bör du svara vilka de sista fyra bokstäverna var med att trycka på bokstavsknapparna på ditt tangentbord. Du vet inte hur lång serien är, så du måste hela tiden vara uppmärksam. Tryck på Fortsätt för att se en demonstration av uppgiften.&quot;)
+
+   # Showing the &quot;Fortsätt&quot; button
+   show(fortsatt keypadpos)
+
+   # Activiting mouseclick on the button -&gt; waiting until user clicks it
+   onmouseclick(fortsatt {action:resume})
+   wait(45656456465)
+
+   # Hiding message and button and disabling clickaction
+   hidemsg()
+   hide(fortsatt)
+   onmouseclick(fortsatt)
+
+ end
+
+ # Second phase, showing what the user should do throught examples
+ interaction-phase Guide
+   enterphase
+     # The stimuli consists of the letter serie and the correct answer
+     setstimuli([{serie:&quot;GLRBKS&quot; ans:&quot;rbks&quot;}
+               ])
+   end
+
+   leavephase
+     helptext(&quot;Leaving practise&quot;)
+   end
+
+   beforeiteration
+     # Filler , iteration blocks can&#39;t be empty
+     plus(1 1)
+   end
+
+   afteriteration
+     plus(1 1)
+     #helptext(&quot;After stimuli iteration&quot;)
+   end
+
+   iteration
+     # Defining variables
+     var textbox &lt;- 0
+     var s &lt;- 0
+     var letters &lt;- 0
+     var currentletter &lt;- 0
+     var answer &lt;- 0
+     var ind &lt;- 0
+
+     var counter &lt;- 0
+
+     # Showing message -&gt; wait -&gt; hide
+     showmsg(&quot;En ny serie börjar....&quot;)
+     wait(seconds(3))
+     hidemsg()
+
+     # Storeing stimuli data in variables
+     s &lt;- stimulus()
+     letters &lt;- s.serie
+     answer &lt;- s.ans
+
+     # currentLetter is set to the first letter in the serie
+     currentletter &lt;- elementatindex(letters 0)
+
+     # While loop is run until all letters have been shown
+     while currentletter
+     do
+       # Logging
+       helptext(currentletter)
+
+       # Showing and hiding crosshair
+       show(crosshair center)
+       wait(500)
+       hide(crosshair)
+
+       # Creating a messagebox containing the current letter, showing and hiding it
+       textbox &lt;- msgbox(currentletter 40)
+       show(textbox center)
+       wait(delay)
+       hide(textbox)
+
+       # Incrementing ind with 1
+       ind &lt;- plus(ind 1)
+
+       # And loading the next letter, elementatindex returns false when ind is bigger than the number of letters
+       # thus ending the while-loop
+       currentletter &lt;- elementatindex(letters ind)
+
+       wait(50)
+
+     end
+
+     showmsg(&quot;Då denna fråga ställs, vet du att det är dags att svara. Bokstavsserien var G-L-R-B-K-S, de sista fyra bokstäverna var alltså R-B-K-S. Svara med att trycka på bokstavsknapparna på ditt tangentbord. Tryck först på R, sedan på B, därefter på K och slutligen på S. Kom ihåg att ordningsföljden är viktig! Du kan inte ändra på ditt svar då du tryckt på en knapp. Tryck på de angivna bokstavsknapparna och tryck sedan Här visas på Fortsätt för personens att börja övningsuppgiften.&quot;)
+
+     # User hasn&#39;t entered enything yet, make sure that it&#39;s empty
+     userinput &lt;- &quot;&quot;
+     # Showing the border around the answer
+     show(inputBox rectpos)
+
+     # Counter starts at 0, while loop is run until count is equal to or bigger than 4
+     while lt(counter 4)
+     do
+       # Resume when the user enters the correct letter, incorrect ones are ignored
+       resumeonkey(elementatindex(answer counter))
+
+       # Wait until user enters something
+       wait(500052352)
+       hide(textbox)
+
+       # storing the pressed key in the variable &quot;in&quot;
+       in &lt;- getlastkey()
+
+       # Logging user input
+       helptext(append(&quot;Testing input: &quot; in))
+
+       # adding the recently pressed letter to the userinput variable,
+       userinput &lt;- append(userinput in)
+       userinput &lt;- append(userinput &quot; - &quot;)
+
+       # Adding the letter to shown message and showing it
+       textbox &lt;- msgbox(userinput 40)
+       show(textbox keypadpos)
+
+       helptext(userinput)
+
+       # Adding +1 to the counter, loop won&#39;t repeat when counter equels 4
+       counter &lt;- plus(counter 1)
+     end
+
+     # Showing the continue button and waiting for the uset to click it
+     show(fortsatt {top:350 left:780})
+     wait(500)
+
+     onmouseclick(fortsatt {action: resume})
+     resumeonkey()
+     wait(3456334635)
+
+
+     # Hiding everything
+     hide(fortsatt)
+     onmouseclick(fortsatt)
+
+     hidemsg()
+     hide(inputBox)
+     hide(textbox)
+
+     helptext(&quot;Guide over&quot;)
+   end
+ end
+
+ # The actual test phase
+ interaction-phase Test
+
+   enterphase
+     # Setting the stimuli, all users are giventhe same serie
+     setstimuli([
+               {serie:&quot;GSIEKZSI&quot; ans:&quot;kzsi&quot;}
+               {serie:&quot;MNIOPE&quot; ans:&quot;iope&quot;}
+               {serie:&quot;SJNEUAOA&quot; ans:&quot;uaoa&quot;}
+               ])
+   end
+
+   leavephase
+     helptext(&quot;Leaving practise&quot;)
+   end
+
+   beforeiteration
+     plus(1 1)
+   end
+
+   afteriteration
+     plus(1 1)
+     # Creating a new resultrow after each round
+     newrow()
+   end
+
+   iteration
+     # Initiating variables
+     var tb &lt;- 0
+     var s &lt;- 0
+     var currentletter &lt;- 0
+     var ind &lt;- 0
+     var counter &lt;- 0
+     var userans &lt;- 0
+
+     var ansbox &lt;- 0
+
+     # Preparing the user
+     showmsg(&quot;En ny serie börjar....&quot;)
+     wait(seconds(3))
+     hidemsg()
+
+     # Setting variables
+     s &lt;- stimulus()
+     ind &lt;- 0
+     userans &lt;- &quot;&quot;
+
+     helptext(s.serie)
+
+     # Current letter is set to the first letter in the serie
+     currentletter &lt;- elementatindex(s.serie 0)
+
+     # Displaying all letters on by one until all letters have been displayed.
+     while currentletter
+     do
+       helptext(currentletter)
+       show(crosshair center)
+       wait(500)
+       hide(crosshair)
+
+       tb &lt;- msgbox(currentletter 40)
+       show(tb center)
+       wait(delay)
+       hide(tb)
+
+       ind &lt;- plus(ind 1)
+       currentletter &lt;- elementatindex(s.serie ind)
+
+     end
+
+     # All letters have been shown, preparing to accept user input
+     showmsg(&quot;Vilka var de fyra sista bokstäverna? Svara med att trycka på bokstavsknapparna på tangentbordet. Gissa även ifall du inte är helt säker, gissande avdrar inte poäng och du kanske svarar rätt. Ge ett fullständigt svar (fyra bokstäver) för att fortsätta..&quot;)
+     wait(50)
+
+     # User input is empty at first, and the counter starts at 0
+     userinput &lt;- &quot;&quot;
+     counter &lt;- 0
+
+     show(inputBox rectpos)
+
+     # Starting to accept input from user, one letter at the time
+     while lt(counter 4)
+     do
+       # Waiting for a keypress,
+       onanykey(resume &quot;onlyletters&quot;)
+       wait(500052352)
+
+       # Stop listening for a input
+       onanykey()
+       hide(tb)
+
+       # Storing the keypress and appening it to the user input variable
+       in &lt;- getlastkey()
+       userinput &lt;- append(userinput in)
+       userinput &lt;- append(userinput &quot; - &quot;)
+
+       # We&#39;re also storing the user input without any &quot;-&quot; inbetween for easier comparison
+       userans &lt;- append(userans in)
+
+       # Showing the updated inputstring to the uset
+       tb &lt;- msgbox(userinput 40)
+       show(tb keypadpos)
+
+       helptext(userinput)
+
+       # +1 to counter
+       counter &lt;- plus(counter 1)
+
+       wait(50)
+     end
+
+     # Showing the correct answer on the first round
+     if firstSerie
+     then
+       ansbox &lt;- msgbox(append(&quot;Rätt svar: &quot; s.ans) 36)
+       show(ansbox {top: 280 left:350})
+     end
+
+     # Storing the serie, correct answer adn user provided answer in results
+     storerow(&quot;serie&quot; s.serie)
+     storerow(&quot;svar&quot; s.ans)
+     storerow(&quot;anvandarens svar&quot; userans)
+
+     # Comparing the users&#39; answer to the correct one
+     if eq(userans s.ans)
+     then
+       # User answered correctly
+       storerow(&quot;ratt_svar&quot; true)
+     else
+       # User anwered incorrectly
+       storerow(&quot;ratt_svar&quot; false)
+     end
+
+     # Showing the continuebutton
+     show(fortsatt {top:350 left:780})
+
+     wait(500)
+
+     # Waiting for a mouseclick on it
+     onmouseclick(fortsatt {action: resume})
+     wait(3456334635)
+
+     # Button clicked, disabling button and hidning it
+     hide(fortsatt)
+     onmouseclick(fortsatt)
+
+     #resumeonkey()
+     #wait(2345345345)
+
+     # Setting firstserie to false and hiding the correct answer box.
+     if firstSerie
+     then
+       hide(ansbox)
+       firstSerie &lt;- false
+     end
+
+     # Hiding everything else in preparation for the next round
+     hide(inputBox)
+     hide(tb)
+     wait(500)
+
+   end
+ end
+
+ # Final phase, aggregating results
+ intermezzo-phase FinalPhase
+     plus(1 1)
+     count(&quot;ratt_svar&quot; true)
+     count(&quot;ratt_svar&quot; false)
+ end
+
+ transition
+   start(Start),
+   Start -&gt; Guide,
+   Guide -&gt; Test,
+   Test -&gt; FinalPhase,
+   final(FinalPhase)
+ end
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="boxes">
+<h2>Boxes<a class="headerlink" href="#boxes" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="http://http://soile.braintrain.fi/test/a578c12d-4951-488d-90a6-e230b10950fa">link to boxes</a></p>
+<div class="highlight-none notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382</pre></div></td><td class="code"><div class="highlight"><pre><span></span> # Loading images
+ gvar bluebox &lt;- imagefile(&quot;http://ocean.danielwarna.com:8081/testimages/a578c12d-4951-488d-90a6-e230b10950fa/bluebox.jpg&quot;)
+ gvar redbox &lt;- imagefile(&quot;http://ocean.danielwarna.com:8081/testimages/a578c12d-4951-488d-90a6-e230b10950fa/redbox.jpg&quot;)
+ gvar crosshair &lt;- imagefile(&quot;http://ocean.danielwarna.com:8081/testimages/a578c12d-4951-488d-90a6-e230b10950fa/crosshair.jpg&quot;)
+ gvar keydown &lt;- imagefile(&quot;http://ocean.danielwarna.com:8081/testimages/a578c12d-4951-488d-90a6-e230b10950fa/keydown.png&quot;)
+ gvar keyright &lt;- imagefile(&quot;http://ocean.danielwarna.com:8081/testimages/a578c12d-4951-488d-90a6-e230b10950fa/keyright.png&quot;)
+ gvar fortsatt &lt;- imagefile(&quot;http://ocean.danielwarna.com:8081/testimages/a578c12d-4951-488d-90a6-e230b10950fa/fortsatt.png&quot;)
+
+
+ gvar practiseerrors &lt;- 0
+
+ gvar rounds &lt;- 4
+ gvar clicked &lt;- false
+ gvar answered &lt;- false
+
+ # Defining positions
+ val center &lt;- {top:240 left:470}
+ val leftpos &lt;- {top:200 left:200}
+ val rightpos &lt;- {top:200 left:600}
+
+ val keypadpos &lt;- {top:350 left:400}
+
+ function click()
+     clicked &lt;- true
+ end
+
+ function answer()
+   answered &lt;- true
+   resume()
+ end
+
+ intermezzo-phase Start
+     plus(1 1)
+     #showmsg(&quot;I denna uppgift kommer du att se en röd eller blå fyrkant som uppenbarar sig på högra eller vänstra kanten av datorskärmen. Tryck på nedåtpilen ↓ ifall fyrkanten är blå eller på högerpilen → ifall fyrkanten är röd, oberoende av var fyrkanten uppenbarar sig. Mellan varje ny fyrkant visas ett fixeringskors som du bör fixera din blick på. Tryck på Fortsätt för att se en demonstration av uppgiften&quot;)
+     #show(fortsatt keypadpos)
+
+     #onmouseclick(fortsatt {action:resume})
+     #wait(45656456465)
+
+     #hidemsg()
+     #hide(fortsatt)
+     #onmouseclick(fortsatt)
+ end
+
+ # Telling the user what to do
+ intermezzo-phase Guide
+
+     # Blue box - Left
+     #-----------------------
+
+     # Showing and hiding crosshair
+     show(crosshair center)
+     wait(800)
+     hide(crosshair)
+     wait(250)
+
+     # Showing instructions and the box
+     showmsg(&quot;Fyrkanten är blå, alltså bör du trycka på nedpil, Tryck på nedpil för att fortsätta&quot;)
+     show(bluebox leftpos)
+     show(keydown keypadpos)
+
+     # Waiting until the user clicks arrow down
+     resumeonkey(&quot;down&quot;)
+     wait(56465489)
+
+     # Clearing screen
+     hidemsg()
+     hide(bluebox)
+     hide(keydown)
+
+     # Red box right
+     #-----------------------
+     show(crosshair center)
+     wait(800)
+     hide(crosshair)
+     wait(250)
+
+     showmsg(&quot;Fyrkanten är röd, alltså bör du trycka på högerpil, Tryck på högerpil för att fortsätta&quot;)
+     show(redbox leftpos)
+     show(keyright keypadpos)
+
+     resumeonkey(&quot;right&quot;)
+     wait(8859789)
+
+     hidemsg()
+     hide(redbox)
+     hide(keyright)
+
+     # Blue box right
+     #-----------------------
+     show(crosshair center)
+     wait(800)
+     hide(crosshair)
+     wait(250)
+
+     showmsg(&quot;Fyrkanten är blå, alltså bör du trycka på nedpil, Tryck på nedpil för att fortsätta&quot;)
+     show(bluebox rightpos)
+     show(keydown keypadpos)
+
+     resumeonkey(&quot;down&quot;)
+     wait(8859789)
+
+     hidemsg()
+     hide(bluebox)
+     hide(keydown)
+
+     # Red box left
+     #-----------------------
+     show(crosshair center)
+     wait(800)
+     hide(crosshair)
+     wait(250)
+
+     showmsg(&quot;Fyrkanten är röd, alltså bör du trycka på högerpil, Tryck på högerpil för att fortsätta&quot;)
+     show(redbox rightpos)
+     show(keyright keypadpos)
+
+     resumeonkey(&quot;right&quot;)
+     wait(8859789)
+
+     hidemsg()
+     hide(redbox)
+     hide(keyright)
+
+     #User finished the instruction round done
+     #-----------------------
+     showmsg(&quot;Nu får du göra några exempeluppgifter.Tryck på nedåtpilen ifall fyrkanten är blå eller på högerpilen ifall fyrkanten är röd. Endast fyrkanterna och fixeringskorset kommer att vara synliga på skärmen. Svara så snabbt du kan, men undvik fel. Varje fyrkant är synlig på rutan tills du tryckt på en av svarsknapparna, men högst i 1,5 sekunder. Tryck på nedåtpilen för att börja övningsuppgiften.&quot;)
+
+     show(keydown keypadpos)
+     resumeonkey(&quot;down&quot;)
+     wait(353453453453)
+
+     hide(keydown)
+     hidemsg()
+     wait(seconds(1))
+ end
+
+ # Practise round
+ interaction-phase Practise
+
+   enterphase
+     helptext(&quot;Enter practise&quot;)
+
+     # Repeat instructions if the user made any errors, ig practiseerrors &gt; 0
+     if gt(practiseerrors 0)
+     then
+       showmsg(&quot;Vi tar det en gång till. Tryck på nedåtpilen ↓ ifall fyrkanten är blå eller på högerpilen → ifall fyrkanten är röd. Svara så snabbt du kan, men undvik fel. Varje fyrkant är synlig på rutan tills du tryckt på en av svarsknapparna, men högst i 1,5 sekunder. Tryck på nedåtpilen för att börja ↑ övningsuppgiften&quot;)
+       show(keydown keypadpos)
+       resumeonkey()
+       wait(353453453453)
+
+       hidemsg()
+       hide(keydown)
+     end
+
+     # Setting errors to 0 before starting a new practisround
+     practiseerrors &lt;- 0
+
+     # Defining practise stimuli,
+     # Box: b = blue box  pos l = display box to the left
+     # Box: r = red box   pos r = display box to the right
+     setstimuli([{box:&quot;b&quot; pos:&quot;l&quot;}
+                 {box:&quot;r&quot; pos:&quot;r&quot;}
+                 {box:&quot;b&quot; pos:&quot;r&quot;}
+                 {box:&quot;r&quot; pos:&quot;l&quot;}
+                 ])
+   end
+
+   leavephase
+     helptext(&quot;Leaving practise&quot;)
+   end
+
+   beforeiteration
+     plus(1 1)
+     #helptext(&quot;Before stimuli iteration&quot;)
+   end
+
+   afteriteration
+     #helptext(&quot;After stimuli iteration&quot;)
+     plus(1 1)
+   end
+
+   iteration
+     # Defining variables
+     var s &lt;- 0
+     var box &lt;- redbox
+     var pos &lt;- leftpos
+
+     clicked &lt;- false
+
+     s &lt;- stimulus()
+
+     # Figuring out where the bix should be placed by comparing stimuli.pos
+     if eq(s.pos &quot;r&quot;)
+     then
+       pos &lt;- rightpos
+     else
+       pos &lt;- leftpos
+     end
+
+     # Showing and hidning crosshair
+     show(crosshair center)
+     wait(800)
+     hide(crosshair)
+     wait(250)
+
+     # The function &quot;click&quot; is called if the users anwers correctly
+     if eq(s.box &quot;b&quot;)
+     then
+       box &lt;- bluebox
+       onkeypress(&quot;down&quot; click)
+     else
+       box &lt;- redbox
+       onkeypress(&quot;right&quot; click)
+     end
+
+     # Whowing box
+     show(box pos)
+
+     # Box is shown for 1.5 seconds, answering right or wrong makes it disappear
+     resumeonkey()
+     wait(1500)
+
+     # Hiding the box and and disabling keypresses
+     hide(box)
+     onkeypress(&quot;right&quot;)
+     onkeypress(&quot;down&quot;)
+
+     # clicked is set to true in the click function, i.e. the user ansered correctly
+     if clicked
+     then
+       helptext(&quot;user answered correctly&quot;)
+     else
+       # Wrong answer add 1 to errors
+       practiseerrors &lt;- plus(practiseerrors 1)
+     end
+
+   end
+ end
+
+ # Repeating instructions
+ intermezzo-phase Repeatinstructions
+     showmsg(&quot;Bra jobbat! Nu börjar uppgiften. Tryck på nedåtpilen ↓ ifall fyrkanten är blå eller på högerpilen → ifall fyrkanten är röd. Svara så snabbt du kan, men undvik fel. Tryck på nedåtpilen för att börja uppgiften.&quot;)
+     show(keydown keypadpos)
+     resumeonkey(&quot;down&quot;)
+     wait(353453453453)
+
+     hidemsg()
+     hide(keydown)
+
+ end
+
+ # The actual test
+ interaction-phase Test
+
+   enterphase
+     helptext(&quot;Entering test&quot;)
+
+     setstimuli([{box:&quot;r&quot; pos:&quot;r&quot;}
+                 {box:&quot;b&quot; pos:&quot;l&quot;}
+                 {box:&quot;b&quot; pos:&quot;r&quot;}
+                 {box:&quot;r&quot; pos:&quot;r&quot;}
+                 {box:&quot;r&quot; pos:&quot;l&quot;}
+                 ])
+   end
+
+   leavephase
+     helptext(&quot;Leaving test&quot;)
+   end
+
+   beforeiteration
+     plus(1 1)
+     #helptext(&quot;Before stimuli iteration&quot;)
+   end
+
+   afteriteration
+     # Starting a new resultrow
+     newrow()
+
+   end
+
+   iteration
+     var s &lt;- 0
+     var i &lt;- 0
+     var box &lt;- redbox
+     var pos &lt;- leftpos
+
+     # Clicked = user answered correctly
+     # Answered = did the user press any button at all
+     clicked &lt;- false
+     answered &lt;- false
+
+     s &lt;- stimulus()
+
+     # Where to show the box
+     if eq(s.pos &quot;r&quot;)
+     then
+       pos &lt;- rightpos
+     else
+       pos &lt;- leftpos
+     end
+
+     show(crosshair center)
+     wait(800)
+     hide(crosshair)
+     wait(250)
+
+     # Starting timer
+     starttimer()
+
+     # Deciding 2hich box should be shown and which key is the right one
+     if eq(s.box &quot;b&quot;)
+     then
+       box &lt;- bluebox
+       onkeypress(&quot;down&quot; click)
+     else
+       box &lt;- redbox
+       onkeypress(&quot;right&quot; click)
+     end
+
+     show(box pos)
+
+     onanykey(answer)
+     wait(1500)
+
+     # Store reaction time
+     i &lt;- elapsedtime()
+
+     # Disable keypresses
+     onkeypress(&quot;right&quot;)
+     onkeypress(&quot;down&quot;)
+     onanykey()
+     hide(box)
+
+     # Computing results
+     if clicked
+     then
+       # User answered correctly
+       helptext(&quot;user answered correctly&quot;)
+       storerow(&quot;correct&quot; true)
+       storerow(&quot;rt&quot; i)
+     else
+       if answered
+       then
+         # User answered incorrecly
+         storerow(&quot;correct&quot; false)
+         storerow(&quot;rt&quot; i)
+       else
+         # User didn&#39;t answer
+         storerow(&quot;correct&quot; &quot;ommitted&quot;)
+         storerow(&quot;rt&quot; &quot;nil&quot;)
+       end
+     end
+
+     # Storing stimuli data in results
+     storerow(&quot;stimuli&quot; s)
+
+   end
+ end
+
+ # The end, calculating result aggragations
+ intermezzo-phase FinalPhase
+     plus(1 1)
+
+     #Storing data
+     count(&quot;correct&quot; true)
+     count(&quot;correct&quot; false)
+     count(&quot;correct&quot; &quot;ommitted&quot;)
+     average(&quot;rt&quot;)
+ end
+
+ transition
+   start(Start),
+   Start -&gt; Guide,
+   Guide -&gt; Practise,
+   Practise -&gt; Repeatinstructions if(lt(practiseerrors 2)), # User passed the practise round,
+                                                            # moving on to the actual test
+   Practise -&gt; Practise if(gt(practiseerrors 1)),           # Too many errors in practisround -&gt; repeating it
+   Repeatinstructions -&gt; Test,
+   Test -&gt; FinalPhase,
+   final(FinalPhase)
+ end
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="number-letter">
+<h2>Number-Letter<a class="headerlink" href="#number-letter" title="Permalink to this headline">¶</a></h2>
+<p>NumberLetter</p>
+<p><a class="reference external" href="http://http://soile.braintrain.fi/test/edd1a4bd-fb05-46c9-aa0d-d282bf761c0a">link to number letter</a></p>
+<div class="highlight-none notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375</pre></div></td><td class="code"><div class="highlight"><pre><span></span> # Loading images
+ gvar crosshair &lt;- imagefile(&quot;http://ocean.danielwarna.com:8081/testimages/a578c12d-4951-488d-90a6-e230b10950fa/crosshair.jpg&quot;)
+ gvar keydown &lt;- imagefile(&quot;http://ocean.danielwarna.com:8081/testimages/a578c12d-4951-488d-90a6-e230b10950fa/keydown.png&quot;)
+ gvar keyright &lt;- imagefile(&quot;http://ocean.danielwarna.com:8081/testimages/a578c12d-4951-488d-90a6-e230b10950fa/keyright.png&quot;)
+ gvar fortsatt &lt;- imagefile(&quot;http://ocean.danielwarna.com:8081/testimages/edd1a4bd-fb05-46c9-aa0d-d282bf761c0a/fortsatt.png&quot;)
+
+ gvar practiseerrors &lt;- 0
+
+ gvar rounds &lt;- 4
+
+ gvar clicked &lt;- false
+ gvar answered &lt;- false
+
+ gvar mess &lt;- &quot;&quot;
+
+ gvar upRect &lt;- rectangle(65 65 2)
+ gvar downRect &lt;- rectangle(65 65 2)
+
+ val center &lt;- {top:220 left:500}
+ val leftpos &lt;- {top:200 left:200}
+ val rightpos &lt;- {top:200 left:600}
+
+ val upPos &lt;- {top:100 left:500}
+ val downPos &lt;- {top:300 left:500}
+
+ val keypadpos &lt;- {top:350 left:370}
+
+ #Functions
+ #------------
+ function click()
+     clicked &lt;- true
+ end
+
+ function answer()
+   answered &lt;- true
+   resume()
+ end
+
+
+ intermezzo-phase Start
+     plus(1 1)
+     wait(seconds(2))
+     #showmsg(&quot;I denna uppgift ser du ett bokstavs-sifferpar som uppenbarar sig i en av två rutor. Ena rutan befinner sig ovanför den andra. Ifall bokstavs-sifferparet uppenbarar sig i den övre rutan, bör du trycka på nedåtpilen ↓ ifall siffran är jämn eller på högerpilen → ifall siffran är udda. Ifalll bokstavs-sifferparet uppenbarar sig i den nedre rutan, bör du trycka på nedåtpilen ↓ ifall bokstaven är en vokal eller på högerpilen → ifall bokstaven är en konsonant. Tryck på Fortsätt för att se en demonstration av uppgiften.&quot;)
+     #show(fortsatt keypadpos)
+
+     #onmouseclick(fortsatt {action:resume})
+     #wait(45656456465)
+
+     #hidemsg()
+     #hide(fortsatt)
+     #onmouseclick(fortsatt)
+ end
+
+ intermezzo-phase Guide
+
+     # Up - Even
+     #-----------------------
+
+     #SHowing and hiding crosshair
+     wait(150)
+     show(crosshair center)
+     wait(300)
+     hide(crosshair)
+
+     # Creating a msgbox containing A8
+     mess &lt;- msgbox(&quot;A8&quot; 40)
+
+     # Showing instructions
+     showmsg(&quot;Bokstavs-sifferparet uppenbarade sig i den övre rutan, alltså bör siffran kategoriseras. Siffran är jämn,               alltså tryck på nedåtpilen.&quot;)
+     show(keydown keypadpos)
+     show(mess upPos)
+     show(upRect upPos)
+     show(downRect downPos)
+
+     # Waiting for the right answer
+     resumeonkey(&quot;down&quot;)
+     wait(56465489)
+
+     # Clearing screen for the next example
+     hidemsg()
+     hide(mess)
+     hide(keydown)
+     hide(upRect)
+     hide(downRect)
+
+     # Down - Consonant
+     #-----------------------
+     wait(150)
+     show(crosshair center)
+     wait(300)
+     hide(crosshair)
+
+     mess &lt;- msgbox(&quot;G5&quot; 40)
+
+     showmsg(&quot;Bokstavs-sifferparet uppenbarade sig i den nedre rutan, alltså bör bokstaven kategoriseras. Bokstaven är en konsonant, alltså tryck på högerpilen.&quot;)
+     show(keyright keypadpos)
+     show(mess downPos)
+     show(upRect {top:120 left:upPos.left})
+     show(downRect downPos)
+
+     resumeonkey(&quot;right&quot;)
+     wait(8859789)
+
+     hidemsg()
+     hide(mess)
+     hide(keyright)
+     hide(upRect)
+     hide(downRect)
+
+     wait(150)
+     show(crosshair center)
+     wait(300)
+     hide(crosshair)
+
+
+     #Instructions done
+     #-----------------------
+     showmsg(&quot;Nu får du göra några exempeluppgifter. Ifall bokstavs-sifferparet uppenbarar sig i den övre rutan, bör du trycka på nedåtpilen ↓ ifall siffran är jämn eller på högerpilen → ifall siffran är udda. Ifalll bokstavs-sifferparet uppenbarar sig i den nedre rutan, bör du trycka på nedåtpilen ↓ ifall bokstaven är en vokal eller på högerpilen → ifall bokstaven är en konsonant. Endast rutorna och fixeringskorset kommer att vara synliga på skärmen. Svara så snabbt du kan, men undvik fel. Varje bokstavs- sifferpar är synlig på rutan tills du tryckt på en av svarsknapparna, men högst i 3 sekunder. Tryck på ↑ nedåtpilen för att börja övningsuppgiften.&quot;)
+
+     # Asking the user to press arrow down and waiting until he does
+     show(keydown keypadpos)
+     resumeonkey(&quot;down&quot;)
+     wait(353453453453)
+
+     # Hiding everything
+     hide(keydown)
+     hidemsg()
+     wait(seconds(3))
+ end
+
+
+ interaction-phase Practise
+
+   enterphase
+     helptext(&quot;Enter practise&quot;)
+
+     # Show instructions again if user failed the last practiseround
+     if gt(practiseerrors 1)
+     then
+       showmsg(&quot;Vi tar det en gång till. Ifall bokstavs-sifferparet uppenbarar sig i den övre rutan, bör du trycka på nedåtpilen ↓ ifall siffran är jämn eller på högerpilen → ifall siffran är udda. Ifalll bokstavs-sifferparet uppenbarar sig i den nedre rutan, bör du trycka på nedåtpilen ↓ ifall bokstaven är en vokal eller på högerpilen → ifall bokstaven är en konsonant. Svara så snabbt du kan, men undvik fel. Varje bokstavs-sifferpar är synlig på rutan tills du tryckt på en av svarsknapparna, men högst i 3 sekunder. Tryck på nedåtpilen för att börja övningsuppgiften&quot;)
+       show(keydown keypadpos)
+       resumeonkey()
+       wait(353453453453)
+
+       hidemsg()
+       hide(keydown)
+     end
+
+     # Setting errors to 0
+     practiseerrors &lt;- 0
+
+     # Setting stimuli
+     # text: what to show, ans = correct answer, pos = where to show it
+     setstimuli([{text:&quot;A5&quot; ans:&quot;r&quot; pos: upPos}
+                 {text:&quot;U9&quot; ans:&quot;d&quot; pos: downPos}
+                 {text:&quot;C6&quot; ans:&quot;r&quot; pos: downPos}
+                 {text:&quot;R4&quot; ans:&quot;d&quot; pos: upPos}
+     ])
+   end
+
+   leavephase
+     helptext(&quot;Leaving practise&quot;)
+   end
+
+   beforeiteration
+     plus(1 1)
+     #helptext(&quot;Before stimuli iteration&quot;)
+   end
+
+   afteriteration
+     #helptext(&quot;After stimuli iteration&quot;)
+     plus(1 1)
+   end
+
+   iteration
+     var s &lt;- 0
+     var box &lt;- &quot;&quot;
+     var pos &lt;- leftpos
+
+     clicked &lt;- false
+
+     s &lt;- stimulus()
+     #helptext(s)
+
+     # Shwoing and hiding crosshair
+     wait(150)
+     show(crosshair center)
+     wait(300)
+     hide(crosshair)
+
+     # Choosing which key corresponds to the correct answer
+     # Calling click if user answers correctly
+     if eq(s.ans &quot;d&quot;)
+     then
+       onkeypress(&quot;down&quot; click)
+     else
+       onkeypress(&quot;right&quot; click)
+     end
+
+     # Showing everything
+     box &lt;- msgbox(s.text 40)
+     show(box s.pos)
+     show(upRect upPos)
+     show(downRect downPos)
+
+     # Waiting for a keypress
+     resumeonkey()
+     wait(3000)
+
+     # Hiding everything
+     hide(box)
+     hide(upRect)
+     hide(downRect)
+     onkeypress(&quot;right&quot;)
+     onkeypress(&quot;down&quot;)
+
+     # If user pressed the correct key -&gt; user answerd correcty, else increase error count
+     if clicked
+     then
+       helptext(&quot;user answered correctly&quot;)
+     else
+       practiseerrors &lt;- plus(practiseerrors 1)
+     end
+
+     wait(2000)
+   end
+ end
+
+ # Repeating instructions
+ intermezzo-phase Repeatinstructions
+
+     showmsg(&quot;Bra jobbat! Nu börjar uppgiften. Ifall bokstavs-sifferparet uppenbarar sig i den övre rutan, bör du trycka på nedåtpilen ↓ ifall siffran är jämn eller på högerpilen → ifall siffran är udda. Ifalll bokstavs- sifferparet uppenbarar sig i den nedre rutan, bör du trycka på nedåtpilen ↓ ifall bokstaven är en vokal eller på högerpilen → ifall bokstaven är en konsonant. Svara så snabbt du kan, men undvik fel. Tryck på nedåtpilen för att börja uppgiften.&quot;)
+     show(keydown keypadpos)
+     resumeonkey(&quot;down&quot;)
+     wait(353453453453)
+
+     hidemsg()
+     hide(keydown)
+
+ end
+
+ interaction-phase Test
+
+   enterphase
+     helptext(&quot;Enter test&quot;)
+
+     # Defining stimuli for the actual test
+     setstimuli([{text:&quot;A5&quot; ans:&quot;r&quot; pos: upPos}
+                 {text:&quot;C6&quot; ans:&quot;r&quot; pos: downPos}
+                 {text:&quot;A9&quot; ans:&quot;d&quot; pos: downPos}
+                 {text:&quot;U4&quot; ans:&quot;d&quot; pos: upPos}
+         ])
+   end
+
+   leavephase
+     helptext(&quot;Leaving Test&quot;)
+   end
+
+   beforeiteration
+     plus(1 1)
+     #helptext(&quot;Before stimuli iteration&quot;)
+   end
+
+   # Creating a new storage row after each iteration
+   afteriteration
+     #helptext(&quot;After stimuli iteration&quot;)
+     newrow()
+
+   end
+
+   iteration
+     var s &lt;- &quot;&quot;
+     var i &lt;- 0
+     var box &lt;- 0
+
+     # User hasn&#39;t answered yet, so both are set to false
+     answered &lt;- false
+     clicked &lt;- false
+     s &lt;- stimulus()
+
+     # Showing and hining crosshair
+     wait(150)
+     show(crosshair center)
+     wait(300)
+     hide(crosshair)
+
+     box &lt;- msgbox(s.text 40)
+
+     # Starting timer
+     starttimer()
+
+     # Defining whihc button represents a correct answer
+     if eq(s.ans &quot;d&quot;)
+     then
+       onkeypress(&quot;down&quot; click)
+     else
+       onkeypress(&quot;right&quot; click)
+     end
+
+     # Showing stuff
+     show(box s.pos)
+     show(upRect upPos)
+     show(downRect downPos)
+
+     # Wait for 3 seconds or until a key is pressed
+     onanykey(answer)
+     wait(3000)
+
+     # Time taken for user to answer
+     i &lt;- elapsedtime()
+
+     # Disable keypresses
+     onanykey()
+     onkeypress(&quot;right&quot;)
+     onkeypress(&quot;down&quot;)
+
+     # Hide stuff
+     hide(box)
+     hide(upRect)
+     hide(downRect)
+
+     # clicked is set to true when the user answers correctly,
+
+     if clicked
+     then
+       # So the answer is logged and the result is stored
+       helptext(&quot;user answered correctly&quot;)
+       storerow(&quot;correct&quot; true)
+     else
+       # Else user didnt answer or answered incorrectly, answered is set to true
+       # if the user pressed any button
+       if answered
+       then
+         # User answerd, but incorrectly
+         storerow(&quot;correct&quot; false)
+       else
+         # User didn&#39;t answer, storing result
+         storerow(&quot;correct&quot; &quot;ommitted&quot;)
+       end
+     end
+
+     # Storing reactiontime
+     if answered
+     then
+       storerow(&quot;rt&quot; i)
+     else
+       storerow(&quot;rt&quot; &quot;nil&quot;)
+     end
+
+     storerow(&quot;stimuli&quot; s)
+
+   end
+ end
+
+ # Last phase, calculating results
+ intermezzo-phase FinalPhase
+     plus(1 1)
+     count(&quot;correct&quot; true)
+     count(&quot;correct&quot; false)
+     count(&quot;correct&quot; &quot;ommitted&quot;)
+     average(&quot;rt&quot;)
+ end
+
+ transition
+   start(Start),
+   Start -&gt; Guide,
+   Guide -&gt; Practise,
+   # continue to real test if there was 1 or less incorrect answers
+   Practise -&gt; Repeatinstructions if(lt(practiseerrors 2)),
+   # Repeat practise if there was more than one incorrect answer
+   Practise -&gt; Practise if(gt(practiseerrors 1)),
+   Repeatinstructions -&gt; Test,
+   Test -&gt; FinalPhase,
+   final(FinalPhase)
+ end
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+        <br/>
+        
+<div id="sourcelink">
+  <a href="_sources/elangexamples.rst.txt"
+     rel="nofollow">Source</a>
+</div>
+      
+    </p>
+    <p>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.4.3.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
