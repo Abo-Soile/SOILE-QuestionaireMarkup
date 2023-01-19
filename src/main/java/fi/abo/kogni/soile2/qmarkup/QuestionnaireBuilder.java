@@ -15,6 +15,7 @@ import org.stringtemplate.v4.STGroupFile;
 import fi.abo.kogni.soile2.qmarkup.typespec.MalformedCommandException;
 import fi.abo.kogni.soile2.qmarkup.typespec.Validator;
 import fi.abo.kogni.soile2.utils.generator.UniqueStringGenerator;
+import io.vertx.core.json.JsonArray;
 
 
 public class QuestionnaireBuilder implements QuestionnaireProcessor {
@@ -29,7 +30,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         this.group = new STGroupFile(template);
         this.questionnaire = questionnaireST();
         this.spacer = group.getInstanceOf("vspacer");
-        this.body = new StringBuilder();
+        this.body = new JsonArray();
         this.validStmt = new StringBuilder();
 
         Tag tag = Tag.newTag("p");
@@ -51,7 +52,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
     
     public QuestionnaireBuilder(String template) throws MalformedURLException
     {
-    	this(QuestionnaireBuilder.class.getClassLoader().getResource("questionnaire_embedded.stg"));    	
+    	this(QuestionnaireBuilder.class.getClassLoader().getResource(template));    	
     }
     public void questionnaireId(String id) {
         this.questionnaireId = id;
@@ -505,12 +506,14 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         case "link":
             if (args.size() >= 1) {
                 tag.attribute("href", args.get(0));
+                tag.attribute("target", "_blank");
                 addTag(tag);
                 textAsArgument = true;
                 setPendingTag(tag);
             }
             if (args.size() == 2) {
                 tag.attribute("class", args.get(1));
+                tag.attribute("target", "_blank");
                 addTag(tag);
                 textAsArgument = true;
                 setPendingTag(tag);
@@ -564,18 +567,19 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 
     @Override
     public void processText(String text) {
+    	
         if (expectPageTitle) {
             questionnaire.add("title", text);
             expectPageTitle = false;
             textAsArgument = false;
             return;
         }
-        body.append(text);
+        currentElement.append(text);
         if (textAsArgument) {
             clearPendingTag();
             textAsArgument = false;
         }
-        body.append(' ');
+        currentElement.append(' ');
     }
 
     @Override
@@ -586,7 +590,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 
     @Override
     public String output() {
-        questionnaire.add("body", body.toString());
+        questionnaire.add("body", body.encode());
         questionnaire.add("stmts", validStmt.toString());
         return questionnaire.render();
     }
@@ -595,9 +599,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         pendingTags.clear();
         tsStack.clear();
         bsStack.clear();
-        if (body.length() > 0) {
-            body.delete(0, body.length());
-        }
+        body = new JsonArray();
         if (validStmt.length() > 0) {
             validStmt.delete(0, validStmt.length());
         }
@@ -631,13 +633,13 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 
     private void emptyTsStack() {
         while (tsStack.isEmpty() == false) {
-            body.append(Tag.closingTag(tsStack.pop()));
+            currentElement.append(Tag.closingTag(tsStack.pop()));
         }
     }
 
     private void emptyBsStack() {
         while (bsStack.isEmpty() == false) {
-            body.append(Tag.closingTag(bsStack.pop()));
+            currentElement.append(Tag.closingTag(bsStack.pop()));
         }
     }
 
@@ -655,26 +657,26 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
     }
 
     private void addTag(String tag) {
-        body.append('\n');
-        body.append(tag);
-        body.append('\n');
+        currentElement.append('\n');
+        currentElement.append(tag);
+        currentElement.append('\n');
     }
 
     private void workOnStack(ArrayList<String> args, ArrayDeque<Tag> stack, Tag tag) {
         String arg = decodeStackArg(args.get(0));
 
         switch (arg) {
-        case "push":
+        case "push":        
             if (args.size() > 1) {
-                StringBuilder sb = new StringBuilder();
+                StringBuilder styleString = new StringBuilder();
                 for (int i = 1; i < args.size(); ++i) {
                     String a = args.get(i);
                     if (TextStyle.defined(a)) {
-                        sb.append(TextStyle.get(a));
-                        sb.append(' ');
+                        styleString.append(TextStyle.get(a));
+                        styleString.append(' ');
                     }
                 }
-                tag.attribute("style", sb.toString());
+                tag.attribute("style", styleString.toString());
             }
             stack.push(tag);
             addTag(tag);
@@ -747,7 +749,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
     private ArrayDeque<Tag> bsStack;
 
     // The body of the questionnaire
-    private StringBuilder body;
+    private JsonArray body;
 
     // Validation statements.
     private StringBuilder validStmt;
@@ -765,7 +767,8 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
     private boolean addSpacer;
     private UniqueStringGenerator idGen;
     private UniqueStringGenerator nameGen;
-
+    private StringBuilder currentElement;
+    
     private abstract class Qdata {
         public Qdata(String n) {
             this.tmpl = group.getInstanceOf(n);
