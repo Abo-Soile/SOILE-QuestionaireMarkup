@@ -16,6 +16,7 @@ import fi.abo.kogni.soile2.qmarkup.typespec.MalformedCommandException;
 import fi.abo.kogni.soile2.qmarkup.typespec.Validator;
 import fi.abo.kogni.soile2.utils.generator.UniqueStringGenerator;
 import io.vertx.core.json.JsonArray;
+import io.vertx.core.json.JsonObject;
 
 
 public class QuestionnaireBuilder implements QuestionnaireProcessor {
@@ -31,14 +32,15 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         this.questionnaire = questionnaireST();
         this.spacer = group.getInstanceOf("vspacer");
         this.body = new JsonArray();
-        this.validStmt = new StringBuilder();
-
+        this.validStmt = new JsonArray();
+        this.currentParagraph = new JsonArray();
+        this.currentElement = new StringBuilder();
         Tag tag = Tag.newTag("p");
         this.paragraphOpenTag = tag.toString();
         this.paragraphCloseTag = Tag.closingTag(tag);
         this.questionnaireId = "";
         this.encryptionKey = "";
-
+        this.currentLine = 0;
         this.inParagraph = false;
         this.textAsArgument = false;
         this.expectPageTitle = false;
@@ -130,7 +132,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                     tmpl.addAggr("options.{short, long}",
                                  v.getValue("dbvalue"), v.getValue("text"));
                 }
-                addTag(tmpl.render());
+                addWidget(tmpl.render());
                 validationCode(ddmwd);
 
                 if(! inline) {
@@ -198,10 +200,11 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                         mswd.addColumn(encrypt(colname));
                         mswd.addValue(dbvalue);
                     }
+                    //System.out.println(columnTmpl.render());
                     tmpl.addAggr("columns.{content}", columnTmpl.render());
                 }
                 validationCode(mswd);
-                addTag(tmpl.render());
+                addWidget(tmpl.render());
                 if(! inline) {
                     addSpacer = true;
                 }
@@ -263,7 +266,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                     tmpl.add("value", false);
                 }
                 tmpl.add("optional", optional);
-                addTag(tmpl.render());
+                addWidget(tmpl.render());
                 validationCode(nfwd);
                 if(! inline) {
                     addSpacer = true;
@@ -324,7 +327,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                         optTmpl.add("name", name);
                         String dbvalue = opt.getValue("dbvalue").toString().replace("\n", "");
                         optTmpl.add("value", dbvalue);
-                        optTmpl.add("label", opt.getValue("text"));
+                        optTmpl.add("label", opt.getValue("text").toString().replace("\n", ""));
                         Boolean checked = (Boolean) opt.getValue("checked").asJavaObject();
                         if (checked == false) {
                             checked = null;
@@ -338,7 +341,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                     tmpl.addAggr("columns.{content}", columnTmpl.render());
                 }
                 validationCode(sswd);
-                addTag(tmpl.render());
+                addWidget(tmpl.render());
                 if(! inline) {
                     addSpacer = true;
                 }
@@ -390,7 +393,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                     tmpl.addAggr("labels.{value}", it.next());
                 }
                 tmpl.add("count", count);
-                addTag(tmpl.render());
+                addWidget(tmpl.render());
                 validationCode(swd);
                 addSpacer = true;
             }
@@ -428,13 +431,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                 tawd.setColumn(encrypt(field));
                 tawd.setMaxLength(maxlen.toString());
                 tmpl.add("separator", separator);
-                addTag(tmpl.render());
-                Boolean optional = ((BooleanValue) value.getValue("optional")).asBoolean();
-                if (optional == false) {
-                    NonemptyTextWidget ntw = this.new NonemptyTextWidget();
-                    ntw.setId(id);
-                    validationCode(ntw);
-                }
+                addWidget(tmpl.render());
                 validationCode(tawd);
                 addSpacer = true;
             }
@@ -480,13 +477,8 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                 tbwd.setId(id);
                 tbwd.setColumn(encrypt(field));
                 tbwd.setMaxLength(maxlen.toString());
-                addTag(tmpl.render());
-                BooleanValue optional = (BooleanValue) value.getValue("optional");
-                if (optional.asBoolean() == false) {
-                    NonemptyTextWidget ntw = this.new NonemptyTextWidget();
-                    ntw.setId(id);
-                    validationCode(ntw);
-                }
+                addWidget(tmpl.render());
+
                 validationCode(tbwd);
             }
             break;
@@ -579,7 +571,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
             clearPendingTag();
             textAsArgument = false;
         }
-        currentElement.append(' ');
+
     }
 
     @Override
@@ -589,9 +581,9 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
     }
 
     @Override
-    public String output() {
-        questionnaire.add("body", body.encode());
-        questionnaire.add("stmts", validStmt.toString());
+    public String output() {    	
+        questionnaire.add("elements", body.encodePrettily());
+        questionnaire.add("functions", validStmt.encodePrettily());
         return questionnaire.render();
     }
 
@@ -600,9 +592,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         tsStack.clear();
         bsStack.clear();
         body = new JsonArray();
-        if (validStmt.length() > 0) {
-            validStmt.delete(0, validStmt.length());
-        }
+        validStmt = new JsonArray();
 //        questionnaire.remove("body");
 //        questionnaire.remove("stmts");
 //        questionnaire.remove("title");
@@ -648,6 +638,9 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
             clearPendingTag();
             emptyTsStack();
             addTag(paragraphCloseTag);
+            addAndClearCurrentElement();
+            body.add(currentParagraph);
+            currentParagraph = new JsonArray();
             inParagraph = false;
         }
     }
@@ -656,10 +649,25 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         addTag(tag.toString());
     }
 
-    private void addTag(String tag) {
-        currentElement.append('\n');
+    private void addWidget(String WidgetJson)
+    {
+    	//Add the widget to the current paragraph.
+    	if(currentElement.length() != 0)
+    	{
+    		addAndClearCurrentElement();
+    	}
+    	currentParagraph.add(new JsonObject().put("type", "widget").put("data",new JsonObject(WidgetJson)));
+    }
+    
+    private void addTag(String tag) {    	
         currentElement.append(tag);
-        currentElement.append('\n');
+        
+    }
+    
+    private void addAndClearCurrentElement()
+    {
+    	currentParagraph.add(new JsonObject().put("type", "html").put("data", currentElement.toString()));
+    	currentElement = new StringBuilder();
     }
 
     private void workOnStack(ArrayList<String> args, ArrayDeque<Tag> stack, Tag tag) {
@@ -725,13 +733,12 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         return sb.toString();*/
     }
 
-    private void validationCode(Qdata data) {
+    private void validationCode(QuestionnaireWidget data) {
         validationCode(data.render());
     }
 
     private void validationCode(String code) {
-        validStmt.append(code);
-        validStmt.append('\n');
+        validStmt.add(new JsonObject(code));        
     }
 
     private String encrypt(String field) {
@@ -752,8 +759,13 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
     private JsonArray body;
 
     // Validation statements.
-    private StringBuilder validStmt;
+    private JsonArray validStmt;
 
+    // The current paragraph
+    private JsonArray currentParagraph;
+
+    private int currentLine;
+    
     private STGroup group;
     private ST spacer;
     private ST questionnaire;
@@ -769,8 +781,9 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
     private UniqueStringGenerator nameGen;
     private StringBuilder currentElement;
     
-    private abstract class Qdata {
-        public Qdata(String n) {
+
+    private abstract class QuestionnaireWidget {
+        public QuestionnaireWidget(String n) {
             this.tmpl = group.getInstanceOf(n);
         }
 
@@ -785,7 +798,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         private ST tmpl;
     }
 
-    private class ValidateWidget extends Qdata {
+    private class ValidateWidget extends QuestionnaireWidget {
         public ValidateWidget() {
             super("qdata_validate_widget");
         }
@@ -796,7 +809,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         }
     }
 
-    private class NonemptyTextWidget extends Qdata {
+    private class NonemptyTextWidget extends QuestionnaireWidget {
         public NonemptyTextWidget() {
             super("qdata_nonempty_text_widget");
         }
@@ -807,7 +820,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         }
     }
 
-    private class DropDownMenuWidgetData extends Qdata {
+    private class DropDownMenuWidgetData extends QuestionnaireWidget {
         public DropDownMenuWidgetData() {
             super("qdata_widgetdata_dropdownmenu");
         }
@@ -822,7 +835,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 
     }
 
-    private class SingleselectWidgetData extends Qdata {
+    private class SingleselectWidgetData extends QuestionnaireWidget {
         public SingleselectWidgetData() {
             super("qdata_widgetdata_singleselect");
         }
@@ -845,7 +858,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 
     }
 
-    private class MultiselectWidgetData extends Qdata {
+    private class MultiselectWidgetData extends QuestionnaireWidget {
         public MultiselectWidgetData() {
             super("qdata_widgetdata_multiselect");
         }
@@ -868,7 +881,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 
     }
 
-    private class NumberFieldWidgetData extends Qdata {
+    private class NumberFieldWidgetData extends QuestionnaireWidget {
         public NumberFieldWidgetData() {
             super("qdata_widgetdata_numberfield");
         }
@@ -883,7 +896,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 
     }
 
-    private class SliderWidgetData extends Qdata {
+    private class SliderWidgetData extends QuestionnaireWidget {
         public SliderWidgetData() {
             super("qdata_widgetdata_slider");
         }
@@ -898,7 +911,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 
     }
 
-    private class TextareaWidgetData extends Qdata {
+    private class TextareaWidgetData extends QuestionnaireWidget {
         public TextareaWidgetData() {
             super("qdata_widgetdata_textarea");
         }
@@ -916,7 +929,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         }
     }
 
-    private class TextboxWidgetData extends Qdata {
+    private class TextboxWidgetData extends QuestionnaireWidget {
         public TextboxWidgetData() {
             super("qdata_widgetdata_textbox");
         }
