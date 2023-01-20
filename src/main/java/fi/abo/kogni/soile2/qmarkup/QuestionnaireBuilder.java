@@ -15,6 +15,7 @@ import org.stringtemplate.v4.STGroupFile;
 import fi.abo.kogni.soile2.qmarkup.typespec.MalformedCommandException;
 import fi.abo.kogni.soile2.qmarkup.typespec.Validator;
 import fi.abo.kogni.soile2.utils.generator.UniqueStringGenerator;
+import io.netty.handler.codec.AsciiHeadersEncoder.NewlineType;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 
@@ -638,7 +639,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
             clearPendingTag();
             emptyTsStack();
             addTag(paragraphCloseTag);
-            addAndClearCurrentElement();
+            addAndClearCurrentElement(currentParagraph);
             body.add(currentParagraph);
             currentParagraph = new JsonArray();
             inParagraph = false;
@@ -652,11 +653,21 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
     private void addWidget(String WidgetJson)
     {
     	//Add the widget to the current paragraph.
-    	if(currentElement.length() != 0)
+    	JsonArray current;
+    	if(inParagraph)
     	{
-    		addAndClearCurrentElement();
+    		current = currentParagraph;    		
     	}
-    	currentParagraph.add(new JsonObject().put("type", "widget").put("data",new JsonObject(WidgetJson)));
+    	else
+    	{
+    		current = new JsonArray();
+    		body.add(current);
+    	}
+    	if(currentElement.length() != 0)
+		{
+			addAndClearCurrentElement(current);    		
+		}
+		current.add(new JsonObject().put("type", "widget").put("data",new JsonObject(WidgetJson)));
     }
     
     private void addTag(String tag) {    	
@@ -664,9 +675,9 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         
     }
     
-    private void addAndClearCurrentElement()
+    private void addAndClearCurrentElement(JsonArray target)
     {
-    	currentParagraph.add(new JsonObject().put("type", "html").put("data", currentElement.toString()));
+    	target.add(new JsonObject().put("type", "html").put("data", currentElement.toString()));
     	currentElement = new StringBuilder();
     }
 
