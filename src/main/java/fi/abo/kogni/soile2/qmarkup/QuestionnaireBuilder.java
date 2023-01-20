@@ -516,7 +516,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         case "p":           // "Paragraph"
             closeParagraph();
             inParagraph = true;
-            addTag(tag);
+            //addTag(tag);
             break;
         case "pagetitle":
             textAsArgument = true;
@@ -638,7 +638,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         if (inParagraph) {
             clearPendingTag();
             emptyTsStack();
-            addTag(paragraphCloseTag);
+            //addTag(paragraphCloseTag);
             addAndClearCurrentElement(currentParagraph);
             body.add(currentParagraph);
             currentParagraph = new JsonArray();
