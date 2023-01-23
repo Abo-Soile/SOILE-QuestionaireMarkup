@@ -108,6 +108,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                 String id = idGen.generate();
                 ddmwd.setId(id);
                 vw.setId(id);
+                System.out.println(value.getValue("inline"));
                 Boolean inline = ((BooleanValue) value.getValue("inline")).asBoolean();
                 Boolean optional = ((BooleanValue) value.getValue("optional")).asBoolean();
 
@@ -218,11 +219,6 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                 validator.validate(value);
 
                 Boolean inline = ((BooleanValue) value.getValue("inline")).asBoolean();
-
-                if(!inline) {
-                    closeParagraph();
-                }
-
                 ST tmpl = group.getInstanceOf(command);
                 NumberFieldWidgetData nfwd = this.new NumberFieldWidgetData();
                 String id = idGen.generate();
@@ -261,6 +257,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                 tmpl.add("increment", incr);
                 tmpl.add("width", width);
                 tmpl.add("separator", separator);
+                tmpl.add("inline", inline);
                 if(startValue != 0) {
                     tmpl.add("value", startValue);
                 } else {
@@ -455,21 +452,25 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                 ST tmpl = group.getInstanceOf(command);
                 String id = idGen.generate();
                 TextboxWidgetData tbwd = this.new TextboxWidgetData();
-                Boolean linebreak = ((BooleanValue) value.getValue("linebreak")).asBoolean();
+                Boolean inline = false;
+                if(value.getValue("linebreak") != null)
+                {
+                	inline = !((BooleanValue) value.getValue("linebreak")).asBoolean();
+                }
+                if(value.getValue("inline") != null)
+                {
+                	inline = ((BooleanValue) value.getValue("inline")).asBoolean();                	
+                }
                 String field = createColumnName(questionnaireId(),
                         value.getValue("dbcolumn").toString());
                 String label = value.getValue("label").toString();
                 Boolean required = false;
                 required = !((BooleanValue) value.getValue("optional")).asBoolean();
-                String separator = "&nbsp;";
-                if (linebreak) {
-                    separator = Tag.newEmptyTag(Tag.LINEBREAK).toString();
-                }
                 if (label.isEmpty() == true) {
                     label = null;
                 }
                 tmpl.add("id", id);
-                tmpl.add("separator", separator);
+                tmpl.add("inline", inline);
                 tmpl.add("label", label);
                 Value maxlen = value.getValue("length");
                 tmpl.add("length", maxlen);

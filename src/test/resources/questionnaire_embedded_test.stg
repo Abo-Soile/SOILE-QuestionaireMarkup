@@ -91,7 +91,8 @@ numberfield(id,
       maximum,
       optional,
       increment,
-      separator) ::= <<
+      separator,
+      inline) ::= <<
 
 
 { 
@@ -103,14 +104,16 @@ numberfield(id,
 "width" : $width$, 
 "minimum" : $minimum$, 
 "maximum" : $maximum$,
-"optional" : "$optional$",
+"optional" : $optional$,
 "increment" : $increment$,
-"separator" : "$separator$"
+"separator" : "$separator$",
+"inline" : $inline$
+
 }
 
 >>
 
-textbox(id, label, length, text, separator, required) ::= <<
+textbox(id, label, length, text, inline, required) ::= <<
 
 { 
 "type": "textbox",
@@ -119,7 +122,7 @@ textbox(id, label, length, text, separator, required) ::= <<
 "length" : "$length$", 
 "text" : "$text$", 
 "required" : "$required$", 
-"separator" : "$separator$"
+"inline" : "$inline$"
 }
 
 >>
