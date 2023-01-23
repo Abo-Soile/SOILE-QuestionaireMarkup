@@ -11,15 +11,16 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
+import fi.abo.kogni.soile2.qmarkup.QuestionnaireBuilder;
+
 public class GenerateValidator {
     public static void main(String[] args) {
         FileInputStream is = null;
         FileOutputStream out = null;
-
-        String Project_dir = System.getProperty("user.dir");
         try {
-            is = new FileInputStream(Project_dir + "/src/main/antlr4/fi/abo/kogni/soile2/qmarkup/typespec/t.typespec");
-            out = new FileOutputStream(Project_dir + "/src/main/java/fi/abo/kogni/soile2/qmarkup/typespec/Validator.java");
+        	
+            is = new FileInputStream(GenerateValidator.class.getClassLoader().getResource("spec/t.typespec").getPath());
+            out = new FileOutputStream("./Validator.java");
             ANTLRInputStream input = new ANTLRInputStream(is);
             TypeSpecLexer lexer = new TypeSpecLexer(input);
             CommonTokenStream tokens = new CommonTokenStream(lexer);
