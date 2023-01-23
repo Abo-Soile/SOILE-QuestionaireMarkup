@@ -667,7 +667,9 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 		{
 			addAndClearCurrentElement(current);    		
 		}
-		current.add(new JsonObject().put("type", "widget").put("data",new JsonObject(WidgetJson)));
+    	JsonObject widget = new JsonObject(WidgetJson);
+    	
+		current.add(new JsonObject().put("type", widget.getString("type")).put("data",widget));
     }
     
     private void addTag(String tag) {    	

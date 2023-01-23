@@ -99,12 +99,12 @@ numberfield(id,
 "id" : "$id$",
 "name" : "$name$",
 "label" : "$label$", 
-"value" : "$value$", 
-"width" : "$width$", 
-"minimum" : "$minimum$", 
-"maximum" : "$maximum$",
+"value" : $value$, 
+"width" : $width$, 
+"minimum" : $minimum$, 
+"maximum" : $maximum$,
 "optional" : "$optional$",
-"increment" : "$increment$",
+"increment" : $increment$,
 "separator" : "$separator$"
 }
 
