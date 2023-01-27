@@ -99,7 +99,7 @@ numberfield(id,
 "type" : "numberfield",
 "id" : "$id$",
 "name" : "$name$",
-"label" : "$label$", 
+$if(label)$  "label" : "$label$", $else$ $endif$
 "value" : $value$, 
 "width" : $width$, 
 "minimum" : $minimum$, 
@@ -119,10 +119,10 @@ textbox(id, label, length, text, inline, required) ::= <<
 "type": "textbox",
 "id" : "$id$",
 "label" : "$label$", 
-"length" : "$length$", 
+"length" : $length$, 
 "text" : "$text$", 
-"required" : "$required$", 
-"inline" : "$inline$"
+"required" : $required$, 
+"inline" : $inline$
 }
 
 >>
@@ -134,8 +134,8 @@ textarea(id, text, rows, columns, label, required, separator) ::= <<
 "id" : "$id$",
 "label" : "$label$", 
 "text" : "$text$", 
-"rows" : "$rows$",
-"columns" : "$columns$", 
+"rows" : $rows$,
+"columns" : $columns$, 
 "required" : $required$, 
 "separator" : "$separator$"
 }
@@ -152,7 +152,7 @@ slider(id, labels, minimum, maximum, increment, select, count, style) ::= <<
 "maximum" : $maximum$,
 "increment" : $increment$, 
 "count" : $count$, 
-"select" : "$select$"
+"select" : $select$
 $if(style)$  ,"style" : "$style$" $endif$
 }
 

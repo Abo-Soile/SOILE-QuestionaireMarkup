@@ -108,7 +108,6 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                 String id = idGen.generate();
                 ddmwd.setId(id);
                 vw.setId(id);
-                System.out.println(value.getValue("inline"));
                 Boolean inline = ((BooleanValue) value.getValue("inline")).asBoolean();
                 Boolean optional = ((BooleanValue) value.getValue("optional")).asBoolean();
 
@@ -264,7 +263,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                     tmpl.add("value", false);
                 }
                 tmpl.add("optional", optional);
-                addWidget(tmpl.render());
+                addWidget(tmpl.render(), inline);
                 validationCode(nfwd);
                 if(! inline) {
                     addSpacer = true;
@@ -516,6 +515,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
             break;
         case "p":           // "Paragraph"
             closeParagraph();
+            
             inParagraph = true;
             //addTag(tag);
             break;
@@ -527,11 +527,13 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
             closeParagraph();
             break;
         case "subtitle":
+        	closeParagraph();
             addTag(tag);
             textAsArgument = true;
             setPendingTag(tag);
             break;
         case "title":
+        	closeParagraph();
             addTag(tag);
             textAsArgument = true;
             setPendingTag(tag);
@@ -640,22 +642,27 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
             clearPendingTag();
             emptyTsStack();
             //addTag(paragraphCloseTag);
-            addAndClearCurrentElement(currentParagraph);
-            body.add(currentParagraph);
-            currentParagraph = new JsonArray();
             inParagraph = false;
         }
+        addAndClearCurrentElement(currentParagraph);
+        body.add(currentParagraph);
+        currentParagraph = new JsonArray();
+
     }
 
     private void addTag(Tag tag) {
         addTag(tag.toString());
     }
-
     private void addWidget(String WidgetJson)
+    {
+    	addWidget(WidgetJson, false);
+    }
+
+    private void addWidget(String WidgetJson, boolean inline)
     {
     	//Add the widget to the current paragraph.
     	JsonArray current;
-    	if(inParagraph)
+    	if(inParagraph || inline)
     	{
     		current = currentParagraph;    		
     	}
@@ -680,7 +687,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
     
     private void addAndClearCurrentElement(JsonArray target)
     {
-    	target.add(new JsonObject().put("type", "html").put("data", currentElement.toString()));
+    	target.add(new JsonObject().put("type", "html").put("data", new JsonObject().put("html", currentElement.toString()).put("inline", true)));
     	currentElement = new StringBuilder();
     }
 
