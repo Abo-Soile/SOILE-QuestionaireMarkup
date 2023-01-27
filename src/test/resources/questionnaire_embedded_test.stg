@@ -71,7 +71,8 @@ dropdownmenu(id, label, required,options, inline) ::= <<
 
 { 
  "type": "dropdownmenu", 
- "inline" : $inline$, 
+ "inline" : $inline$,
+$if(label)$  "label" : "$label$", $else$ $endif$
  "id": "$id$", 
  "required": "$required$",
  "options": [

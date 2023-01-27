@@ -15,7 +15,6 @@ import org.stringtemplate.v4.STGroupFile;
 import fi.abo.kogni.soile2.qmarkup.typespec.MalformedCommandException;
 import fi.abo.kogni.soile2.qmarkup.typespec.Validator;
 import fi.abo.kogni.soile2.utils.generator.UniqueStringGenerator;
-import io.netty.handler.codec.AsciiHeadersEncoder.NewlineType;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 
@@ -46,6 +45,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         this.textAsArgument = false;
         this.expectPageTitle = false;
         this.addSpacer = false;
+        this.currentStyle = new StringBuilder();
         AtomicInteger counter = UniqueStringGenerator.createCounter();
         this.idGen = new UniqueStringGenerator("id");
         this.idGen.setCounter(counter);
@@ -110,10 +110,6 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                 vw.setId(id);
                 Boolean inline = ((BooleanValue) value.getValue("inline")).asBoolean();
                 Boolean optional = ((BooleanValue) value.getValue("optional")).asBoolean();
-
-                if(! inline) {
-                    closeParagraph();
-                }
                 tmpl.add("id", id);
                 String label = value.getValue("label").toString();
                 if (label.isEmpty() == true) {
@@ -133,12 +129,8 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                     tmpl.addAggr("options.{short, long}",
                                  v.getValue("dbvalue"), v.getValue("text"));
                 }
-                addWidget(tmpl.render());
+                addWidget(tmpl.render(), inline);
                 validationCode(ddmwd);
-
-                if(! inline) {
-                    addSpacer = true;
-                }
             }
             break;
         case "multiselect":
@@ -147,12 +139,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                 Validator validator = Validator.validatorFor(command);
                 validator.validate(value);
 
-                Boolean inline = ((BooleanValue) value.getValue("inline")).asBoolean();
                 Boolean colalign = ((BooleanValue) value.getValue("colalign")).asBoolean();
-                if(! inline) {
-                    closeParagraph();
-                }
-
                 ST tmpl = group.getInstanceOf("select");
                 String defaultValue = value.getValue("default_value").toString();
                 ArrayList<Value> options =
@@ -206,9 +193,6 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                 }
                 validationCode(mswd);
                 addWidget(tmpl.render());
-                if(! inline) {
-                    addSpacer = true;
-                }
             }
             break;
         case "numberfield":
@@ -265,9 +249,6 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                 tmpl.add("optional", optional);
                 addWidget(tmpl.render(), inline);
                 validationCode(nfwd);
-                if(! inline) {
-                    addSpacer = true;
-                }
             }
             break;
         case "singleselect":
@@ -339,9 +320,6 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                 }
                 validationCode(sswd);
                 addWidget(tmpl.render());
-                if(! inline) {
-                    addSpacer = true;
-                }
             }
             break;
         case "slider":
@@ -392,7 +370,6 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                 tmpl.add("count", count);
                 addWidget(tmpl.render());
                 validationCode(swd);
-                addSpacer = true;
             }
             break;
         case "textarea":
@@ -430,21 +407,10 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                 tmpl.add("separator", separator);
                 addWidget(tmpl.render());
                 validationCode(tawd);
-                addSpacer = true;
             }
             break;
         case "textbox":
             if (args.size() > 0) {
-
-                /*
-                 * Text boxes are "in-line elements." That is, they can appear only
-                 * inside a paragraph.
-                 */
-                if (inParagraph == false) {
-                    addTag(paragraphOpenTag);
-                    inParagraph = true;
-                }
-
                 Value value = Value.parse(args.get(0));
                 Validator validator = Validator.validatorFor(command);
                 validator.validate(value);
@@ -478,7 +444,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                 tbwd.setId(id);
                 tbwd.setColumn(encrypt(field));
                 tbwd.setMaxLength(maxlen.toString());
-                addWidget(tmpl.render());
+                addWidget(tmpl.render(), inline);
 
                 validationCode(tbwd);
             }
@@ -530,13 +496,14 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         	closeParagraph();
             addTag(tag);
             textAsArgument = true;
-            setPendingTag(tag);
+            setPendingTag(tag);                                   
             break;
         case "title":
         	closeParagraph();
             addTag(tag);
             textAsArgument = true;
             setPendingTag(tag);
+            closeParagraph();
             break;
         case "ts":          // "Text Style"
             if (inParagraph && args.size() > 0) {
@@ -572,7 +539,8 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         }
         currentElement.append(text);
         if (textAsArgument) {
-            clearPendingTag();
+            clearPendingTag();            
+            closeParagraph();
             textAsArgument = false;
         }
 
@@ -668,6 +636,9 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
     	}
     	else
     	{
+    		// if we are not in the paragraph, we need to close whatever paragraph we have and
+    		// start a new one.
+    		closeParagraph();
     		current = new JsonArray();
     		body.add(current);
     	}
@@ -801,6 +772,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
     private UniqueStringGenerator idGen;
     private UniqueStringGenerator nameGen;
     private StringBuilder currentElement;
+    private StringBuilder currentStyle;
     
 
     private abstract class QuestionnaireWidget {
