@@ -5,43 +5,36 @@ questionnaire_html(title, elements, functions) ::= <<
 {
 "title": "$title$",
 "elements" :  $elements$ ,                    
-"functions" : $functions$     
+"mapping" : $functions$     
 }
 >>
 
 qdata_widgetdata_dropdownmenu(id, column) ::= <<
-  {"fun":"save_value","params":[["$id$"], "$column$"]}
+  [{"id" : "$id$", "dbcolumn" : "$column$" } ]
 >>
 
 qdata_widgetdata_multiselect(ids, columns, values, defaultValue) ::= <<
-  {"fun":"save_all_checked", "params":[
-                   [$ids:{id | "$id.text$"}; separator=","$],
-                   [$values:{val | "$val.text$"}; separator=","$],
-                   [$columns:{col | "$col.text$"}; separator=","$],
-                   "$defaultValue$"]}
->>
+[ $ids , columns, values: { id, column, value | { "id" : "$id.text$", "dbcolumn" : "$column.text$", "value" : "$value.text$", "defaultValue" : "$defaultValue$" \}} ; separator=","$ ] 
+>> 
 
 qdata_widgetdata_singleselect(ids, columnName, values, defaultValue) ::= <<
-  {"fun":"save_first_checked", "params":[
-                     [$ids:{id | "$id.text$"}; separator=","$],
-                     [$values:{val | "$val.text$"}; separator=","$],
-                     "$columnName$", "$defaultValue$"]}
+[ $ids , values: { id, value | { "id" : "$id.text$", "dbcolumn" : "$columnName$", "value" : "$value.text$", "defaultValue" : "$defaultValue$" \}} ; separator=","$ ]
 >>
 
 qdata_widgetdata_numberfield(id, columnName) ::= <<
-  {"fun":"save_value", "params":[ ["$id$"], "$columnName$"]}
+[{"id" : "$id$", "dbcolumn" : "$columnName$", "value" : null, "defaultValue" : null} ]
 >>
 
 qdata_widgetdata_slider(id, columnName) ::= <<
-  {"fun":"save_value", "params":[ ["$id$"], "$columnName$"]}
+  [{"id" : "$id$", "dbcolumn" : "$columnName$", "value" : null, "defaultValue" : null} ]
 >>
 
-qdata_widgetdata_textarea(id, columnName, maxlength) ::= <<
-  {"fun":"save_textwidget_value", "params":[ ["$id$", $maxlength$], "$columnName$"]}
+qdata_widgetdata_textarea(id, columnName) ::= <<
+	[{"id" : "$id$", "dbcolumn" : "$columnName$", "value" : "", "defaultValue" : "" } ]  
 >>
 
-qdata_widgetdata_textbox(id, columnName, maxlength) ::= <<
-  {"fun":"save_textwidget_value", "params":[ ["$id$", $maxlength$], "$columnName$"]}
+qdata_widgetdata_textbox(id, columnName) ::= <<
+  [{"id" : "$id$", "dbcolumn" : "$columnName$", "value" : "", "defaultValue" : "" } ]
 >>
 
 qdata_push_widget_value(id, column, checksum, length) ::= <<
@@ -128,7 +121,7 @@ textbox(id, label, length, text, inline, required) ::= <<
 
 >>
 
-textarea(id, text, rows, columns, label, required, separator) ::= <<
+textarea(id, text, rows, columns, label, maxlength, required, separator) ::= <<
 
 { 
 "type" : "textarea",
@@ -137,6 +130,7 @@ textarea(id, text, rows, columns, label, required, separator) ::= <<
 "text" : "$text$", 
 "rows" : $rows$,
 "columns" : $columns$, 
+"maxlength" : $maxlength$,
 "required" : $required$, 
 "separator" : "$separator$"
 }

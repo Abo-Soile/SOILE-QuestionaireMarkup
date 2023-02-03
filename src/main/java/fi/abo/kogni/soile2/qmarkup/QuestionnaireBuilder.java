@@ -406,10 +406,10 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                 tmpl.add("columns", value.getValue("columns"));
                 tmpl.add("text", value.getValue("text"));
                 tmpl.add("label", value.getValue("label"));
+                tmpl.add("maxlength", maxlen);
                 tmpl.add("required", required);
                 tawd.setId(id);
                 tawd.setColumn(encrypt(field));
-                tawd.setMaxLength(maxlen.toString());
                 tmpl.add("separator", separator);
                 addWidget(tmpl.render());
                 validationCode(tawd);
@@ -445,7 +445,6 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                 tmpl.add("required", required);
                 tbwd.setId(id);
                 tbwd.setColumn(encrypt(field));
-                tbwd.setMaxLength(maxlen.toString());
                 addWidget(tmpl.render(), true);
                 if(linebreak)
                 {
@@ -729,7 +728,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
     }
 
     private void validationCode(String code) {
-        validStmt.add(new JsonObject(code));        
+        validStmt.addAll(new JsonArray(code));        
     }
 
     private String encrypt(String field) {
