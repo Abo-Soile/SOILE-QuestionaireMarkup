@@ -4,167 +4,191 @@ import java.util.HashMap;
 
 public class TextStyle {
     
+	private String type;
+	private String value;
+	
+	public TextStyle(String type, String value)
+	{
+		this.type = type;
+		this.value = value;
+	}
+	
+	public String getType()
+	{
+		return this.type;
+	}
+	
+	public String getValue()
+	{
+		return value;
+	}
+	
+	public boolean isValid()
+	{
+		return !this.type.equals("");
+	}
+	
     public static boolean defined(String name) {
         return styles.containsKey(name);
     }
 
-    public static String get(String name) {
+    public static TextStyle get(String name) {
         String key = name.toLowerCase().trim();
         if (styles.containsKey(key)) {
             return styles.get(key);
         }
-        return "EMPTY";
+        return new TextStyle("", "");
     }
     
-    public static String indent() {
+    public static TextStyle indent() {
         return get("indent");
     }
 
-    public static String aqua() {
+    public static TextStyle aqua() {
         return get("aqua");
     }
 
-    public static String black() {
+    public static TextStyle black() {
         return get("black");
     }
 
-    public static String blue() {
+    public static TextStyle blue() {
         return get("blue");
     }
 
-    public static String fuchsia() {
+    public static TextStyle fuchsia() {
         return get("fuchsia");
     }
 
-    public static String gray() {
+    public static TextStyle gray() {
         return get("gray");
     }
 
-    public static String green() {
+    public static TextStyle green() {
         return get("green");
     }
 
-    public static String lime() {
+    public static TextStyle lime() {
         return get("lime");
     }
 
-    public static String maroon() {
+    public static TextStyle maroon() {
         return get("maroon");
     }
 
-    public static String navy() {
+    public static TextStyle navy() {
         return get("navy");
     }
 
-    public static String olive() {
+    public static TextStyle olive() {
         return get("olive");
     }
 
-    public static String orange() {
+    public static TextStyle orange() {
         return get("orange");
     }
 
-    public static String purple() {
+    public static TextStyle purple() {
         return get("purple");
     }
 
-    public static String red() {
+    public static TextStyle red() {
         return get("red");
     }
 
-    public static String silver() {
+    public static TextStyle silver() {
         return get("silver");
     }
 
-    public static String teal() {
+    public static TextStyle teal() {
         return get("teal");
     }
 
-    public static String monospace() {
+    public static TextStyle monospace() {
         return get("monospace");
     }
 
-    public static String sansserif() {
+    public static TextStyle sansserif() {
         return get("sansserif");
     }
 
-    public static String serif() {
+    public static TextStyle serif() {
         return get("serif");
     }
 
-    public static String small() {
+    public static TextStyle small() {
         return get("small");
     }
 
-    public static String large() {
+    public static TextStyle large() {
         return get("large");
     }
 
-    public static String italic() {
+    public static TextStyle italic() {
         return get("italic");
     }
 
-    public static String bold() {
+    public static TextStyle bold() {
         return get("bold");
     }
 
-    public static String linethrough() {
+    public static TextStyle linethrough() {
         return get("linethrough");
     }
 
-    public static String overline() {
+    public static TextStyle overline() {
         return get("overline");
     }
 
-    public static String underline() {
+    public static TextStyle underline() {
         return get("underline");
     }
 
-    public static String capitalize() {
+    public static TextStyle capitalize() {
         return get("capitalize");
     }
 
-    public static String lowercase() {
+    public static TextStyle lowercase() {
         return get("lowercase");
     }
 
-    public static String uppercase() {
+    public static TextStyle uppercase() {
         return get("uppercase");
     }
 
-    private static HashMap<String, String> styles;
+    private static HashMap<String, TextStyle> styles;
 
     static {
         styles = new HashMap<>();
-        styles.put("aqua", "color: aqua;");
-        styles.put("black", "color: black;");
-        styles.put("blue", "color: blue;");
-        styles.put("bold", "font-weight:bold;");
-        styles.put("capitalize", "text-transform: capitalize;");
-        styles.put("fuchsia", "color: fuchsia;");
-        styles.put("gray", "color: gray;");
-        styles.put("green", "color: green;");
-        styles.put("indent", "margin-left: 1em;");
-        styles.put("italic", "font-style:italic;");
-        styles.put("large", "font-size: large;");
-        styles.put("lime", "color: lime;");
-        styles.put("linethrough", "text-decoration: line-through;");
-        styles.put("lowercase", "text-transform: lowercase;");
-        styles.put("maroon", "color: maroon;");
-        styles.put("monospace", "font-family: monospace;");
-        styles.put("navy", "color: navy;");
-        styles.put("olive", "color: olive;");
-        styles.put("orange", "color: orange;");
-        styles.put("overline", "text-decoration: overline;");
-        styles.put("purple", "color: purple;");
-        styles.put("red", "color: red;");
-        styles.put("sansserif", "font-family: sans-serif;");
-        styles.put("serif", "font-family: serif;");
-        styles.put("silver", "color: silver;");
-        styles.put("small", "font-size: smaller;");
-        styles.put("teal", "color: teal;");
-        styles.put("underline", "text-decoration: underline;");
-        styles.put("uppercase", "text-transform: uppercase;");
+        styles.put("aqua", new TextStyle("color","aqua"));
+        styles.put("black", new TextStyle("color","black"));
+        styles.put("blue", new TextStyle("color","blue"));
+        styles.put("bold", new TextStyle("font-weight","bold"));
+        styles.put("capitalize", new TextStyle("text-transform","capitalize"));
+        styles.put("fuchsia", new TextStyle("color","fuchsia"));
+        styles.put("gray", new TextStyle("color","gray"));
+        styles.put("green", new TextStyle("color","green"));
+        styles.put("indent", new TextStyle("margin-left","1em"));
+        styles.put("italic", new TextStyle("font-style","italic"));
+        styles.put("large", new TextStyle("font-size","large"));
+        styles.put("lime", new TextStyle("color","lime"));
+        styles.put("linethrough", new TextStyle("text-decoration","line-through"));
+        styles.put("lowercase", new TextStyle("text-transform","lowercase"));
+        styles.put("maroon", new TextStyle("color","maroon"));
+        styles.put("monospace", new TextStyle("font-family","monospace"));
+        styles.put("navy", new TextStyle("color","navy"));
+        styles.put("olive", new TextStyle("color","olive"));
+        styles.put("orange", new TextStyle("color","orange"));
+        styles.put("overline", new TextStyle("text-decoration","overline"));
+        styles.put("purple", new TextStyle("color","purple"));
+        styles.put("red", new TextStyle("color","red"));
+        styles.put("sansserif", new TextStyle("font-family","sans-serif"));
+        styles.put("serif", new TextStyle("font-family","serif"));
+        styles.put("silver", new TextStyle("color","silver"));
+        styles.put("small", new TextStyle("font-size","smaller"));
+        styles.put("teal", new TextStyle("color","teal"));
+        styles.put("underline", new TextStyle("text-decoration","underline"));
+        styles.put("uppercase", new TextStyle("text-transform","uppercase"));
     }
 
 }

@@ -66,6 +66,7 @@ public class InputReader {
 			}
 			catch(Exception e)
 			{
+				e.printStackTrace(System.out);
 				throw new MalformedCommandException(e.getMessage(), lineNumber);
 			}
 			line = readLine();

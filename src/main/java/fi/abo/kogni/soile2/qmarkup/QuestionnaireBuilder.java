@@ -21,6 +21,9 @@ import io.vertx.core.json.JsonObject;
 
 public class QuestionnaireBuilder implements QuestionnaireProcessor {
 
+	private JsonObject textStyle;
+	private JsonObject blockStyle;
+	private JsonObject currentTag;
     public QuestionnaireBuilder(URL template) {
         super();
         this.pendingTags = new ArrayDeque<>();
@@ -34,7 +37,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         this.body = new JsonArray();
         this.validStmt = new JsonArray();
         this.currentParagraph = new JsonArray();
-        this.currentElement = new StringBuilder();
+        this.currentElement = new JsonArray();
         Tag tag = Tag.newTag("p");
         this.paragraphOpenTag = tag.toString();
         this.paragraphCloseTag = Tag.closingTag(tag);
@@ -45,6 +48,9 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         this.textAsArgument = false;
         this.expectPageTitle = false;
         this.addSpacer = false;
+        this.textStyle = new JsonObject();
+        this.currentTag = new JsonObject();
+        this.blockStyle = new JsonObject();
         this.currentStyle = new StringBuilder();
         AtomicInteger counter = UniqueStringGenerator.createCounter();
         this.idGen = new UniqueStringGenerator("id");
@@ -73,15 +79,15 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         return this.encryptionKey;
     }
 
+    private JsonObject newTag()
+    {
+    	return new JsonObject().put("type", "text").put("inline", true);
+    }
+    
     @SuppressWarnings("unchecked")
     @Override
     public void processCommand(String command, ArrayList<String> args) throws MalformedCommandException {
         Tag tag = Tag.newTag(command);
-
-        if (addSpacer) {
-            addTag(spacer.render());
-            addSpacer = false;
-        }
 
         if (textAsArgument) {
             /*
@@ -89,7 +95,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
              * never mind. Proceed as usual, but close the pending tag.
              */
             textAsArgument = false;
-            clearPendingTag();
+            currentTag = newTag();
         }
 
         switch (command) {
@@ -417,14 +423,10 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                 ST tmpl = group.getInstanceOf(command);
                 String id = idGen.generate();
                 TextboxWidgetData tbwd = this.new TextboxWidgetData();
-                Boolean inline = false;
+                boolean linebreak = false;
                 if(value.getValue("linebreak") != null)
                 {
-                	inline = !((BooleanValue) value.getValue("linebreak")).asBoolean();
-                }
-                if(value.getValue("inline") != null)
-                {
-                	inline = ((BooleanValue) value.getValue("inline")).asBoolean();                	
+                	linebreak = ((BooleanValue) value.getValue("linebreak")).asBoolean();
                 }
                 String field = createColumnName(questionnaireId(),
                         value.getValue("dbcolumn").toString());
@@ -435,7 +437,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                     label = null;
                 }
                 tmpl.add("id", id);
-                tmpl.add("inline", inline);
+                tmpl.add("inline", true);
                 tmpl.add("label", label);
                 Value maxlen = value.getValue("length");
                 tmpl.add("length", maxlen);
@@ -444,8 +446,11 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                 tbwd.setId(id);
                 tbwd.setColumn(encrypt(field));
                 tbwd.setMaxLength(maxlen.toString());
-                addWidget(tmpl.render(), inline);
-
+                addWidget(tmpl.render(), true);
+                if(linebreak)
+                {
+                	addText("\n");
+                }                
                 validationCode(tbwd);
             }
             break;
@@ -455,29 +460,23 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         case "bs":          // "Block Style"
             if (args.size() > 0) {
                 closeParagraph();
-                workOnStack(args, bsStack, tag);
+                workOnStack(args, blockStyle);
             }
             break;
         case "lb":          // "Line Break"
-            tag = Tag.newEmptyTag(command);
-            addTag(tag);
+            addText("\n");            
             break;
-        case "link":
+        case "link":        	
+        	currentTag = new JsonObject().put("inline", true);
+        	currentTag.put("type", "link");        	
             if (args.size() >= 1) {
-                tag.attribute("href", args.get(0));
-                tag.attribute("target", "_blank");
-                addTag(tag);
+                currentTag.put("href", args.get(0));                                
                 textAsArgument = true;
-                setPendingTag(tag);
             }
             if (args.size() == 2) {
-                tag.attribute("class", args.get(1));
-                tag.attribute("target", "_blank");
-                addTag(tag);
+            	currentTag.put("class", args.get(1));
                 textAsArgument = true;
-                setPendingTag(tag);
             }
-
             break;
         case "p":           // "Paragraph"
             closeParagraph();
@@ -487,28 +486,23 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
             break;
         case "pagetitle":
             textAsArgument = true;
-            expectPageTitle = true;
+            expectPageTitle = true;        	            
             break;
         case "pb":          // "Paragraph Break"
             closeParagraph();
             break;
         case "subtitle":
         	closeParagraph();
-            addTag(tag);
-            textAsArgument = true;
-            setPendingTag(tag);                                   
+        	currentTag = new JsonObject().put("type", "subtitle");            
+            textAsArgument = true;                                           
             break;
         case "title":
         	closeParagraph();
-            addTag(tag);
-            textAsArgument = true;
-            setPendingTag(tag);
-            closeParagraph();
+        	currentTag = new JsonObject().put("type", "title");            
+            textAsArgument = true;            
             break;
-        case "ts":          // "Text Style"
-            if (inParagraph && args.size() > 0) {
-                workOnStack(args, tsStack, tag);
-            }
+        case "ts":          // "Text Style"            
+            workOnStack(args, textStyle);            
             break;
         case "spacer":
             closeParagraph();
@@ -537,15 +531,38 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
             textAsArgument = false;
             return;
         }
-        currentElement.append(text);
+        // This should probably be a StringBuilder, but it might just work ok...
+        addText(text);
         if (textAsArgument) {
-            clearPendingTag();            
-            closeParagraph();
+            closeTag();
             textAsArgument = false;
         }
-
     }
+    
+    private void closeTag()
+    {
+    	if(textStyle.isEmpty())
+    	{
+    		currentTag.put("style", new JsonObject().mergeIn(textStyle));
+    	}
+    	else
+    	{
+    		currentTag.put("style", new JsonObject().mergeIn(blockStyle));
+    	}
+    	String tagType = addAndClearCurrentElement(currentParagraph);
+    	if(tagType.equals("subtitle") || tagType.equals("title") )
+    	{
+    		closeParagraph();
+    	}
+    }
+    
 
+    private void addText(String text)
+    {
+    	currentTag.put("text",currentTag.getString("text","") + text);
+    }
+    
+    
     @Override
     public void finish() {
         closeParagraph();
@@ -575,51 +592,28 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         questionnaireId = "";
     }
 
-    private void setPendingTag(Tag tag) {
-        // Only one tag may be pending at any given time.
-
-        if (pendingTags.isEmpty() == false) {
-            pendingTags.clear();
-        }
-        pendingTags.push(Tag.closingTag(tag));
-    }
-
-    private void clearPendingTag() {
-        if (pendingTags.isEmpty() == false) {
-            addTag(pendingTags.pop());
-
-            // Only one tag is allowed to be pending at a time.
-            pendingTags.clear();
-        }
-    }
 
     private void emptyTsStack() {
-        while (tsStack.isEmpty() == false) {
-            currentElement.append(Tag.closingTag(tsStack.pop()));
-        }
+    	textStyle.clear();
     }
 
     private void emptyBsStack() {
-        while (bsStack.isEmpty() == false) {
-            currentElement.append(Tag.closingTag(bsStack.pop()));
-        }
+    	blockStyle.clear();
     }
 
     private void closeParagraph() {
         if (inParagraph) {
-            clearPendingTag();
             emptyTsStack();
             //addTag(paragraphCloseTag);
             inParagraph = false;
         }
         addAndClearCurrentElement(currentParagraph);
-        body.add(currentParagraph);
+        if(currentParagraph.size() > 0)
+        {
+        	body.add(currentParagraph);
+        }
         currentParagraph = new JsonArray();
 
-    }
-
-    private void addTag(Tag tag) {
-        addTag(tag.toString());
     }
     private void addWidget(String WidgetJson)
     {
@@ -630,9 +624,10 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
     {
     	//Add the widget to the current paragraph.
     	JsonArray current;
+		    		
     	if(inParagraph || inline)
     	{
-    		current = currentParagraph;    		
+    		current = currentParagraph;
     	}
     	else
     	{
@@ -641,57 +636,61 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
     		closeParagraph();
     		current = new JsonArray();
     		body.add(current);
-    	}
-    	if(currentElement.length() != 0)
-		{
-			addAndClearCurrentElement(current);    		
-		}
+    	}    	
+		addAndClearCurrentElement(current);    	
     	JsonObject widget = new JsonObject(WidgetJson);
-    	
 		current.add(new JsonObject().put("type", widget.getString("type")).put("data",widget));
     }
-    
-    private void addTag(String tag) {    	
-        currentElement.append(tag);
         
-    }
-    
-    private void addAndClearCurrentElement(JsonArray target)
+    private String addAndClearCurrentElement(JsonArray target)
     {
-    	target.add(new JsonObject().put("type", "html").put("data", new JsonObject().put("html", currentElement.toString()).put("inline", true)));
-    	currentElement = new StringBuilder();
+    	// add only if this actually is non empty
+    	if(!currentTag.getString("text","").equals(""))
+    	{
+    		target.add(new JsonObject().put("type", "html").put("data", currentTag));
+    		
+    	}
+    	String type = currentTag.getString("type","");
+    	currentTag = newTag();
+    	return type;
     }
 
-    private void workOnStack(ArrayList<String> args, ArrayDeque<Tag> stack, Tag tag) {
+    private void workOnStack(ArrayList<String> args, JsonObject styleObject) {
         String arg = decodeStackArg(args.get(0));
 
         switch (arg) {
-        case "push":        
+        case "push":
+        	JsonObject newStyle = new JsonObject();
             if (args.size() > 1) {
-                StringBuilder styleString = new StringBuilder();
-                for (int i = 1; i < args.size(); ++i) {
+            	            	                
+                for (int i = 1; i < args.size(); ++i) {                	
                     String a = args.get(i);
                     if (TextStyle.defined(a)) {
-                        styleString.append(TextStyle.get(a));
-                        styleString.append(' ');
+                        TextStyle current = TextStyle.get(a);
+                        newStyle.put(current.getType(), current.getValue());                        
                     }
-                }
-                tag.attribute("style", styleString.toString());
+                }                
             }
-            stack.push(tag);
-            addTag(tag);
+            styleObject.mergeIn(newStyle);            
             break;
 
         case "pop":
-            if (stack.isEmpty() == false) {
-                addTag(Tag.closingTag(stack.pop()));
+        	if (args.size() > 1) {                
+                for (int i = 1; i < args.size(); ++i) {                	
+                    String a = args.get(i);
+                    if (TextStyle.defined(a)) {
+                        TextStyle current = TextStyle.get(a);
+                        if(styleObject.getString(current.getType(),"").equals(current.getValue()))
+                        {
+                        	styleObject.remove(current.getType());
+                        }
+                    }
+                }                
             }
             break;
 
         case "empty":
-            while (stack.isEmpty() == false) {
-                addTag(Tag.closingTag(stack.pop()));
-            }
+            styleObject.clear();
             break;
         default:
             String msg = String.format("Unknown stack argument: '%s'", arg);
@@ -771,7 +770,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
     private boolean addSpacer;
     private UniqueStringGenerator idGen;
     private UniqueStringGenerator nameGen;
-    private StringBuilder currentElement;
+    private JsonArray currentElement;
     private StringBuilder currentStyle;
     
 
