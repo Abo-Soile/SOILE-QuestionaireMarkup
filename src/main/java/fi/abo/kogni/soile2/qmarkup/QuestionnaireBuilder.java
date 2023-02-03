@@ -15,10 +15,15 @@ import org.stringtemplate.v4.STGroupFile;
 import fi.abo.kogni.soile2.qmarkup.typespec.MalformedCommandException;
 import fi.abo.kogni.soile2.qmarkup.typespec.Validator;
 import fi.abo.kogni.soile2.utils.generator.UniqueStringGenerator;
+import io.vertx.core.json.JsonArray;
+import io.vertx.core.json.JsonObject;
 
 
 public class QuestionnaireBuilder implements QuestionnaireProcessor {
 
+	private JsonObject textStyle;
+	private JsonObject blockStyle;
+	private JsonObject currentTag;
     public QuestionnaireBuilder(URL template) {
         super();
         this.pendingTags = new ArrayDeque<>();
@@ -29,19 +34,24 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         this.group = new STGroupFile(template);
         this.questionnaire = questionnaireST();
         this.spacer = group.getInstanceOf("vspacer");
-        this.body = new StringBuilder();
-        this.validStmt = new StringBuilder();
-
+        this.body = new JsonArray();
+        this.validStmt = new JsonArray();
+        this.currentParagraph = new JsonArray();
+        this.currentElement = new JsonArray();
         Tag tag = Tag.newTag("p");
         this.paragraphOpenTag = tag.toString();
         this.paragraphCloseTag = Tag.closingTag(tag);
         this.questionnaireId = "";
         this.encryptionKey = "";
-
+        this.currentLine = 0;
         this.inParagraph = false;
         this.textAsArgument = false;
         this.expectPageTitle = false;
         this.addSpacer = false;
+        this.textStyle = new JsonObject();
+        this.currentTag = new JsonObject();
+        this.blockStyle = new JsonObject();
+        this.currentStyle = new StringBuilder();
         AtomicInteger counter = UniqueStringGenerator.createCounter();
         this.idGen = new UniqueStringGenerator("id");
         this.idGen.setCounter(counter);
@@ -51,7 +61,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
     
     public QuestionnaireBuilder(String template) throws MalformedURLException
     {
-    	this(QuestionnaireBuilder.class.getClassLoader().getResource("questionnaire_embedded.stg"));    	
+    	this(QuestionnaireBuilder.class.getClassLoader().getResource(template));    	
     }
     public void questionnaireId(String id) {
         this.questionnaireId = id;
@@ -69,15 +79,15 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         return this.encryptionKey;
     }
 
+    private JsonObject newTag()
+    {
+    	return new JsonObject().put("type", "text").put("inline", true);
+    }
+    
     @SuppressWarnings("unchecked")
     @Override
     public void processCommand(String command, ArrayList<String> args) throws MalformedCommandException {
         Tag tag = Tag.newTag(command);
-
-        if (addSpacer) {
-            addTag(spacer.render());
-            addSpacer = false;
-        }
 
         if (textAsArgument) {
             /*
@@ -85,7 +95,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
              * never mind. Proceed as usual, but close the pending tag.
              */
             textAsArgument = false;
-            clearPendingTag();
+            currentTag = newTag();
         }
 
         switch (command) {
@@ -106,10 +116,6 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                 vw.setId(id);
                 Boolean inline = ((BooleanValue) value.getValue("inline")).asBoolean();
                 Boolean optional = ((BooleanValue) value.getValue("optional")).asBoolean();
-
-                if(! inline) {
-                    closeParagraph();
-                }
                 tmpl.add("id", id);
                 String label = value.getValue("label").toString();
                 if (label.isEmpty() == true) {
@@ -129,12 +135,8 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                     tmpl.addAggr("options.{short, long}",
                                  v.getValue("dbvalue"), v.getValue("text"));
                 }
-                addTag(tmpl.render());
+                addWidget(tmpl.render(), inline);
                 validationCode(ddmwd);
-
-                if(! inline) {
-                    addSpacer = true;
-                }
             }
             break;
         case "multiselect":
@@ -143,12 +145,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                 Validator validator = Validator.validatorFor(command);
                 validator.validate(value);
 
-                Boolean inline = ((BooleanValue) value.getValue("inline")).asBoolean();
                 Boolean colalign = ((BooleanValue) value.getValue("colalign")).asBoolean();
-                if(! inline) {
-                    closeParagraph();
-                }
-
                 ST tmpl = group.getInstanceOf("select");
                 String defaultValue = value.getValue("default_value").toString();
                 ArrayList<Value> options =
@@ -197,13 +194,11 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                         mswd.addColumn(encrypt(colname));
                         mswd.addValue(dbvalue);
                     }
+                    //System.out.println(columnTmpl.render());
                     tmpl.addAggr("columns.{content}", columnTmpl.render());
                 }
                 validationCode(mswd);
-                addTag(tmpl.render());
-                if(! inline) {
-                    addSpacer = true;
-                }
+                addWidget(tmpl.render());
             }
             break;
         case "numberfield":
@@ -213,11 +208,6 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                 validator.validate(value);
 
                 Boolean inline = ((BooleanValue) value.getValue("inline")).asBoolean();
-
-                if(!inline) {
-                    closeParagraph();
-                }
-
                 ST tmpl = group.getInstanceOf(command);
                 NumberFieldWidgetData nfwd = this.new NumberFieldWidgetData();
                 String id = idGen.generate();
@@ -256,17 +246,15 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                 tmpl.add("increment", incr);
                 tmpl.add("width", width);
                 tmpl.add("separator", separator);
+                tmpl.add("inline", inline);
                 if(startValue != 0) {
                     tmpl.add("value", startValue);
                 } else {
                     tmpl.add("value", false);
                 }
                 tmpl.add("optional", optional);
-                addTag(tmpl.render());
+                addWidget(tmpl.render(), inline);
                 validationCode(nfwd);
-                if(! inline) {
-                    addSpacer = true;
-                }
             }
             break;
         case "singleselect":
@@ -323,7 +311,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                         optTmpl.add("name", name);
                         String dbvalue = opt.getValue("dbvalue").toString().replace("\n", "");
                         optTmpl.add("value", dbvalue);
-                        optTmpl.add("label", opt.getValue("text"));
+                        optTmpl.add("label", opt.getValue("text").toString().replace("\n", ""));
                         Boolean checked = (Boolean) opt.getValue("checked").asJavaObject();
                         if (checked == false) {
                             checked = null;
@@ -337,10 +325,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                     tmpl.addAggr("columns.{content}", columnTmpl.render());
                 }
                 validationCode(sswd);
-                addTag(tmpl.render());
-                if(! inline) {
-                    addSpacer = true;
-                }
+                addWidget(tmpl.render());
             }
             break;
         case "slider":
@@ -389,9 +374,8 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                     tmpl.addAggr("labels.{value}", it.next());
                 }
                 tmpl.add("count", count);
-                addTag(tmpl.render());
+                addWidget(tmpl.render());
                 validationCode(swd);
-                addSpacer = true;
             }
             break;
         case "textarea":
@@ -427,50 +411,33 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                 tawd.setColumn(encrypt(field));
                 tawd.setMaxLength(maxlen.toString());
                 tmpl.add("separator", separator);
-                addTag(tmpl.render());
-                Boolean optional = ((BooleanValue) value.getValue("optional")).asBoolean();
-                if (optional == false) {
-                    NonemptyTextWidget ntw = this.new NonemptyTextWidget();
-                    ntw.setId(id);
-                    validationCode(ntw);
-                }
+                addWidget(tmpl.render());
                 validationCode(tawd);
-                addSpacer = true;
             }
             break;
         case "textbox":
             if (args.size() > 0) {
-
-                /*
-                 * Text boxes are "in-line elements." That is, they can appear only
-                 * inside a paragraph.
-                 */
-                if (inParagraph == false) {
-                    addTag(paragraphOpenTag);
-                    inParagraph = true;
-                }
-
                 Value value = Value.parse(args.get(0));
                 Validator validator = Validator.validatorFor(command);
                 validator.validate(value);
                 ST tmpl = group.getInstanceOf(command);
                 String id = idGen.generate();
                 TextboxWidgetData tbwd = this.new TextboxWidgetData();
-                Boolean linebreak = ((BooleanValue) value.getValue("linebreak")).asBoolean();
+                boolean linebreak = false;
+                if(value.getValue("linebreak") != null)
+                {
+                	linebreak = ((BooleanValue) value.getValue("linebreak")).asBoolean();
+                }
                 String field = createColumnName(questionnaireId(),
                         value.getValue("dbcolumn").toString());
                 String label = value.getValue("label").toString();
                 Boolean required = false;
                 required = !((BooleanValue) value.getValue("optional")).asBoolean();
-                String separator = "&nbsp;";
-                if (linebreak) {
-                    separator = Tag.newEmptyTag(Tag.LINEBREAK).toString();
-                }
                 if (label.isEmpty() == true) {
                     label = null;
                 }
                 tmpl.add("id", id);
-                tmpl.add("separator", separator);
+                tmpl.add("inline", true);
                 tmpl.add("label", label);
                 Value maxlen = value.getValue("length");
                 tmpl.add("length", maxlen);
@@ -479,13 +446,11 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                 tbwd.setId(id);
                 tbwd.setColumn(encrypt(field));
                 tbwd.setMaxLength(maxlen.toString());
-                addTag(tmpl.render());
-                BooleanValue optional = (BooleanValue) value.getValue("optional");
-                if (optional.asBoolean() == false) {
-                    NonemptyTextWidget ntw = this.new NonemptyTextWidget();
-                    ntw.setId(id);
-                    validationCode(ntw);
-                }
+                addWidget(tmpl.render(), true);
+                if(linebreak)
+                {
+                	addText("\n");
+                }                
                 validationCode(tbwd);
             }
             break;
@@ -495,54 +460,49 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         case "bs":          // "Block Style"
             if (args.size() > 0) {
                 closeParagraph();
-                workOnStack(args, bsStack, tag);
+                workOnStack(args, blockStyle);
             }
             break;
         case "lb":          // "Line Break"
-            tag = Tag.newEmptyTag(command);
-            addTag(tag);
+            addText("\n");            
             break;
-        case "link":
+        case "link":        	
+        	currentTag = new JsonObject().put("inline", true);
+        	currentTag.put("type", "link");        	
             if (args.size() >= 1) {
-                tag.attribute("href", args.get(0));
-                addTag(tag);
+                currentTag.put("href", args.get(0));                                
                 textAsArgument = true;
-                setPendingTag(tag);
             }
             if (args.size() == 2) {
-                tag.attribute("class", args.get(1));
-                addTag(tag);
+            	currentTag.put("class", args.get(1));
                 textAsArgument = true;
-                setPendingTag(tag);
             }
-
             break;
         case "p":           // "Paragraph"
             closeParagraph();
+            
             inParagraph = true;
-            addTag(tag);
+            //addTag(tag);
             break;
         case "pagetitle":
             textAsArgument = true;
-            expectPageTitle = true;
+            expectPageTitle = true;        	            
             break;
         case "pb":          // "Paragraph Break"
             closeParagraph();
             break;
         case "subtitle":
-            addTag(tag);
-            textAsArgument = true;
-            setPendingTag(tag);
+        	closeParagraph();
+        	currentTag = new JsonObject().put("type", "subtitle");            
+            textAsArgument = true;                                           
             break;
         case "title":
-            addTag(tag);
-            textAsArgument = true;
-            setPendingTag(tag);
+        	closeParagraph();
+        	currentTag = new JsonObject().put("type", "title");            
+            textAsArgument = true;            
             break;
-        case "ts":          // "Text Style"
-            if (inParagraph && args.size() > 0) {
-                workOnStack(args, tsStack, tag);
-            }
+        case "ts":          // "Text Style"            
+            workOnStack(args, textStyle);            
             break;
         case "spacer":
             closeParagraph();
@@ -564,20 +524,45 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 
     @Override
     public void processText(String text) {
+    	
         if (expectPageTitle) {
             questionnaire.add("title", text);
             expectPageTitle = false;
             textAsArgument = false;
             return;
         }
-        body.append(text);
+        // This should probably be a StringBuilder, but it might just work ok...
+        addText(text);
         if (textAsArgument) {
-            clearPendingTag();
+            closeTag();
             textAsArgument = false;
         }
-        body.append(' ');
     }
+    
+    private void closeTag()
+    {
+    	if(textStyle.isEmpty())
+    	{
+    		currentTag.put("style", new JsonObject().mergeIn(textStyle));
+    	}
+    	else
+    	{
+    		currentTag.put("style", new JsonObject().mergeIn(blockStyle));
+    	}
+    	String tagType = addAndClearCurrentElement(currentParagraph);
+    	if(tagType.equals("subtitle") || tagType.equals("title") )
+    	{
+    		closeParagraph();
+    	}
+    }
+    
 
+    private void addText(String text)
+    {
+    	currentTag.put("text",currentTag.getString("text","") + text);
+    }
+    
+    
     @Override
     public void finish() {
         closeParagraph();
@@ -585,9 +570,9 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
     }
 
     @Override
-    public String output() {
-        questionnaire.add("body", body.toString());
-        questionnaire.add("stmts", validStmt.toString());
+    public String output() {    	
+        questionnaire.add("elements", body.encodePrettily());
+        questionnaire.add("functions", validStmt.encodePrettily());
         return questionnaire.render();
     }
 
@@ -595,12 +580,8 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         pendingTags.clear();
         tsStack.clear();
         bsStack.clear();
-        if (body.length() > 0) {
-            body.delete(0, body.length());
-        }
-        if (validStmt.length() > 0) {
-            validStmt.delete(0, validStmt.length());
-        }
+        body = new JsonArray();
+        validStmt = new JsonArray();
 //        questionnaire.remove("body");
 //        questionnaire.remove("stmts");
 //        questionnaire.remove("title");
@@ -611,85 +592,105 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         questionnaireId = "";
     }
 
-    private void setPendingTag(Tag tag) {
-        // Only one tag may be pending at any given time.
-
-        if (pendingTags.isEmpty() == false) {
-            pendingTags.clear();
-        }
-        pendingTags.push(Tag.closingTag(tag));
-    }
-
-    private void clearPendingTag() {
-        if (pendingTags.isEmpty() == false) {
-            addTag(pendingTags.pop());
-
-            // Only one tag is allowed to be pending at a time.
-            pendingTags.clear();
-        }
-    }
 
     private void emptyTsStack() {
-        while (tsStack.isEmpty() == false) {
-            body.append(Tag.closingTag(tsStack.pop()));
-        }
+    	textStyle.clear();
     }
 
     private void emptyBsStack() {
-        while (bsStack.isEmpty() == false) {
-            body.append(Tag.closingTag(bsStack.pop()));
-        }
+    	blockStyle.clear();
     }
 
     private void closeParagraph() {
         if (inParagraph) {
-            clearPendingTag();
             emptyTsStack();
-            addTag(paragraphCloseTag);
+            //addTag(paragraphCloseTag);
             inParagraph = false;
         }
+        addAndClearCurrentElement(currentParagraph);
+        if(currentParagraph.size() > 0)
+        {
+        	body.add(currentParagraph);
+        }
+        currentParagraph = new JsonArray();
+
+    }
+    private void addWidget(String WidgetJson)
+    {
+    	addWidget(WidgetJson, false);
     }
 
-    private void addTag(Tag tag) {
-        addTag(tag.toString());
+    private void addWidget(String WidgetJson, boolean inline)
+    {
+    	//Add the widget to the current paragraph.
+    	JsonArray current;
+		    		
+    	if(inParagraph || inline)
+    	{
+    		current = currentParagraph;
+    	}
+    	else
+    	{
+    		// if we are not in the paragraph, we need to close whatever paragraph we have and
+    		// start a new one.
+    		closeParagraph();
+    		current = new JsonArray();
+    		body.add(current);
+    	}    	
+		addAndClearCurrentElement(current);    	
+    	JsonObject widget = new JsonObject(WidgetJson);
+		current.add(new JsonObject().put("type", widget.getString("type")).put("data",widget));
+    }
+        
+    private String addAndClearCurrentElement(JsonArray target)
+    {
+    	// add only if this actually is non empty
+    	if(!currentTag.getString("text","").equals(""))
+    	{
+    		target.add(new JsonObject().put("type", "html").put("data", currentTag));
+    		
+    	}
+    	String type = currentTag.getString("type","");
+    	currentTag = newTag();
+    	return type;
     }
 
-    private void addTag(String tag) {
-        body.append('\n');
-        body.append(tag);
-        body.append('\n');
-    }
-
-    private void workOnStack(ArrayList<String> args, ArrayDeque<Tag> stack, Tag tag) {
+    private void workOnStack(ArrayList<String> args, JsonObject styleObject) {
         String arg = decodeStackArg(args.get(0));
 
         switch (arg) {
         case "push":
+        	JsonObject newStyle = new JsonObject();
             if (args.size() > 1) {
-                StringBuilder sb = new StringBuilder();
-                for (int i = 1; i < args.size(); ++i) {
+            	            	                
+                for (int i = 1; i < args.size(); ++i) {                	
                     String a = args.get(i);
                     if (TextStyle.defined(a)) {
-                        sb.append(TextStyle.get(a));
-                        sb.append(' ');
+                        TextStyle current = TextStyle.get(a);
+                        newStyle.put(current.getType(), current.getValue());                        
                     }
-                }
-                tag.attribute("style", sb.toString());
+                }                
             }
-            stack.push(tag);
-            addTag(tag);
+            styleObject.mergeIn(newStyle);            
             break;
 
         case "pop":
-            if (stack.isEmpty() == false) {
-                addTag(Tag.closingTag(stack.pop()));
+        	if (args.size() > 1) {                
+                for (int i = 1; i < args.size(); ++i) {                	
+                    String a = args.get(i);
+                    if (TextStyle.defined(a)) {
+                        TextStyle current = TextStyle.get(a);
+                        if(styleObject.getString(current.getType(),"").equals(current.getValue()))
+                        {
+                        	styleObject.remove(current.getType());
+                        }
+                    }
+                }                
             }
             break;
 
         case "empty":
-            while (stack.isEmpty() == false) {
-                addTag(Tag.closingTag(stack.pop()));
-            }
+            styleObject.clear();
             break;
         default:
             String msg = String.format("Unknown stack argument: '%s'", arg);
@@ -723,13 +724,12 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         return sb.toString();*/
     }
 
-    private void validationCode(Qdata data) {
+    private void validationCode(QuestionnaireWidget data) {
         validationCode(data.render());
     }
 
     private void validationCode(String code) {
-        validStmt.append(code);
-        validStmt.append('\n');
+        validStmt.add(new JsonObject(code));        
     }
 
     private String encrypt(String field) {
@@ -747,11 +747,16 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
     private ArrayDeque<Tag> bsStack;
 
     // The body of the questionnaire
-    private StringBuilder body;
+    private JsonArray body;
 
     // Validation statements.
-    private StringBuilder validStmt;
+    private JsonArray validStmt;
 
+    // The current paragraph
+    private JsonArray currentParagraph;
+
+    private int currentLine;
+    
     private STGroup group;
     private ST spacer;
     private ST questionnaire;
@@ -765,9 +770,12 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
     private boolean addSpacer;
     private UniqueStringGenerator idGen;
     private UniqueStringGenerator nameGen;
+    private JsonArray currentElement;
+    private StringBuilder currentStyle;
+    
 
-    private abstract class Qdata {
-        public Qdata(String n) {
+    private abstract class QuestionnaireWidget {
+        public QuestionnaireWidget(String n) {
             this.tmpl = group.getInstanceOf(n);
         }
 
@@ -782,7 +790,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         private ST tmpl;
     }
 
-    private class ValidateWidget extends Qdata {
+    private class ValidateWidget extends QuestionnaireWidget {
         public ValidateWidget() {
             super("qdata_validate_widget");
         }
@@ -793,7 +801,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         }
     }
 
-    private class NonemptyTextWidget extends Qdata {
+    private class NonemptyTextWidget extends QuestionnaireWidget {
         public NonemptyTextWidget() {
             super("qdata_nonempty_text_widget");
         }
@@ -804,7 +812,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         }
     }
 
-    private class DropDownMenuWidgetData extends Qdata {
+    private class DropDownMenuWidgetData extends QuestionnaireWidget {
         public DropDownMenuWidgetData() {
             super("qdata_widgetdata_dropdownmenu");
         }
@@ -819,7 +827,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 
     }
 
-    private class SingleselectWidgetData extends Qdata {
+    private class SingleselectWidgetData extends QuestionnaireWidget {
         public SingleselectWidgetData() {
             super("qdata_widgetdata_singleselect");
         }
@@ -842,7 +850,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 
     }
 
-    private class MultiselectWidgetData extends Qdata {
+    private class MultiselectWidgetData extends QuestionnaireWidget {
         public MultiselectWidgetData() {
             super("qdata_widgetdata_multiselect");
         }
@@ -865,7 +873,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 
     }
 
-    private class NumberFieldWidgetData extends Qdata {
+    private class NumberFieldWidgetData extends QuestionnaireWidget {
         public NumberFieldWidgetData() {
             super("qdata_widgetdata_numberfield");
         }
@@ -880,7 +888,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 
     }
 
-    private class SliderWidgetData extends Qdata {
+    private class SliderWidgetData extends QuestionnaireWidget {
         public SliderWidgetData() {
             super("qdata_widgetdata_slider");
         }
@@ -895,7 +903,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 
     }
 
-    private class TextareaWidgetData extends Qdata {
+    private class TextareaWidgetData extends QuestionnaireWidget {
         public TextareaWidgetData() {
             super("qdata_widgetdata_textarea");
         }
@@ -913,7 +921,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         }
     }
 
-    private class TextboxWidgetData extends Qdata {
+    private class TextboxWidgetData extends QuestionnaireWidget {
         public TextboxWidgetData() {
             super("qdata_widgetdata_textbox");
         }

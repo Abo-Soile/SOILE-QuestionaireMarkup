@@ -5,8 +5,8 @@ public class MalformedCommandException extends RuntimeException {
     /**
      * 
      */
-    private static final long serialVersionUID = -8023786090013447951L;
-
+    private static final long serialVersionUID = -8023786090013447951L;    
+    
     public MalformedCommandException() {
         super();
     }
@@ -15,4 +15,7 @@ public class MalformedCommandException extends RuntimeException {
         super(msg);
     }
 
+    public MalformedCommandException(String msg, int position ) {
+        this("Problem at line " + position +": " + msg);        
+    }
 }
