@@ -177,7 +177,7 @@ selection_column(elems, width) ::= <<
 
 >>
 
-radiobutton(id, name, value, label, checked) ::= <<
+radiobutton(id, name, selectedValue, label, checked) ::= <<
 
 {
 "type" : "radiobutton",
@@ -185,7 +185,7 @@ radiobutton(id, name, value, label, checked) ::= <<
 "name" : "$name$",
 "label" : "$label$",
 "checked" : $if(checked)$  $checked$ $else$ false $endif$,
-"value" : "$value$"
+"selectedValue" : "$selectedValue$"
 }
 
 >>
