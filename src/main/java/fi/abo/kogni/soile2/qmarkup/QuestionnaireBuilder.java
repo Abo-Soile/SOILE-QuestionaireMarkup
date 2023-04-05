@@ -213,7 +213,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                 String id = idGen.generate();
                 tmpl.add("id", id);
                 tmpl.add("name", nameGen.generate());
-
+                
                 String label = String.valueOf(value.getValue("label"));
                 if(label.length()==0) {
                     tmpl.add("label", false);
@@ -233,6 +233,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                 String field = createColumnName(questionnaireId(),
                         value.getValue("dbcolumn").toString());
                 nfwd.setColumn(encrypt(field));
+                
                 Value min = value.getValue("minimum");
                 Value max = value.getValue("maximum");
                 Value incr = value.getValue("increment");
@@ -240,6 +241,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                 //Empty meaning that no value is set and that the field isn't required
                 Boolean optional = ((BooleanValue) value.getValue("optional")).asBoolean();
                 Integer startValue = ((IntegerValue) value.getValue("value")).asInteger();
+                nfwd.setValue(startValue.toString());
                 int width = max.toString().trim().length() + 2;
                 tmpl.add("minimum", min);
                 tmpl.add("maximum", max);
@@ -363,6 +365,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                 tmpl.add("maximum", max);
                 tmpl.add("increment", incr);
                 tmpl.add("select", select);
+                swd.setSelected(select.toString());
                 String field = createColumnName(questionnaireId(),
                         value.getValue("dbcolumn").toString());
                 swd.setColumn(encrypt(field));
@@ -884,6 +887,10 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         public void setColumn(String col) {
             getTmpl().add("columnName", col);
         }
+        
+        public void setValue(String value) {
+            getTmpl().add("defaultValue", value);
+        }
 
     }
 
@@ -898,6 +905,10 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 
         public void setColumn(String col) {
             getTmpl().add("columnName", col);
+        }
+
+        public void setSelected(String selected) {
+            getTmpl().add("select", selected);
         }
 
     }

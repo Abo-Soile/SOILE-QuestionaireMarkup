@@ -21,12 +21,12 @@ qdata_widgetdata_singleselect(ids, columnName, values, defaultValue) ::= <<
 [ $ids , values: { id, value | { "id" : "$id.text$", "dbcolumn" : "$columnName$", "value" : "$value.text$", "defaultValue" : "$defaultValue$" \}} ; separator=","$ ]
 >>
 
-qdata_widgetdata_numberfield(id, columnName) ::= <<
-[{"id" : "$id$", "dbcolumn" : "$columnName$", "value" : null, "defaultValue" : null} ]
+qdata_widgetdata_numberfield(id, columnName, defaultValue) ::= <<
+[{"id" : "$id$", "dbcolumn" : "$columnName$", "value" : $defaultValue$, "defaultValue" : $defaultValue$} ]
 >>
 
-qdata_widgetdata_slider(id, columnName) ::= <<
-  [{"id" : "$id$", "dbcolumn" : "$columnName$", "value" : null, "defaultValue" : null} ]
+qdata_widgetdata_slider(id, columnName, select) ::= <<
+  [{"id" : "$id$", "dbcolumn" : "$columnName$", "value" : $select$, "defaultValue" : $select$} ]
 >>
 
 qdata_widgetdata_textarea(id, columnName) ::= <<

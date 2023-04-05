@@ -46,6 +46,13 @@ public class QuestionnaireBuilderTest extends TestCase {
     }
 
     @Test
+    public void testExample() throws Exception {
+    	String result = buildForm("QuestionnaireExample.qmarkup");
+    	//System.out.println(result);
+    	assertTrue(succeeded);
+    }
+    
+    @Test
     public void testPilotForm() throws Exception {
         String result = buildForm("pilotform.qmarkup");
         //System.out.println(result);
