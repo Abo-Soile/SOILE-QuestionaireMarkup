@@ -182,7 +182,8 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                         optTmpl.add("id", id);
                         optTmpl.add("name", name);
                         String dbvalue = opt.getValue("dbvalue").toString().replace("\n", "");
-                        optTmpl.add("value", dbvalue);
+                        optTmpl.add("selectedValue", dbvalue);
+                        optTmpl.add("unselectedValue", defaultValue);
                         optTmpl.add("label", opt.getValue("text"));
                         Boolean checked = (Boolean) opt.getValue("checked").asJavaObject();
                         if (checked == false) {
@@ -312,7 +313,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                         optTmpl.add("id", id);
                         optTmpl.add("name", name);
                         String dbvalue = opt.getValue("dbvalue").toString().replace("\n", "");
-                        optTmpl.add("value", dbvalue);
+                        optTmpl.add("selectedValue", dbvalue);
                         optTmpl.add("label", opt.getValue("text").toString().replace("\n", ""));
                         Boolean checked = (Boolean) opt.getValue("checked").asJavaObject();
                         if (checked == false) {
