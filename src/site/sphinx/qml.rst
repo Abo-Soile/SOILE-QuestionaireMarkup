@@ -237,7 +237,7 @@ This would produce
 Åbo Akademi.
 
 /table
------
+------
 
 This commands sets up a table for all following data. It must be used in conjunction with the /tableRow, /tableColumn and /endTable commands.
 The table command can be supplemented by a style parameter ( /table { style="border:1px; background:green;" } )

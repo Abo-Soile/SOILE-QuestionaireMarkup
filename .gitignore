@@ -16,3 +16,6 @@ Test.html
 Test2.html
 
 /target/
+
+src/site/sphinx/_build/*
+
