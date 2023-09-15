@@ -86,3 +86,9 @@ command textbox {
 }
 
 
+command table {
+
+    style: String
+    
+}
+

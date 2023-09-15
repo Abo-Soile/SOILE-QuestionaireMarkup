@@ -236,6 +236,20 @@ This is how a link to the Åbo Akademi homepage would be created.
 This would produce 
 Åbo Akademi.
 
+/table
+-----
+
+This commands sets up a table for all following data. It must be used in conjunction with the /tableRow, /tableColumn and /endTable commands.
+The table command can be supplemented by a style parameter ( /table { style="border:1px; background:green;" } )
+
+- /table opens a table
+- /tableRow opens a row in the table and closes the previous row
+- /tableColumn opens a table column within the current table row and closes the previous column.
+- /endTable closes the table 
+
+Tables must be closed (i.e. must be ended by /endtable) otherwise the layout can fail.
+
+
 #######
 Widgets
 #######

@@ -120,6 +120,19 @@ public abstract class Validator {
         }
      
 
+        public static class table extends Validator {
+            @Override
+            public void validate(Value value) throws MalformedCommandException {
+            	validateCommand8(value);
+            }
+
+            @Override
+            public String name() {
+                return "table";
+            }
+        }
+     
+
 
 
         @SuppressWarnings("unchecked")
@@ -656,6 +669,22 @@ public abstract class Validator {
         }
      
 
+
+        @SuppressWarnings("unchecked")
+        protected void validateCommand8(Value value) 
+                throws MalformedCommandException {
+            validateObject(value);
+            Map<String, Value> object = (Map<String, Value>) value.asJavaObject();
+                    if (object.containsKey("style")) {
+                        validateString(object.get("style"));
+                    } 
+                    else {
+                        String msg = String.format("Missing object element: '%s'.", "style");
+                        throw new MalformedCommandException(msg);
+                    } 
+        }
+     
+
     protected Value defaultStringValue(String s) {
         return new StringValue(s);
     }
@@ -739,6 +768,7 @@ public abstract class Validator {
         validators.put("numberfield", new numberfield());
         validators.put("textarea", new textarea());
         validators.put("textbox", new textbox());
+        validators.put("table", new table());
     }
 
 }

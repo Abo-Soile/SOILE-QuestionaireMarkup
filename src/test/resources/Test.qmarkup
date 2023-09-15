@@ -1,0 +1,44 @@
+/subtitle
+TERVEYDENTILA JA ELINTAVAT
+
+/numberfield {
+    dbcolumn: "pituus",
+    label: "Pituus:",
+    value: 0,
+    minimum: 0,
+    maximum: 250,
+    increment: 1
+} cm
+
+/numberfield {
+    dbcolumn: "paino",
+    label: "Paino:",
+    value: 0,
+    minimum: 0,
+    maximum: 250,
+    increment: 1
+} kg
+
+/p
+Onko sinulla
+/p
+
+/multiselect {
+    default_value: "ei",
+    dbcolumn: "kuulo",
+    options: [[
+    {
+      dbcolumn: "kuulo",
+      dbvalue: "normaali",
+      text: "",
+      checked: false
+    }
+    ]]
+}
+/p
+
+
+
+
+
+

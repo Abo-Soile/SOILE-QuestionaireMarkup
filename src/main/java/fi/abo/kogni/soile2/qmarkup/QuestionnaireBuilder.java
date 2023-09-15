@@ -24,6 +24,11 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 	private JsonObject textStyle;
 	private JsonObject blockStyle;
 	private JsonObject currentTag;
+	private JsonObject currentTable;
+	private JsonArray currentTableRow;
+	private JsonArray currentTableColumn;
+	
+	
     public QuestionnaireBuilder(URL template) {
         super();
         this.pendingTags = new ArrayDeque<>();
@@ -35,6 +40,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         this.questionnaire = questionnaireST();
         this.spacer = group.getInstanceOf("vspacer");
         this.body = new JsonArray();
+        this.currentBody = this.body;
         this.validStmt = new JsonArray();
         this.currentParagraph = new JsonArray();
         this.currentElement = new JsonArray();
@@ -101,7 +107,46 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         switch (command) {
 
         // Process those commands which take an object as argument.
-
+        case "table":
+        	if(currentTable != null)
+        	{
+        		throw new MalformedCommandException("Table was not closed!");
+        	}
+        	currentTable = new JsonObject();
+        	currentTable.put("tableRows", new JsonArray());
+        	if (args.size() > 0)
+        	{
+        		Value value = Value.parse(args.get(0));
+                Validator validator = Validator.validatorFor(command);
+                validator.validate(value);
+                String style = String.valueOf(value.getValue("style"));
+                currentTable.put("style", style);
+                currentTable.put("type", "table");
+        	}        	
+        	break;
+        case "tableColumn":        	
+        	if(currentTableColumn != null )
+        	{
+        		// the column ends, fill it. 
+        		this.closeParagraph();            	        	
+        	}
+        	currentTableColumn = new JsonArray();
+        	currentTableRow.add(currentTableColumn);
+        	this.currentBody = currentTableColumn;
+        	break;
+        case "tableRow":        	     	        
+        	// create a new row and add it. 
+        	currentTableRow = new JsonArray();
+        	currentTable.getJsonArray("tableRows").add(currentTableRow);
+        	break;
+        case "endTable":        	
+        	this.closeParagraph();
+        	this.currentBody = body;        	
+        	this.currentBody.add(currentTable);
+        	this.currentTable = null;
+        	this.currentTableColumn = null;
+        	this.currentTableRow = null;
+        	break;
         case "dropdownmenu":
             if (args.size() > 0) {
                 //closeParagraph();
@@ -138,70 +183,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                 addWidget(tmpl.render(), inline);
                 validationCode(ddmwd);
             }
-            break;
-        case "multiselect":
-            if (args.size() > 0) {
-                Value value = Value.parse(args.get(0));
-                Validator validator = Validator.validatorFor(command);
-                validator.validate(value);
-
-                Boolean colalign = ((BooleanValue) value.getValue("colalign")).asBoolean();
-                ST tmpl = group.getInstanceOf("select");
-                String defaultValue = value.getValue("default_value").toString();
-                ArrayList<Value> options =
-                        (ArrayList<Value>)  value.getValue("options").asJavaObject();
-                int numColumns = options.size();
-//                int width = CONTENT_WIDTH_PX  / numColumns;
-//                width -= 5;
-                float width = 100/numColumns;
-
-                MultiselectWidgetData mswd = this.new MultiselectWidgetData();
-                mswd.setDefaultValue(defaultValue);
-                String name = nameGen.generate();
-                Iterator<Value> it = options.iterator();
-                while (it.hasNext()) {
-                    // Iterating over columns, basically.
-
-                    Value c = it.next();
-                    ST columnTmpl = group.getInstanceOf("selection_column");
-                    if(colalign) {
-                        columnTmpl.add("width", width);
-                    } else {
-                        columnTmpl.add("width", "");
-                    }
-                    ArrayList<Value> column = (ArrayList<Value>) c.asJavaObject();
-                    Iterator<Value> iter = column.iterator();
-                    while (iter.hasNext()) {
-                        // Fill one column.
-
-                        Value opt = iter.next();
-                        ST optTmpl = group.getInstanceOf("checkbox");
-                        String colname = createColumnName(questionnaireId(),
-                                opt.getValue("dbcolumn").toString());
-                        String id = idGen.generate();
-                        optTmpl.add("id", id);
-                        optTmpl.add("name", name);
-                        String dbvalue = opt.getValue("dbvalue").toString().replace("\n", "");
-                        optTmpl.add("selectedValue", dbvalue);
-                        optTmpl.add("unselectedValue", defaultValue);
-                        optTmpl.add("label", opt.getValue("text"));
-                        Boolean checked = (Boolean) opt.getValue("checked").asJavaObject();
-                        if (checked == false) {
-                            checked = null;
-                        }
-                        optTmpl.add("checked", checked);
-                        columnTmpl.addAggr("elems.{content}", optTmpl.render());
-                        mswd.addId(id);
-                        mswd.addColumn(encrypt(colname));
-                        mswd.addValue(dbvalue);
-                    }
-                    //System.out.println(columnTmpl.render());
-                    tmpl.addAggr("columns.{content}", columnTmpl.render());
-                }
-                validationCode(mswd);
-                addWidget(tmpl.render());
-            }
-            break;
+            break;        
         case "numberfield":
             if (args.size() > 0) {
                 Value value = Value.parse(args.get(0));
@@ -260,6 +242,70 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                 validationCode(nfwd);
             }
             break;
+        case "multiselect":
+            if (args.size() > 0) {
+                Value value = Value.parse(args.get(0));
+                Validator validator = Validator.validatorFor(command);
+                validator.validate(value);
+
+                Boolean colalign = ((BooleanValue) value.getValue("colalign")).asBoolean();
+                ST tmpl = group.getInstanceOf("select");
+                String defaultValue = value.getValue("default_value").toString();
+                ArrayList<Value> options =
+                        (ArrayList<Value>)  value.getValue("options").asJavaObject();
+                
+                int numColumns = options.size();
+//                int width = CONTENT_WIDTH_PX  / numColumns;
+//                width -= 5;
+                float width = 100/numColumns;
+                closeParagraph();
+                MultiselectWidgetData mswd = this.new MultiselectWidgetData();
+                mswd.setDefaultValue(defaultValue);
+                String name = nameGen.generate();
+                Iterator<Value> it = options.iterator();
+                while (it.hasNext()) {
+                    // Iterating over columns, basically.
+
+                    Value c = it.next();
+                    ST columnTmpl = group.getInstanceOf("selection_column");
+                    if(colalign) {
+                        columnTmpl.add("width", width);
+                    } else {
+                        columnTmpl.add("width", "");
+                    }
+                    ArrayList<Value> column = (ArrayList<Value>) c.asJavaObject();
+                    Iterator<Value> iter = column.iterator();
+                    while (iter.hasNext()) {
+                        // Fill one column.
+
+                        Value opt = iter.next();
+                        ST optTmpl = group.getInstanceOf("checkbox");
+                        String colname = createColumnName(questionnaireId(),
+                                opt.getValue("dbcolumn").toString());
+                        String id = idGen.generate();
+                        optTmpl.add("id", id);
+                        optTmpl.add("name", name);
+                        String dbvalue = opt.getValue("dbvalue").toString().replace("\n", "");
+                        optTmpl.add("selectedValue", dbvalue);
+                        optTmpl.add("unselectedValue", defaultValue);
+                        optTmpl.add("label", opt.getValue("text"));
+                        Boolean checked = (Boolean) opt.getValue("checked").asJavaObject();
+                        if (checked == false) {
+                            checked = null;
+                        }
+                        optTmpl.add("checked", checked);
+                        columnTmpl.addAggr("elems.{content}", optTmpl.render());
+                        mswd.addId(id);
+                        mswd.addColumn(encrypt(colname));
+                        mswd.addValue(dbvalue);
+                    }
+                    //System.out.println(columnTmpl.render());
+                    tmpl.addAggr("columns.{content}", columnTmpl.render());
+                }
+                validationCode(mswd);
+                addWidget(tmpl.render());
+            }
+            break;            
         case "singleselect":
             if (args.size() > 0) {
                 Value value = Value.parse(args.get(0));
@@ -350,7 +396,8 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                 try {
                 	if(value.getValue("style") == null)
                 	{
-                		style = "width = 380px";
+                		style = "width: 400px";
+                		tmpl.add("style", style);
                 	}
                 	else
                 	{
@@ -602,8 +649,8 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 
     private void emptyBsStack() {
     	blockStyle.clear();
-    }
-
+    }    
+    
     private void closeParagraph() {
         if (inParagraph) {
             emptyTsStack();
@@ -613,7 +660,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         addAndClearCurrentElement(currentParagraph);
         if(currentParagraph.size() > 0)
         {
-        	body.add(currentParagraph);
+        	currentBody.add(currentParagraph);
         }
         currentParagraph = new JsonArray();
 
@@ -638,7 +685,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
     		// start a new one.
     		closeParagraph();
     		current = new JsonArray();
-    		body.add(current);
+    		currentBody.add(current);
     	}    	
 		addAndClearCurrentElement(current);    	
     	JsonObject widget = new JsonObject(WidgetJson);
@@ -752,6 +799,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
     // The body of the questionnaire
     private JsonArray body;
 
+    private JsonArray currentBody;
     // Validation statements.
     private JsonArray validStmt;
 

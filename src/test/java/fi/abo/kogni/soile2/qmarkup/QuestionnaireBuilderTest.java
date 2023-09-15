@@ -12,6 +12,7 @@ import org.junit.Test;
 
 // import com.sun.org.apache.xpath.internal.operations.Bool;
 import fi.abo.kogni.soile2.qmarkup.typespec.MalformedCommandException;
+import io.vertx.core.json.JsonObject;
 import junit.framework.TestCase;
 
 public class QuestionnaireBuilderTest extends TestCase {
@@ -38,6 +39,15 @@ public class QuestionnaireBuilderTest extends TestCase {
         assertTrue(succeeded);
     }
 
+    @Test
+    public void testTable() throws Exception {
+        String result = buildForm("TableTest.qmarkup");
+        assertTrue(result.contains("tableRows"));
+        JsonObject obj = new JsonObject(result);
+        assertTrue(obj.getJsonArray("elements").getJsonObject(0).getString("type").equals("table"));
+        assertTrue(succeeded);
+    }
+    
     @Test
          public void testAllWidgets() throws Exception {
         String result = buildForm("fullWidgetTest.qmarkup");
@@ -83,6 +93,8 @@ public class QuestionnaireBuilderTest extends TestCase {
     @Test
     public void testNumberFieldEmpty() throws Exception {
         String result = buildForm("testNumberField.qmarkup");
+        assertTrue(result.contains("numberfield"));
+        assertTrue(result.contains("mapping"));
         assertTrue(succeeded);
 
     }

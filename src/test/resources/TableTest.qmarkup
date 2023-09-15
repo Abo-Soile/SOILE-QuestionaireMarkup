@@ -1,0 +1,49 @@
+/table {style: "border=1px"}
+/tableRow
+/tableColumn
+/numberfield {
+    dbcolumn: "first",
+    numeric: true,
+    label: "Ik�",
+    minimum: 1,
+    maximum: 120,
+    increment: 1,
+    optional:true
+}
+
+/tableColumn
+/numberfield {
+    dbcolumn: "ik�",
+    numeric: true,
+    label: "Ik�",
+    minimum: 1,
+    maximum: 120,
+    increment: 1,
+    optional:false
+}
+
+/tableRow
+/tableColumn
+
+/numberfield {
+    dbcolumn: "third",
+    numeric: true,
+    label: "Ik�",
+    minimum: 1,
+    maximum: 120,
+    increment: 1,
+    optional:false,
+    value:22
+}
+/tableColumn
+/numberfield {
+    dbcolumn: "fourth",
+    numeric: true,
+    label: "Ik�",
+    minimum: 1,
+    maximum: 120,
+    increment: 1,
+    optional:false,
+    value:22
+}
+/endTable
