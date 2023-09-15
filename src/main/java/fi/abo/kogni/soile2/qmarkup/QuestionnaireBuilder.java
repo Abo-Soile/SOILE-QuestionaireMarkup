@@ -108,20 +108,23 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 
         // Process those commands which take an object as argument.
         case "table":
+        	closeParagraph();
         	if(currentTable != null)
         	{
         		throw new MalformedCommandException("Table was not closed!");
         	}
         	currentTable = new JsonObject();
-        	currentTable.put("tableRows", new JsonArray());
+        	currentTable.put("data", new JsonObject());
+        	
+        	currentTable.getJsonObject("data").put("tableRows", new JsonArray());
+        	currentTable.getJsonObject("data").put("type", "table");
         	if (args.size() > 0)
         	{
         		Value value = Value.parse(args.get(0));
                 Validator validator = Validator.validatorFor(command);
                 validator.validate(value);
                 String style = String.valueOf(value.getValue("style"));
-                currentTable.put("style", style);
-                currentTable.put("type", "table");
+                currentTable.getJsonObject("data").put("style", style);                
         	}        	
         	break;
         case "tableColumn":        	
@@ -137,12 +140,17 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         case "tableRow":        	     	        
         	// create a new row and add it. 
         	currentTableRow = new JsonArray();
-        	currentTable.getJsonArray("tableRows").add(currentTableRow);
+        	currentTable.getJsonObject("data").getJsonArray("tableRows").add(currentTableRow);
         	break;
         case "endTable":        	
-        	this.closeParagraph();
+        	// close everything contained in the table. This is added to the last table row.
+        	this.closeParagraph();        	
+        	// add the table to the open paragraph;
+        	this.currentParagraph.add(currentTable);
+        	// and add the paragraph containing this table to the body.
         	this.currentBody = body;        	
-        	this.currentBody.add(currentTable);
+        	this.closeParagraph();
+        	// reset the table settings        	
         	this.currentTable = null;
         	this.currentTableColumn = null;
         	this.currentTableRow = null;

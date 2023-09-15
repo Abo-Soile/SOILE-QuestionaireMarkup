@@ -44,7 +44,7 @@ public class QuestionnaireBuilderTest extends TestCase {
         String result = buildForm("TableTest.qmarkup");
         assertTrue(result.contains("tableRows"));
         JsonObject obj = new JsonObject(result);
-        assertTrue(obj.getJsonArray("elements").getJsonObject(0).getString("type").equals("table"));
+        assertTrue(obj.getJsonArray("elements").getJsonArray(2).getJsonObject(0).getJsonObject("data").getString("type").equals("table"));        
         assertTrue(succeeded);
     }
     

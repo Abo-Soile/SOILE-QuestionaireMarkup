@@ -1,3 +1,9 @@
+/title
+TableTest
+
+Some more data
+
+
 /table {style: "border=1px"}
 /tableRow
 /tableColumn
@@ -47,3 +53,5 @@
     value:22
 }
 /endTable
+
+And some stuff after
