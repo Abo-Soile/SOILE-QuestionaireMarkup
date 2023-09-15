@@ -20,6 +20,7 @@ jobs:
         with:
           python-version: 3.11    # Python version to build the html sphinx documentation
           environment-file: src/site/sphinx/sphinx.yml    # Path to the documentation conda environment
+          mamba-version: "*"
           auto-update-conda: false
           auto-activate-base: false
           show-channel-urls: true
