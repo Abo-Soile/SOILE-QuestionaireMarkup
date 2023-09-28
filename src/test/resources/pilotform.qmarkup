@@ -21,7 +21,10 @@ aiemmissa tutkimuksissa yhdistetty suoriutumiseen tiedonkäsittelyyn ja muistiin
 
 /p
 /ts + large
+/ts + bold
 Sukupuoli:
+/ts - bold
+/ts - large
 /singleselect {
   default_value: "",
   dbcolumn: "sukupuoli",

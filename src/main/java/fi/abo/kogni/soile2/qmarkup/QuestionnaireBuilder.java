@@ -39,14 +39,17 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         this.group = new STGroupFile(template);
         this.questionnaire = questionnaireST();
         this.spacer = group.getInstanceOf("vspacer");
-        this.body = new JsonArray();
-        this.currentBody = this.body;
         this.validStmt = new JsonArray();
         this.currentParagraph = new JsonArray();
         this.currentElement = new JsonArray();
         Tag tag = Tag.newTag("p");
         this.paragraphOpenTag = tag.toString();
         this.paragraphCloseTag = Tag.closingTag(tag);
+        
+        
+        
+        this.body = new JsonArray();
+        this.currentBody = this.body;
         this.questionnaireId = "";
         this.encryptionKey = "";
         this.currentLine = 0;
@@ -117,7 +120,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         	currentTable.put("data", new JsonObject());
         	
         	currentTable.getJsonObject("data").put("tableRows", new JsonArray());
-        	currentTable.getJsonObject("data").put("type", "table");
+        	currentTable.put("type", "table");
         	if (args.size() > 0)
         	{
         		Value value = Value.parse(args.get(0));
@@ -521,12 +524,27 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                 workOnStack(args, blockStyle);
             }
             break;
+        case "ts":          // "Text Style"            
+            workOnStack(args, textStyle);            
+            break;            
         case "lb":          // "Line Break"
             addText("\n");            
             break;
         case "link":        	
         	currentTag = new JsonObject().put("inline", true);
         	currentTag.put("type", "link");        	
+            if (args.size() >= 1) {
+                currentTag.put("href", args.get(0));                                
+                textAsArgument = true;
+            }
+            if (args.size() == 2) {
+            	currentTag.put("class", args.get(1));
+                textAsArgument = true;
+            }
+            break;
+        case "personalLink":        	
+        	currentTag = new JsonObject().put("inline", true);
+        	currentTag.put("type", "personalLink");        	
             if (args.size() >= 1) {
                 currentTag.put("href", args.get(0));                                
                 textAsArgument = true;
@@ -559,9 +577,6 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         	currentTag = new JsonObject().put("type", "title");            
             textAsArgument = true;            
             break;
-        case "ts":          // "Text Style"            
-            workOnStack(args, textStyle);            
-            break;
         case "spacer":
             closeParagraph();
             addSpacer = true;
@@ -590,23 +605,18 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
             return;
         }
         // This should probably be a StringBuilder, but it might just work ok...
-        addText(text);
+        addText(text);        
         if (textAsArgument) {
-            closeTag();
+        	// this is a tag that needs the nextline as argument (like titles or links). 
+        	// Thus we need to close it, adding styles.
+        	closeTag();
             textAsArgument = false;
         }
     }
     
     private void closeTag()
     {
-    	if(textStyle.isEmpty())
-    	{
-    		currentTag.put("style", new JsonObject().mergeIn(textStyle));
-    	}
-    	else
-    	{
-    		currentTag.put("style", new JsonObject().mergeIn(blockStyle));
-    	}
+    	    	
     	String tagType = addAndClearCurrentElement(currentParagraph);
     	if(tagType.equals("subtitle") || tagType.equals("title") )
     	{
@@ -618,6 +628,13 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
     private void addText(String text)
     {
     	currentTag.put("text",currentTag.getString("text","") + text);
+    	
+    	if(!(textStyle.isEmpty() && blockStyle.isEmpty()))
+    	{
+    		closeTag();
+    	}
+    	
+    	
     }
     
     
@@ -635,19 +652,34 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
     }
 
     public void reset() {
+    	
         pendingTags.clear();
         tsStack.clear();
         bsStack.clear();
         body = new JsonArray();
         validStmt = new JsonArray();
-//        questionnaire.remove("body");
-//        questionnaire.remove("stmts");
-//        questionnaire.remove("title");
         questionnaire = questionnaireST();
-        inParagraph = false;
-        textAsArgument = false;
-        addSpacer = false;
-        questionnaireId = "";
+        this.currentTable = null;
+        this.currentTableColumn = null;
+        this.currentTableRow = null;
+        this.body = new JsonArray();
+        this.currentBody = this.body;
+        this.questionnaireId = "";
+        this.encryptionKey = "";
+        this.currentLine = 0;
+        this.inParagraph = false;
+        this.textAsArgument = false;
+        this.expectPageTitle = false;
+        this.addSpacer = false;
+        this.textStyle = new JsonObject();
+        this.currentTag = new JsonObject();
+        this.blockStyle = new JsonObject();
+        this.currentStyle = new StringBuilder();
+        AtomicInteger counter = UniqueStringGenerator.createCounter();
+        this.idGen = new UniqueStringGenerator("id");
+        this.idGen.setCounter(counter);
+        this.nameGen = new UniqueStringGenerator("name");
+        this.nameGen.setCounter(counter);                       
     }
 
 
@@ -660,8 +692,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
     }    
     
     private void closeParagraph() {
-        if (inParagraph) {
-            emptyTsStack();
+        if (inParagraph) {        	    	        	            
             //addTag(paragraphCloseTag);
             inParagraph = false;
         }
@@ -671,7 +702,8 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         	currentBody.add(currentParagraph);
         }
         currentParagraph = new JsonArray();
-
+        // we clear the current text style stack, as we enter a new paragraph
+        emptyTsStack();
     }
     private void addWidget(String WidgetJson)
     {
@@ -696,7 +728,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
     		currentBody.add(current);
     	}    	
 		addAndClearCurrentElement(current);    	
-    	JsonObject widget = new JsonObject(WidgetJson);
+    	JsonObject widget = new JsonObject(WidgetJson);    	
 		current.add(new JsonObject().put("type", widget.getString("type")).put("data",widget));
     }
         
@@ -705,7 +737,14 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
     	// add only if this actually is non empty
     	if(!currentTag.getString("text","").equals(""))
     	{
-    		target.add(new JsonObject().put("type", "html").put("data", currentTag));
+    		// add the currently set     		
+    		if(!currentTag.containsKey("style"))
+    		{
+    			JsonObject style = new JsonObject();
+    	    	style.mergeIn(blockStyle);
+    	    	style.mergeIn(textStyle);
+    			target.add(new JsonObject().put("type", "html").put("data", currentTag).put("style", style));
+    		}
     		
     	}
     	String type = currentTag.getString("type","");
@@ -716,8 +755,9 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
     private void workOnStack(ArrayList<String> args, JsonObject styleObject) {
         String arg = decodeStackArg(args.get(0));
 
-        switch (arg) {
+        switch (arg) {        
         case "push":
+        	
         	JsonObject newStyle = new JsonObject();
             if (args.size() > 1) {
             	            	                

@@ -12,6 +12,7 @@ import org.junit.Test;
 
 // import com.sun.org.apache.xpath.internal.operations.Bool;
 import fi.abo.kogni.soile2.qmarkup.typespec.MalformedCommandException;
+import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import junit.framework.TestCase;
 
@@ -38,13 +39,42 @@ public class QuestionnaireBuilderTest extends TestCase {
         String result = buildForm("titleTest.qmarkup");
         assertTrue(succeeded);
     }
-
+    
+    @Test
+    public void testStyle() throws Exception {
+        String result = buildForm("StyleTest.qmarkup");
+        JsonObject obj = new JsonObject(result);        
+        assertEquals(4, obj.getJsonArray("elements").size());
+        JsonArray elements = obj.getJsonArray("elements");
+        JsonArray firstText = elements.getJsonArray(1);
+        assertEquals("large", firstText.getJsonObject(0).getJsonObject("style").getString("font-size"));
+        assertEquals("bold", firstText.getJsonObject(0).getJsonObject("style").getString("font-weight"));
+        assertEquals("large", firstText.getJsonObject(1).getJsonObject("style").getString("font-size"));
+        assertFalse(firstText.getJsonObject(1).getJsonObject("style").containsKey("font-weight"));
+        JsonArray lastText = elements.getJsonArray(3);
+        assertFalse(lastText.getJsonObject(0).getJsonObject("style").containsKey("font-weight"));
+        assertFalse(lastText.getJsonObject(0).getJsonObject("style").containsKey("font-size"));
+        
+        assertTrue(succeeded);
+    }
+    
+    @Test
+    public void testpersonalLink() throws Exception {
+        String result = buildForm("LinkTest.qmarkup");
+        assertTrue(result.contains("personalLink"));
+        JsonObject obj = new JsonObject(result);
+        assertEquals("html", obj.getJsonArray("elements").getJsonArray(1).getJsonObject(0).getString("type"));
+        assertEquals("personalLink", obj.getJsonArray("elements").getJsonArray(1).getJsonObject(0).getJsonObject("data").getString("type"));
+        assertEquals("http://test.fi", obj.getJsonArray("elements").getJsonArray(1).getJsonObject(0).getJsonObject("data").getString("href"));
+        
+        assertTrue(succeeded);
+    }
     @Test
     public void testTable() throws Exception {
         String result = buildForm("TableTest.qmarkup");
         assertTrue(result.contains("tableRows"));
         JsonObject obj = new JsonObject(result);
-        assertTrue(obj.getJsonArray("elements").getJsonArray(2).getJsonObject(0).getJsonObject("data").getString("type").equals("table"));        
+        assertTrue(obj.getJsonArray("elements").getJsonArray(2).getJsonObject(0).getString("type").equals("table"));        
         assertTrue(succeeded);
     }
     

@@ -236,6 +236,21 @@ This is how a link to the Åbo Akademi homepage would be created.
 This would produce 
 Åbo Akademi.
 
+
+/peronalLink
+-----
+
+This command creates a personalised hyperlink for the current participant.
+
+Like a link it needs a target in line and a Text in the next line. 
+
+A Link like this gets then extended (in the front-end) by the participant ID. This means the link
+
+  /link http://www.abo.fi/?userID=
+
+Will get extended to http://www.abo.fi/?userID=sdaoensiv123ni with sdaoensiv123ni being the userID of the current participant.
+          
+
 /table
 ------
 
