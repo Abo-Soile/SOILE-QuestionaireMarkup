@@ -743,7 +743,8 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
     			JsonObject style = new JsonObject();
     	    	style.mergeIn(blockStyle);
     	    	style.mergeIn(textStyle);
-    			target.add(new JsonObject().put("type", "html").put("data", currentTag).put("style", style));
+    	    	currentTag.put("style", style);
+    			target.add(new JsonObject().put("type", "html").put("data", currentTag));
     		}
     		
     	}

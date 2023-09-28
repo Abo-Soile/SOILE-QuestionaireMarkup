@@ -47,13 +47,13 @@ public class QuestionnaireBuilderTest extends TestCase {
         assertEquals(4, obj.getJsonArray("elements").size());
         JsonArray elements = obj.getJsonArray("elements");
         JsonArray firstText = elements.getJsonArray(1);
-        assertEquals("large", firstText.getJsonObject(0).getJsonObject("style").getString("font-size"));
-        assertEquals("bold", firstText.getJsonObject(0).getJsonObject("style").getString("font-weight"));
-        assertEquals("large", firstText.getJsonObject(1).getJsonObject("style").getString("font-size"));
-        assertFalse(firstText.getJsonObject(1).getJsonObject("style").containsKey("font-weight"));
+        assertEquals("large", firstText.getJsonObject(0).getJsonObject("data").getJsonObject("style").getString("font-size"));
+        assertEquals("bold", firstText.getJsonObject(0).getJsonObject("data").getJsonObject("style").getString("font-weight"));
+        assertEquals("large", firstText.getJsonObject(1).getJsonObject("data").getJsonObject("style").getString("font-size"));
+        assertFalse(firstText.getJsonObject(1).getJsonObject("data").getJsonObject("style").containsKey("font-weight"));
         JsonArray lastText = elements.getJsonArray(3);
-        assertFalse(lastText.getJsonObject(0).getJsonObject("style").containsKey("font-weight"));
-        assertFalse(lastText.getJsonObject(0).getJsonObject("style").containsKey("font-size"));
+        assertFalse(lastText.getJsonObject(0).getJsonObject("data").getJsonObject("style").containsKey("font-weight"));
+        assertFalse(lastText.getJsonObject(0).getJsonObject("data").getJsonObject("style").containsKey("font-size"));
         
         assertTrue(succeeded);
     }
