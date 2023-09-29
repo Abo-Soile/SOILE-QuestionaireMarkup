@@ -23,7 +23,7 @@ public class QuestionnaireBuilderTest extends TestCase {
 
     @Before
     public void setUp() throws Exception {
-       String template = "questionnaire_embedded_test.stg";
+       String template = "questionnaire_embedded.stg";
        builder = new QuestionnaireBuilder(template);
 
        succeeded = true;
@@ -43,10 +43,10 @@ public class QuestionnaireBuilderTest extends TestCase {
     @Test
     public void testStyle() throws Exception {
         String result = buildForm("StyleTest.qmarkup");
-        JsonObject obj = new JsonObject(result);        
+        JsonObject obj = new JsonObject(result);       
         assertEquals(4, obj.getJsonArray("elements").size());
         JsonArray elements = obj.getJsonArray("elements");
-        JsonArray firstText = elements.getJsonArray(1);
+        JsonArray firstText = elements.getJsonArray(1);       
         assertEquals("large", firstText.getJsonObject(0).getJsonObject("data").getJsonObject("style").getString("font-size"));
         assertEquals("bold", firstText.getJsonObject(0).getJsonObject("data").getJsonObject("style").getString("font-weight"));
         assertEquals("large", firstText.getJsonObject(1).getJsonObject("data").getJsonObject("style").getString("font-size"));
@@ -57,6 +57,22 @@ public class QuestionnaireBuilderTest extends TestCase {
         
         assertTrue(succeeded);
     }
+    
+    @Test
+    public void testHorizontal() throws Exception {
+        String result = buildForm("horizontalTest.qmarkup");
+        JsonObject obj = new JsonObject(result);       
+        assertEquals(3, obj.getJsonArray("elements").size());
+        JsonArray elements = obj.getJsonArray("elements");
+        JsonObject firstRadio = elements.getJsonArray(0).getJsonObject(0);
+        assertTrue(firstRadio.getJsonObject("data").getBoolean("horizontal"));
+        JsonObject secondRadio = elements.getJsonArray(1).getJsonObject(0);
+        assertFalse(secondRadio.getJsonObject("data").getBoolean("horizontal"));
+        JsonObject multi = elements.getJsonArray(2).getJsonObject(0);
+        assertTrue(multi.getJsonObject("data").getBoolean("horizontal"));                
+        assertTrue(succeeded);
+    }
+    
     
     @Test
     public void testpersonalLink() throws Exception {

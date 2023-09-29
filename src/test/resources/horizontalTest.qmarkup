@@ -1,0 +1,75 @@
+
+
+/singleselect {
+  default_value: "",
+  dbcolumn: "sukupuoli",
+  horizontal: true,
+  options:
+  [[
+    {
+      dbvalue: "mies",
+      text: "mies",
+      checked: false
+    },
+    {
+      dbvalue: "nainen",
+      text: "nainen",
+      checked: false
+    },
+              {
+      dbvalue: "muu",
+      text: "muu",
+      checked: false
+    }
+  ]]
+}
+
+/singleselect {
+  default_value: "",
+  dbcolumn: "sukupuoli2",  
+  options:
+  [[
+    {
+      dbvalue: "mies",
+      text: "mies",
+      checked: false
+    },
+    {
+      dbvalue: "nainen",
+      text: "nainen",
+      checked: false
+    },
+              {
+      dbvalue: "muu",
+      text: "muu",
+      checked: false
+    }
+  ]]
+}
+
+
+
+/multiselect {
+    default_value: "no",
+    horizontal: true,
+    dbcolumn: "vehicle",
+    options: [ [
+        {
+          dbcolumn: "Bike",
+          dbvalue: "yes",
+          text: "Bike",
+          checked: true
+        },
+          {
+          dbcolumn: "Car",
+          dbvalue: "yes",
+          text: "Car",
+          checked: false
+        },
+        {
+          dbcolumn: "Motorbike",
+          dbvalue: "yes",
+          text: "Motorbike",
+          checked: false
+        }] ]
+}

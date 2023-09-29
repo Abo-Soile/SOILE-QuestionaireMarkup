@@ -264,7 +264,13 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                 String defaultValue = value.getValue("default_value").toString();
                 ArrayList<Value> options =
                         (ArrayList<Value>)  value.getValue("options").asJavaObject();
-                
+                Boolean horizontal = false;
+                if(value.getValue("horizontal") != null)
+                {                
+                	horizontal = ((BooleanValue) value.getValue("horizontal")).asBoolean();
+                }
+                tmpl.add("horizontal", horizontal);
+
                 int numColumns = options.size();
 //                int width = CONTENT_WIDTH_PX  / numColumns;
 //                width -= 5;
@@ -332,7 +338,13 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                 Boolean inline = ((BooleanValue) value.getValue("inline")).asBoolean();
                 Boolean colalign = ((BooleanValue) value.getValue("colalign")).asBoolean();
                 Boolean optional = ((BooleanValue) value.getValue("optional")).asBoolean();
-
+                Boolean horizontal = false;
+                if(value.getValue("horizontal") != null)
+                {                
+                	horizontal = ((BooleanValue) value.getValue("horizontal")).asBoolean();
+                }
+                tmpl.add("horizontal", horizontal);
+                
                 tmpl.add("optional", optional);
 
                 if(!inline){

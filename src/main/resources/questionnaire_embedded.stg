@@ -153,21 +153,24 @@ $if(style)$  ,"style" : "$style$" $endif$
 
 >>
 
-select(columns) ::= <<
+select(columns, horizontal) ::= <<
 
 {
 "type" : "select",
+"horizontal" : $horizontal$,
 "options" : [ $columns:{col | $col.content$}; separator=","$ ]
 }
 
 >>
 
-selectradio(columns, optional) ::= <<
+selectradio(columns, optional, horizontal) ::= <<
 
 {
 "type" : "selectradio",
+"horizontal" : $horizontal$,
 "options" : [ $columns:{col | $col.content$}; separator=","$ ],
 "optional" : $optional$
+
 }
 >>
 
@@ -212,30 +215,4 @@ attribute(name, value) ::= " $name$=\"$value$\" "
 
 style(decls) ::= <<
  $decls:{decl | $decl.text$}; separator=" "$
-
->>
-
-table(style) ::= <<
-
-{ 
-"style" : $style$,
-"type" : "table"
-}
-
->>
-
-tablerow() ::= <<
-
-{ 
-"type" : "tablerow"
-}
-
->>
-
-tablecolumn() ::= <<
-
-{ 
-"type" : "tablecolumn"
-}
-
 >>
