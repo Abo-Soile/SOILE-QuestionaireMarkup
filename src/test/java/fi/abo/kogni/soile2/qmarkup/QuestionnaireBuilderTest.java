@@ -39,6 +39,23 @@ public class QuestionnaireBuilderTest extends TestCase {
         String result = buildForm("titleTest.qmarkup");
         assertTrue(succeeded);
     }
+    @Test
+    public void testText() throws Exception {
+        String result = buildForm("textTest.qmarkup");
+        JsonObject obj = new JsonObject(result);       
+        assertEquals(1, obj.getJsonArray("elements").size());
+        JsonObject dataObject= obj.getJsonArray("elements").getJsonArray(0).getJsonObject(0).getJsonObject("data");
+        String dataText = obj.getJsonArray("elements").getJsonArray(0).getJsonObject(0).getJsonObject("data").getString("text"); 
+        assertEquals(3, dataText.split("\n").length);
+        assertTrue(dataObject.getJsonObject("style").isEmpty());
+        JsonObject dataObject2= obj.getJsonArray("elements").getJsonArray(0).getJsonObject(1).getJsonObject("data");
+        assertTrue(dataObject2.getJsonObject("style").containsKey("font-weight"));
+        JsonObject dataObject3= obj.getJsonArray("elements").getJsonArray(0).getJsonObject(2).getJsonObject("data");
+        assertTrue(dataObject3.getJsonObject("style").containsKey("color"));
+        assertTrue(dataObject3.getJsonObject("style").containsKey("font-weight"));
+        System.out.println(obj.encodePrettily());                
+        assertTrue(succeeded);
+    }
     
     @Test
     public void testStyle() throws Exception {

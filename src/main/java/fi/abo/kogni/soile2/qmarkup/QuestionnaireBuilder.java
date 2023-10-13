@@ -536,7 +536,8 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
                 workOnStack(args, blockStyle);
             }
             break;
-        case "ts":          // "Text Style"            
+        case "ts":          // "Text Style"
+        	closeTag(); // any previous elements should not get this style!
             workOnStack(args, textStyle);            
             break;            
         case "lb":          // "Line Break"
@@ -639,14 +640,12 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 
     private void addText(String text)
     {
-    	currentTag.put("text",currentTag.getString("text","") + text);
-    	
+    	// if we have style, we need to close the tag before adding things. 
     	if(!(textStyle.isEmpty() && blockStyle.isEmpty()))
     	{
     		closeTag();
     	}
-    	
-    	
+    	currentTag.put("text",(currentTag.getString("text","")+ "\n" + text).trim());    	    	    	    	
     }
     
     
