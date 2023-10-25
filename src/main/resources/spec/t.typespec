@@ -13,12 +13,12 @@ command slider {
 
     dbcolumn: String,
     numeric: Boolean(true),
-    labels: [Integer*],
-    minimum: Integer,
-    maximum: Integer,
-    increment: Integer,
-    select: Integer
-
+    labels: [Float*],    
+    minimum: Float,
+    maximum: Float,
+    increment: Float,    
+    select: Float,
+	optional: Boolean(false)
 }
 
 command singleselect {
@@ -27,7 +27,7 @@ command singleselect {
     default_value: String,
     colalign: Boolean(true),
     inline: Boolean(false),
-    optional: Boolean(true),
+    optional: Boolean(false),
     dbcolumn: String,
     options: [ [ {
     		  dbvalue: String, 
@@ -55,7 +55,7 @@ command numberfield {
     numeric: Boolean(true),
     label: String,
     value: Integer(0),
-    optional:Boolean(true),
+    optional:Boolean(false),
     minimum: Integer,
     maximum: Integer,
     increment: Float,
@@ -69,7 +69,7 @@ command textarea {
     columns: Integer(80),
     label: String,
     length: Integer,
-    optional: Boolean(true),
+    optional: Boolean(false),
     text: String("")
 
 }
@@ -80,7 +80,7 @@ command textbox {
     label: String(""),
     linebreak: Boolean(false),
     length: Integer,
-    optional: Boolean(true),
+    optional: Boolean(false),
     text: String("")
     
 }

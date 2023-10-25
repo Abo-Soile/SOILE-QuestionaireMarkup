@@ -11,7 +11,6 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
-import fi.abo.kogni.soile2.qmarkup.QuestionnaireBuilder;
 
 public class GenerateValidator {
     public static void main(String[] args) {

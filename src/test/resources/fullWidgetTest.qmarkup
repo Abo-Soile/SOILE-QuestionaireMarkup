@@ -58,7 +58,7 @@
      minimum: 0,
      maximum: 6,
      increment: 1,
-     select: 0
+     select: 0     
 }
 
 /textarea {

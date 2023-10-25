@@ -258,32 +258,38 @@ public abstract class Validator {
                         throw new MalformedCommandException(msg);
                     } 
                     if (object.containsKey("minimum")) {
-                        validateInteger(object.get("minimum"));
+                        validateFloat(object.get("minimum"));
                     } 
                     else {
                         String msg = String.format("Missing object element: '%s'.", "minimum");
                         throw new MalformedCommandException(msg);
                     } 
                     if (object.containsKey("maximum")) {
-                        validateInteger(object.get("maximum"));
+                        validateFloat(object.get("maximum"));
                     } 
                     else {
                         String msg = String.format("Missing object element: '%s'.", "maximum");
                         throw new MalformedCommandException(msg);
                     } 
                     if (object.containsKey("increment")) {
-                        validateInteger(object.get("increment"));
+                        validateFloat(object.get("increment"));
                     } 
                     else {
                         String msg = String.format("Missing object element: '%s'.", "increment");
                         throw new MalformedCommandException(msg);
                     } 
                     if (object.containsKey("select")) {
-                        validateInteger(object.get("select"));
+                        validateFloat(object.get("select"));
                     } 
                     else {
                         String msg = String.format("Missing object element: '%s'.", "select");
                         throw new MalformedCommandException(msg);
+                    } 
+                    if (object.containsKey("optional")) {
+                        validateBoolean(object.get("optional"));
+                    } 
+                    else {
+                        object.put("optional", defaultBooleanValue( false ));
                     } 
         }
      
@@ -378,7 +384,7 @@ public abstract class Validator {
                         validateBoolean(object.get("optional"));
                     } 
                     else {
-                        object.put("optional", defaultBooleanValue( true ));
+                        object.put("optional", defaultBooleanValue( false ));
                     } 
                     if (object.containsKey("dbcolumn")) {
                         validateString(object.get("dbcolumn"));
@@ -536,7 +542,7 @@ public abstract class Validator {
                         validateBoolean(object.get("optional"));
                     } 
                     else {
-                        object.put("optional", defaultBooleanValue( true ));
+                        object.put("optional", defaultBooleanValue( false ));
                     } 
                     if (object.containsKey("minimum")) {
                         validateInteger(object.get("minimum"));
@@ -611,7 +617,7 @@ public abstract class Validator {
                         validateBoolean(object.get("optional"));
                     } 
                     else {
-                        object.put("optional", defaultBooleanValue( true ));
+                        object.put("optional", defaultBooleanValue( false ));
                     } 
                     if (object.containsKey("text")) {
                         validateString(object.get("text"));
@@ -658,7 +664,7 @@ public abstract class Validator {
                         validateBoolean(object.get("optional"));
                     } 
                     else {
-                        object.put("optional", defaultBooleanValue( true ));
+                        object.put("optional", defaultBooleanValue( false ));
                     } 
                     if (object.containsKey("text")) {
                         validateString(object.get("text"));
@@ -750,6 +756,14 @@ public abstract class Validator {
     }
 
     protected void validateArray(Value value) throws MalformedCommandException {
+        Object obj = value.asJavaObject();
+        if (!(obj instanceof ArrayList<?>)) {
+            String msg = String.format("Value '%s' is not Array.", value);
+            throw new MalformedCommandException(msg);
+        }
+    }
+
+    protected void validateAlternative(Value value) throws MalformedCommandException {
         Object obj = value.asJavaObject();
         if (!(obj instanceof ArrayList<?>)) {
             String msg = String.format("Value '%s' is not Array.", value);

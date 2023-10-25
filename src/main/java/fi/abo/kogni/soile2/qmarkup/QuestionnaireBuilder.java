@@ -171,14 +171,18 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 				ddmwd.setId(id);
 				vw.setId(id);
 				Boolean inline = ((BooleanValue) value.getValue("inline")).asBoolean();
-				Boolean optional = ((BooleanValue) value.getValue("optional")).asBoolean();
+				Boolean optional = false;
+				if(value.getValue("optional") != null)
+				{
+					optional = ((BooleanValue) value.getValue("optional")).asBoolean();
+				}
 				tmpl.add("id", id);
 				String label = value.getValue("label").toString();
 				if (label.isEmpty() == true) {
 					label = null;
 				}
 				tmpl.add("label", label);
-				tmpl.add("required", (!optional));
+				tmpl.add("optional", optional);
 				tmpl.add("inline", inline);
 				String field = createColumnName(questionnaireId(),
 						value.getValue("dbcolumn").toString());
@@ -233,7 +237,12 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 				Value incr = value.getValue("increment");
 				//Can be empty if optional==true
 				//Empty meaning that no value is set and that the field isn't required
-				Boolean optional = ((BooleanValue) value.getValue("optional")).asBoolean();
+				
+				Boolean optional = false;
+				if(value.getValue("optional") != null)
+				{
+					optional = ((BooleanValue) value.getValue("optional")).asBoolean();
+				}
 				Integer startValue = ((IntegerValue) value.getValue("value")).asInteger();
 				nfwd.setValue(startValue.toString());
 				int width = max.toString().trim().length() + 2;
@@ -337,8 +346,11 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 				String defaultValue = value.getValue("default_value").toString();
 				Boolean inline = ((BooleanValue) value.getValue("inline")).asBoolean();
 				Boolean colalign = ((BooleanValue) value.getValue("colalign")).asBoolean();
-				Boolean optional = ((BooleanValue) value.getValue("optional")).asBoolean();
-				Boolean horizontal = false;
+				Boolean optional = false;
+				if(value.getValue("optional") != null)
+				{
+					optional = ((BooleanValue) value.getValue("optional")).asBoolean();
+				}				Boolean horizontal = false;
 				if(value.getValue("horizontal") != null)
 				{                
 					horizontal = ((BooleanValue) value.getValue("horizontal")).asBoolean();
@@ -413,7 +425,12 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 				Integer min = (Integer) value.getValue("minimum").asJavaObject();
 				Integer max = (Integer) value.getValue("maximum").asJavaObject();
 				Integer incr = (Integer) value.getValue("increment").asJavaObject();
-				Integer select = -1;
+				Boolean optional = false;
+				if(value.getValue("optional") != null)
+				{
+					optional = ((BooleanValue) value.getValue("optional")).asBoolean();
+				}
+				Integer select = null;				
 				try {
 					if(value.getValue("select") != null)
 					{
@@ -444,7 +461,8 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 				tmpl.add("minimum", min);
 				tmpl.add("maximum", max);
 				tmpl.add("increment", incr);
-				tmpl.add("select", select);
+				tmpl.add("select", select == null ? "false" : select);
+				tmpl.add("optional", optional);
 				swd.setSelected(select.toString());
 				String field = createColumnName(questionnaireId(),
 						value.getValue("dbcolumn").toString());
@@ -483,14 +501,18 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 				{
 					separator = value.getValue("separator");
 				}
-				required = ((BooleanValue) value.getValue("optional")).asBoolean();
+				Boolean optional = false;
+				if(value.getValue("optional") != null)
+				{
+					optional = ((BooleanValue) value.getValue("optional")).asBoolean();
+				}
 				tmpl.add("id", id);
 				tmpl.add("rows", value.getValue("rows"));
 				tmpl.add("columns", value.getValue("columns"));
 				tmpl.add("text", value.getValue("text"));
 				tmpl.add("label", value.getValue("label"));
 				tmpl.add("maxlength", maxlen);
-				tmpl.add("required", required);
+				tmpl.add("optional", optional);
 				tawd.setId(id);
 				tawd.setColumn(encrypt(field));
 				tmpl.add("separator", separator);
@@ -514,8 +536,11 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 				String field = createColumnName(questionnaireId(),
 						value.getValue("dbcolumn").toString());
 				String label = value.getValue("label").toString();
-				Boolean required = false;
-				required = !((BooleanValue) value.getValue("optional")).asBoolean();
+				Boolean optional = false;
+				if(value.getValue("optional") != null)
+				{
+					optional = ((BooleanValue) value.getValue("optional")).asBoolean();
+				}
 				if (label.isEmpty() == true) {
 					label = null;
 				}
@@ -525,7 +550,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 				Value maxlen = value.getValue("length");
 				tmpl.add("length", maxlen);
 				tmpl.add("text", value.getValue("text"));
-				tmpl.add("required", required);
+				tmpl.add("optional", optional);
 				tbwd.setId(id);
 				tbwd.setColumn(encrypt(field));
 				addWidget(tmpl.render(), true);

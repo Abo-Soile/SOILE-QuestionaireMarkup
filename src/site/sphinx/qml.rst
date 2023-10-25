@@ -380,7 +380,7 @@ The following object is valid with respect to the above specification.
 
   {
       dbcolumn: String, 
-      required: boolean, # (optional) whether this is a required field (Questionnaire cannot be submitted without this being set, a default will set this)
+      optional: boolean, # (optional), default : false , whether this field is optional 
       numeric: boolean,
       label: String,
       options: 
@@ -410,6 +410,7 @@ Example:
           
 /multiselect
 ------------
+By its very nature this is the only widget that cannot be optional, as it allows selection of all or none of its options. 
 
 ::
 
@@ -471,7 +472,7 @@ Example:
       value: Integer,
       minimum: Integer,
       maximum: Integer,
-      optional: boolean, 
+      optional: boolean, # optional, default: false - whether this field can be omitted
       increment: Integer or "Decimal value"
       inline: false # (optional) whether the field should be just printed within the text.
   }
@@ -500,8 +501,8 @@ Example:
   {
       numeric: true,
       default_value: String
-      horizontal: false # (optional) Whether to display the select options horizontally
-      optional: true # (optional) whether the select is optional.
+      horizontal: boolean  # (optional) default: false,  Whether to display the select options horizontally
+      optional: boolean # (optional) default: false, whether the select is optional.
       options: 
         [ 
           [ 
@@ -540,10 +541,11 @@ Example:
         [
           Integer
         ],
-      minimum: Integer,
-      maximum: Integer,
-      increment: Integer,
-      select: Integer # (optional)
+      minimum: Float,
+      maximum: Float,
+      increment: Float,
+      select: Float # needs to be provided. If this is outside the minimum/maximum range, no value will be selected on the slider initially
+      optional: boolean # (optional) default: false, whether a selection is optional.
       style: String # (optional) style information passed on to the slider element, mainly for e.g. fixing the width to align to an image.                                          
   }
           

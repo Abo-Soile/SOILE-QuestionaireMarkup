@@ -43,7 +43,6 @@ public class QuestionnaireBuilderTest extends TestCase {
     @Test
     public void testTable() throws Exception {
         String result = buildForm("TableTest.qmarkup");
-        System.out.println(new JsonObject(result).encodePrettily());
         assertTrue(result.contains("tableRows"));
         JsonObject obj = new JsonObject(result);
         assertTrue(obj.getJsonArray("elements").getJsonArray(2).getJsonObject(0).getString("type").equals("table"));        
@@ -51,8 +50,10 @@ public class QuestionnaireBuilderTest extends TestCase {
     }
     
     @Test
-         public void testAllWidgets() throws Exception {
+    public void testAllWidgets() throws Exception {
         String result = buildForm("fullWidgetTest.qmarkup");
+        JsonObject obj = new JsonObject(result);
+        System.out.println(obj.encodePrettily());
         //System.out.println(result);
         assertTrue(succeeded);
     }
@@ -61,6 +62,14 @@ public class QuestionnaireBuilderTest extends TestCase {
     public void testExample() throws Exception {
     	String result = buildForm("QuestionnaireExample.qmarkup");
     	//System.out.println(result);
+    	assertTrue(succeeded);
+    }
+
+    @Test
+    public void testSlider() throws Exception {
+    	String result = buildForm("SliderTest.qmarkup");
+    	JsonObject obj = new JsonObject(result);
+    	System.out.print(obj.encodePrettily());
     	assertTrue(succeeded);
     }
     
@@ -143,6 +152,19 @@ public class QuestionnaireBuilderTest extends TestCase {
     }
     
     @Test
+    public void testLink() throws Exception {
+        String result = buildForm("LinkTest.qmarkup");
+        assertTrue(result.contains("personalLink"));
+        JsonObject obj = new JsonObject(result);
+        System.out.println(obj.encodePrettily());
+        assertEquals("html", obj.getJsonArray("elements").getJsonArray(1).getJsonObject(0).getString("type"));
+        assertEquals("personalLink", obj.getJsonArray("elements").getJsonArray(1).getJsonObject(0).getJsonObject("data").getString("type"));
+        assertEquals("http://test.fi", obj.getJsonArray("elements").getJsonArray(1).getJsonObject(0).getJsonObject("data").getString("href"));
+
+        assertTrue(succeeded);
+    }
+    
+    @Test
     public void testHorizontal() throws Exception {
         String result = buildForm("HorizontalTest.qmarkup");
         JsonObject obj = new JsonObject(result);       
@@ -167,7 +189,7 @@ public class QuestionnaireBuilderTest extends TestCase {
         try {
             reader.processInput();
             builder.finish();
-            output = builder.output();
+            output = builder.output();            
         } catch (MalformedCommandException e) {
             succeeded = false;
             output = e.getMessage();

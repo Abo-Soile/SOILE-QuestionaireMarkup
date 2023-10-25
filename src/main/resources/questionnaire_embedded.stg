@@ -60,14 +60,14 @@ qdata_validate_widget(id) ::= <<
 >>
 
 
-dropdownmenu(id, label, required,options, inline) ::= <<
+dropdownmenu(id, label, optional, options, inline) ::= <<
 
 { 
  "type": "dropdownmenu", 
  "inline" : $inline$,
 $if(label)$  "label" : "$label$", $else$ $endif$
  "id": "$id$", 
- "required": $required$,
+ "optional": $optional$,
  "options": [
   $options:{op | { "value" : "$op.short$", "text" : "$op.long$" \} }; separator=",\n"$
   ]
@@ -107,7 +107,7 @@ $if(label)$  "label" : "$label$", $else$ $endif$
 
 >>
 
-textbox(id, label, length, text, inline, required) ::= <<
+textbox(id, label, length, text, inline, optional) ::= <<
 
 { 
 "type": "textbox",
@@ -115,13 +115,13 @@ textbox(id, label, length, text, inline, required) ::= <<
 "label" : "$label$", 
 "length" : $length$, 
 "text" : "$text$", 
-"required" : $required$, 
+"optional" : $optional$, 
 "inline" : $inline$
 }
 
 >>
 
-textarea(id, text, rows, columns, label, maxlength, required, separator) ::= <<
+textarea(id, text, rows, columns, label, maxlength, optional, separator) ::= <<
 
 { 
 "type" : "textarea",
@@ -131,13 +131,13 @@ textarea(id, text, rows, columns, label, maxlength, required, separator) ::= <<
 "rows" : $rows$,
 "columns" : $columns$, 
 "maxlength" : $maxlength$,
-"required" : $required$, 
+"optional" : $optional$, 
 "separator" : "$separator$"
 }
 
 >>
 
-slider(id, labels, minimum, maximum, increment, select, count, style) ::= <<
+slider(id, labels, minimum, maximum, increment, select, count, optional, style) ::= <<
 
 { 
 "type" : "slider",
@@ -147,7 +147,8 @@ slider(id, labels, minimum, maximum, increment, select, count, style) ::= <<
 "maximum" : $maximum$,
 "increment" : $increment$, 
 "count" : $count$, 
-"select" : $select$
+"select" : $select$,
+"optional" : $optional$
 $if(style)$  ,"style" : "$style$" $endif$
 }
 

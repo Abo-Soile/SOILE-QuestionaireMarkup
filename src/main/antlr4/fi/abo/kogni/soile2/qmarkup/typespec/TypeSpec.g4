@@ -9,7 +9,7 @@ body: '{' def ( ',' def )* '}' ;
 
 object: '{' def ( ',' def )* '}' ;
 
-def: field ':' type ;
+def: field ':'  type ;
 
 field: ID ;
 
@@ -17,6 +17,7 @@ type
    : simple_type
    | compound_type
    ;
+
 
 simple_type
           : integer_type
@@ -28,8 +29,8 @@ simple_type
 compound_type
             : array_type
             | repeat_type
-            | object_type
-            ;
+            | object_type             
+            ;	
            
 integer_type: TYPE_INTEGER  ( '(' INTEGER ')' )? ;
 float_type: TYPE_FLOAT  ( '(' FLOAT ')' )? ;
@@ -37,6 +38,7 @@ string_type:  TYPE_STRING   ( '(' STRING ')' )? ;
 boolean_type: TYPE_BOOLEAN  ( '(' BOOLEAN ')' )? ;
 array_type: '[' type (',' type)* ']' ;
 repeat_type: '[' type '*' ']' ;
+
 object_type: object ;
 
 TYPE_INTEGER: 'Integer' ;
