@@ -22,15 +22,17 @@ public final class QuestionnaireRenderVerticle extends AbstractVerticle {
 	public QuestionnaireRenderVerticle(String address)
 	{
 		this.address = address;
+		URL template = QuestionnaireRenderVerticle.class.getClassLoader().getResource("questionnaire_embedded.stg");
+		builder = new QuestionnaireBuilder(template);
+		generator = IdGenerator.shortIdGenerator();		
+		generator.seed(1024);
+		generator.init();	
+		
 	}
 	
 	@Override
 	public void start() {		
-		URL template = QuestionnaireRenderVerticle.class.getClassLoader().getResource("questionnaire_embedded.stg");
-	    builder = new QuestionnaireBuilder(template);
-		generator = IdGenerator.shortIdGenerator();		
-		generator.seed(1024);
-		generator.init();		    
+			    
 		vertx.eventBus().consumer(address, this::handle);		
 	}
 	// only one of this should ever be called simultaneously.

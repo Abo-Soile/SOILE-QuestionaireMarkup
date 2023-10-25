@@ -12,6 +12,7 @@ import org.junit.Test;
 
 // import com.sun.org.apache.xpath.internal.operations.Bool;
 import fi.abo.kogni.soile2.qmarkup.typespec.MalformedCommandException;
+import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import junit.framework.TestCase;
 
@@ -22,7 +23,7 @@ public class QuestionnaireBuilderTest extends TestCase {
 
     @Before
     public void setUp() throws Exception {
-       String template = "questionnaire_embedded_test.stg";
+       String template = "questionnaire_embedded.stg";
        builder = new QuestionnaireBuilder(template);
 
        succeeded = true;
@@ -42,9 +43,10 @@ public class QuestionnaireBuilderTest extends TestCase {
     @Test
     public void testTable() throws Exception {
         String result = buildForm("TableTest.qmarkup");
+        System.out.println(new JsonObject(result).encodePrettily());
         assertTrue(result.contains("tableRows"));
         JsonObject obj = new JsonObject(result);
-        assertTrue(obj.getJsonArray("elements").getJsonArray(2).getJsonObject(0).getJsonObject("data").getString("type").equals("table"));        
+        assertTrue(obj.getJsonArray("elements").getJsonArray(2).getJsonObject(0).getString("type").equals("table"));        
         assertTrue(succeeded);
     }
     
@@ -99,6 +101,7 @@ public class QuestionnaireBuilderTest extends TestCase {
 
     }
 
+    
     @Test
     public void testRadioOptional() throws Exception {
         String result = buildForm("testRadioOptional.qmarkup");
@@ -106,7 +109,54 @@ public class QuestionnaireBuilderTest extends TestCase {
 
     }
 
+    @Test
+    public void testStyle() throws Exception {
+        String result = buildForm("StyleTest.qmarkup");
+        JsonObject obj = new JsonObject(result);   
+        assertEquals(5, obj.getJsonArray("elements").size());
+        JsonArray elements = obj.getJsonArray("elements");
+        JsonArray firstText = elements.getJsonArray(1);       
+        assertEquals("large", firstText.getJsonObject(0).getJsonObject("data").getJsonObject("style").getString("font-size"));
+        assertEquals("bold", firstText.getJsonObject(0).getJsonObject("data").getJsonObject("style").getString("font-weight"));
+        assertEquals("green", firstText.getJsonObject(0).getJsonObject("data").getJsonObject("style").getString("color"));
+        assertEquals("large", firstText.getJsonObject(1).getJsonObject("data").getJsonObject("style").getString("font-size"));
+        assertNull(firstText.getJsonObject(1).getJsonObject("data").getJsonObject("style").getString("font-weight"));
+        assertFalse(firstText.getJsonObject(1).getJsonObject("data").getJsonObject("style").containsKey("font-weight"));
+        JsonArray lastText = elements.getJsonArray(4);
+        assertFalse(lastText.getJsonObject(0).getJsonObject("data").getJsonObject("style").containsKey("font-weight"));
+        assertFalse(lastText.getJsonObject(0).getJsonObject("data").getJsonObject("style").containsKey("font-size"));
+        assertFalse(lastText.getJsonObject(0).getJsonObject("data").getJsonObject("style").containsKey("color"));
+        
+        assertTrue(succeeded);
+    }
+    
+    @Test
+    public void testpersonalLink() throws Exception {
+        String result = buildForm("LinkTest.qmarkup");
+        assertTrue(result.contains("personalLink"));
+        JsonObject obj = new JsonObject(result);
+        assertEquals("html", obj.getJsonArray("elements").getJsonArray(1).getJsonObject(0).getString("type"));
+        assertEquals("personalLink", obj.getJsonArray("elements").getJsonArray(1).getJsonObject(0).getJsonObject("data").getString("type"));
+        assertEquals("http://test.fi", obj.getJsonArray("elements").getJsonArray(1).getJsonObject(0).getJsonObject("data").getString("href"));
 
+        assertTrue(succeeded);
+    }
+    
+    @Test
+    public void testHorizontal() throws Exception {
+        String result = buildForm("HorizontalTest.qmarkup");
+        JsonObject obj = new JsonObject(result);       
+        assertEquals(3, obj.getJsonArray("elements").size());
+        JsonArray elements = obj.getJsonArray("elements");
+        JsonObject firstRadio = elements.getJsonArray(0).getJsonObject(0);
+        assertTrue(firstRadio.getJsonObject("data").getBoolean("horizontal"));
+        JsonObject secondRadio = elements.getJsonArray(1).getJsonObject(0);
+        assertFalse(secondRadio.getJsonObject("data").getBoolean("horizontal"));
+        JsonObject multi = elements.getJsonArray(2).getJsonObject(0);
+        assertTrue(multi.getJsonObject("data").getBoolean("horizontal"));                
+        assertTrue(succeeded);
+    }
+    
     public String buildForm(String testPath) throws IOException {
     	URL resource = this.getClass().getClassLoader().getResource(testPath);
         InputReader reader = new InputReader(readFile(resource.getFile(), Charset.defaultCharset()));

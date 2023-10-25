@@ -236,6 +236,24 @@ This is how a link to the Åbo Akademi homepage would be created.
 This would produce 
 Åbo Akademi.
 
+
+
+/peronalLink
+-----
+
+This command creates a personalised hyperlink for the current participant.
+
+Like a link it needs a target in line and a Text in the next line. 
+
+A Link like this gets then extended (in the front-end) by the participant ID. This means the link
+
+  /link http://www.abo.fi/?userID=
+
+Will get extended to http://www.abo.fi/?userID=sdaoensiv123ni with sdaoensiv123ni being the userID of the current participant.
+
+
+
+
 /table
 ------
 
@@ -361,8 +379,9 @@ The following object is valid with respect to the above specification.
 ::
 
   {
-      dbcolumn: String,
-      numeric: true,
+      dbcolumn: String, 
+      required: boolean, # (optional) whether this is a required field (Questionnaire cannot be submitted without this being set, a default will set this)
+      numeric: boolean,
       label: String,
       options: 
         [
@@ -397,6 +416,7 @@ Example:
   {
       numeric: true,
       default_value: String
+      horizontal: false # (optional) Whether to print this as a horizontal multi-select option
       options: 
         [ 
           [ 
@@ -451,7 +471,9 @@ Example:
       value: Integer,
       minimum: Integer,
       maximum: Integer,
+      optional: boolean, 
       increment: Integer or "Decimal value"
+      inline: false # (optional) whether the field should be just printed within the text.
   }
 
 Increment can be either an integer(5) or a decimal value(3.6).Note that decimal values must be surrounded by quotes("5.5"). If not it's interpreted as an integer.
@@ -478,6 +500,8 @@ Example:
   {
       numeric: true,
       default_value: String
+      horizontal: false # (optional) Whether to display the select options horizontally
+      optional: true # (optional) whether the select is optional.
       options: 
         [ 
           [ 
@@ -519,7 +543,8 @@ Example:
       minimum: Integer,
       maximum: Integer,
       increment: Integer,
-      select: Integer                                            
+      select: Integer # (optional)
+      style: String # (optional) style information passed on to the slider element, mainly for e.g. fixing the width to align to an image.                                          
   }
           
 Example:
@@ -549,7 +574,8 @@ Example:
       columns: Integer,
       label: String,
       text: String
-      optional: Boolean (default=true)
+      maxlength: Number # Maximal number of characters. 
+      optional: true # (optional) whether there has to be text in the area 
   }
           
 The Optional field is not required and can be left out, the default value for it is false
@@ -578,7 +604,7 @@ Example:
       linebreak: Boolean,
       length: Integer,
       text: String
-      optional: Boolean (default=true)
+      optional: true # (optional) whether the textbox can be left empty.
   }
        
 The Optional field is not required and can be left out, the default value for it is false

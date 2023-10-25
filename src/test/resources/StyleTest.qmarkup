@@ -1,0 +1,49 @@
+/title
+TAUSTATIEDOT
+/p
+
+/bs + green
+
+/ts + large
+
+/ts + bold
+
+Big Bold green
+
+/ts - bold
+/lb 
+Big green
+/lb  
+Nothing new 
+
+/bs - green
+
+/p
+
+Nothing
+
+/singleselect {
+  default_value: "",
+  dbcolumn: "sukupuoli",
+  options:
+  [[
+    {
+      dbvalue: "mies",
+      text: "mies",
+      checked: false
+    },
+    {
+      dbvalue: "nainen",
+      text: "nainen",
+      checked: false
+    },
+              {
+      dbvalue: "muu",
+      text: "muu",
+      checked: false
+    }
+  ]]
+}
+
+
+Nothing
