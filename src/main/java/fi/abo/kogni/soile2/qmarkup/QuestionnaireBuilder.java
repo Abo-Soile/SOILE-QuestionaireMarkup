@@ -645,7 +645,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
     	{
     		closeTag();
     	}
-    	currentTag.put("text",(currentTag.getString("text","")+ "\n" + text).trim());    	    	    	    	
+    	currentTag.put("text",(currentTag.getString("text","") + text + "\n"));    	    	    	    	
     }
     
     
@@ -745,7 +745,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         
     private String addAndClearCurrentElement(JsonArray target)
     {
-    	// add only if this actually is non empty
+    	// add only if this actually is non empty (also not including pure whitespace)    	
     	if(!currentTag.getString("text","").equals(""))
     	{
     		// add the currently set     		

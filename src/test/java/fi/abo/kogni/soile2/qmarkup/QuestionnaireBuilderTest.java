@@ -42,7 +42,8 @@ public class QuestionnaireBuilderTest extends TestCase {
     @Test
     public void testText() throws Exception {
         String result = buildForm("textTest.qmarkup");
-        JsonObject obj = new JsonObject(result);       
+        JsonObject obj = new JsonObject(result);      
+        System.out.println(obj.encodePrettily());
         assertEquals(1, obj.getJsonArray("elements").size());
         JsonObject dataObject= obj.getJsonArray("elements").getJsonArray(0).getJsonObject(0).getJsonObject("data");
         String dataText = obj.getJsonArray("elements").getJsonArray(0).getJsonObject(0).getJsonObject("data").getString("text"); 
@@ -53,7 +54,6 @@ public class QuestionnaireBuilderTest extends TestCase {
         JsonObject dataObject3= obj.getJsonArray("elements").getJsonArray(0).getJsonObject(2).getJsonObject("data");
         assertTrue(dataObject3.getJsonObject("style").containsKey("color"));
         assertTrue(dataObject3.getJsonObject("style").containsKey("font-weight"));
-        System.out.println(obj.encodePrettily());                
         assertTrue(succeeded);
     }
     
@@ -78,7 +78,9 @@ public class QuestionnaireBuilderTest extends TestCase {
     @Test
     public void testHorizontal() throws Exception {
         String result = buildForm("horizontalTest.qmarkup");
-        JsonObject obj = new JsonObject(result);       
+        JsonObject obj = new JsonObject(result);   
+        System.out.println(obj.encodePrettily());                
+
         assertEquals(3, obj.getJsonArray("elements").size());
         JsonArray elements = obj.getJsonArray("elements");
         JsonObject firstRadio = elements.getJsonArray(0).getJsonObject(0);
