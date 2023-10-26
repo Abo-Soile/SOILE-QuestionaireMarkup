@@ -57,7 +57,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 		this.expectPageTitle = false;
 		this.addSpacer = false;
 		this.textStyle = new JsonObject();
-		this.currentTag = new JsonObject();
+		this.currentTag = newTag();
 		this.blockStyle = new JsonObject();
 		this.currentStyle = new StringBuilder();
 		AtomicInteger counter = UniqueStringGenerator.createCounter();
@@ -95,7 +95,6 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void processCommand(String command, ArrayList<String> args) throws MalformedCommandException {
-		Tag tag = Tag.newTag(command);
 
 		if (textAsArgument) {
 			/*
@@ -441,23 +440,31 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 				{
 					e.printStackTrace(System.out);
 				}
-				String style; 
+				JsonObject style; 
 				try {
 					if(value.getValue("style") == null)
 					{
-						style = "width: 400px";
-						tmpl.add("style", style);
+						style = new JsonObject().put("width","400px");						
 					}
 					else
 					{
-						style = (String) value.getValue("style").asJavaObject();
-						tmpl.add("style", style);
+						String styleString = (String) value.getValue("style").asJavaObject();
+						style = new JsonObject();
+						String[] entries = styleString.split(";");
+						for(String entry : entries)
+						{
+							String[] entryAndValue = entry.split(":");
+							style.put(entryAndValue[0].trim(), entryAndValue[1].trim());
+						}
+						
 					}
 				}
 				catch(Exception e)
 				{
 					e.printStackTrace(System.out);
+					style = new JsonObject().put("width","400px");					
 				}                
+				tmpl.add("style", style.encode());
 				tmpl.add("minimum", min);
 				tmpl.add("maximum", max);
 				tmpl.add("increment", incr);
@@ -545,19 +552,25 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 					label = null;
 				}
 				tmpl.add("id", id);
-				tmpl.add("inline", true);
+				Boolean inline = true; // By default, text boxes are in line elements
+				if(value.getValue("inline") != null)
+				{
+					inline = ((BooleanValue) value.getValue("inline")).asBoolean();
+				}
+				if(!inline)
+				{
+					closeParagraph();
+				}
+				tmpl.add("inline", inline);
 				tmpl.add("label", label);
 				Value maxlen = value.getValue("length");
 				tmpl.add("length", maxlen);
 				tmpl.add("text", value.getValue("text"));
 				tmpl.add("optional", optional);
+				tmpl.add("linebreak", linebreak);
 				tbwd.setId(id);
-				tbwd.setColumn(encrypt(field));
-				addWidget(tmpl.render(), true);
-				if(linebreak)
-				{
-					addText("\n");
-				}                
+				tbwd.setColumn(encrypt(field));				
+				addWidget(tmpl.render(), inline);
 				validationCode(tbwd);
 			}
 			break;
@@ -575,7 +588,8 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 		case "lb":          // "Line Break"
 			addText("\n");            
 			break;
-		case "link":        	
+		case "link":   
+			closeTag();
 			currentTag = new JsonObject().put("inline", true);
 			currentTag.put("type", "link");        	
 			if (args.size() >= 1) {
@@ -587,7 +601,8 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 				textAsArgument = true;
 			}
 			break;
-        case "personalLink":        	
+        case "personalLink":
+        	closeTag();
         	currentTag = new JsonObject().put("inline", true);
         	currentTag.put("type", "personalLink");        	
             if (args.size() >= 1) {
@@ -720,7 +735,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
         this.expectPageTitle = false;
         this.addSpacer = false;
         this.textStyle = new JsonObject();
-        this.currentTag = new JsonObject();
+        this.currentTag = newTag();
         this.blockStyle = new JsonObject();
         this.currentStyle = new StringBuilder();
         AtomicInteger counter = UniqueStringGenerator.createCounter();
@@ -777,7 +792,14 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 			currentBody.add(current);
 		}    	
 		addAndClearCurrentElement(current);    	
-		JsonObject widget = new JsonObject(WidgetJson);
+		JsonObject widget = new JsonObject(WidgetJson);		
+		JsonObject style = new JsonObject();
+    	style.mergeIn(blockStyle);
+    	style.mergeIn(textStyle);
+    	// highest priority
+		style.mergeIn(widget.getJsonObject("style",new JsonObject()));
+    	// add style definitions
+    	widget.put("style",style);
 		current.add(new JsonObject().put("type", widget.getString("type")).put("data",widget));
 	}
 

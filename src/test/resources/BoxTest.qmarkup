@@ -1,0 +1,14 @@
+Some text
+
+/textbox {
+     dbcolumn: "name",
+     label: "Enter you name",
+     linebreak: true,
+     length: 40,
+     text: "Enter your name here"
+}
+
+Some text between
+
+/link http://www.abo.fi/
+Abo Akademi

@@ -53,7 +53,7 @@ public class QuestionnaireBuilderTest extends TestCase {
     public void testAllWidgets() throws Exception {
         String result = buildForm("fullWidgetTest.qmarkup");
         JsonObject obj = new JsonObject(result);
-        System.out.println(obj.encodePrettily());
+        //System.out.println(obj.encodePrettily());
         //System.out.println(result);
         assertTrue(succeeded);
     }
@@ -69,7 +69,6 @@ public class QuestionnaireBuilderTest extends TestCase {
     public void testSlider() throws Exception {
     	String result = buildForm("SliderTest.qmarkup");
     	JsonObject obj = new JsonObject(result);
-    	System.out.print(obj.encodePrettily());
     	assertTrue(succeeded);
     }
     
@@ -119,6 +118,13 @@ public class QuestionnaireBuilderTest extends TestCase {
     }
 
     @Test
+    public void testBox() throws Exception {
+        String result = buildForm("BoxTest.qmarkup");
+        JsonObject obj = new JsonObject(result);
+        System.out.println(obj);
+        assertEquals(4, obj.getJsonArray("elements").getJsonArray(0).size());
+    }
+    @Test
     public void testStyle() throws Exception {
         String result = buildForm("StyleTest.qmarkup");
         JsonObject obj = new JsonObject(result);   
@@ -156,7 +162,7 @@ public class QuestionnaireBuilderTest extends TestCase {
         String result = buildForm("LinkTest.qmarkup");
         assertTrue(result.contains("personalLink"));
         JsonObject obj = new JsonObject(result);
-        System.out.println(obj.encodePrettily());
+        //System.out.println(obj.encodePrettily());
         assertEquals("html", obj.getJsonArray("elements").getJsonArray(1).getJsonObject(0).getString("type"));
         assertEquals("personalLink", obj.getJsonArray("elements").getJsonArray(1).getJsonObject(0).getJsonObject("data").getString("type"));
         assertEquals("http://test.fi", obj.getJsonArray("elements").getJsonArray(1).getJsonObject(0).getJsonObject("data").getString("href"));

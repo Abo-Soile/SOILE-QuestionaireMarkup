@@ -107,7 +107,7 @@ $if(label)$  "label" : "$label$", $else$ $endif$
 
 >>
 
-textbox(id, label, length, text, inline, optional) ::= <<
+textbox(id, label, length, text, inline, linebreak, optional) ::= <<
 
 { 
 "type": "textbox",
@@ -116,7 +116,8 @@ textbox(id, label, length, text, inline, optional) ::= <<
 "length" : $length$, 
 "text" : "$text$", 
 "optional" : $optional$, 
-"inline" : $inline$
+"inline" : $inline$,
+"linebreak" : $linebreak$
 }
 
 >>
@@ -149,7 +150,7 @@ slider(id, labels, minimum, maximum, increment, select, count, optional, style) 
 "count" : $count$, 
 "select" : $select$,
 "optional" : $optional$
-$if(style)$  ,"style" : "$style$" $endif$
+$if(style)$  ,"style" : $style$ $endif$
 }
 
 >>
