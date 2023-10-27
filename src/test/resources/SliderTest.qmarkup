@@ -22,5 +22,6 @@
      maximum: 6,
      increment: 1,
      optional: true,
+     widgetStyle: "width:300px",
      select: -1
  }

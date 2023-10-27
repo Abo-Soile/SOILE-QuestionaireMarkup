@@ -209,6 +209,12 @@ public abstract class Validator {
                     else {
                         object.put("optional", defaultBooleanValue( false ));
                     } 
+                    if (object.containsKey("widgetStyle")) {
+                        validateString(object.get("widgetStyle"));
+                    } 
+                    else {
+                        object.put("widgetStyle", defaultStringValue( "" ));
+                    } 
                     if (object.containsKey("options")) {
                         validateRepeat_2147483645(object.get("options"));
                     } 
@@ -227,7 +233,7 @@ public abstract class Validator {
             ArrayList<Value> array = (ArrayList<Value>) value.asJavaObject();
             Iterator<Value> it = array.iterator();
             while (it.hasNext()) {
-                validateInteger(it.next());
+                validateFloat(it.next());
             }
         } 
 
@@ -284,6 +290,12 @@ public abstract class Validator {
                     else {
                         String msg = String.format("Missing object element: '%s'.", "select");
                         throw new MalformedCommandException(msg);
+                    } 
+                    if (object.containsKey("widgetStyle")) {
+                        validateString(object.get("widgetStyle"));
+                    } 
+                    else {
+                        object.put("widgetStyle", defaultStringValue( "" ));
                     } 
                     if (object.containsKey("optional")) {
                         validateBoolean(object.get("optional"));
@@ -393,6 +405,12 @@ public abstract class Validator {
                         String msg = String.format("Missing object element: '%s'.", "dbcolumn");
                         throw new MalformedCommandException(msg);
                     } 
+                    if (object.containsKey("widgetStyle")) {
+                        validateString(object.get("widgetStyle"));
+                    } 
+                    else {
+                        object.put("widgetStyle", defaultStringValue( "" ));
+                    } 
                     if (object.containsKey("options")) {
                         validateRepeat_2147483641(object.get("options"));
                     } 
@@ -496,6 +514,12 @@ public abstract class Validator {
                     else {
                         object.put("inline", defaultBooleanValue( false ));
                     } 
+                    if (object.containsKey("widgetStyle")) {
+                        validateString(object.get("widgetStyle"));
+                    } 
+                    else {
+                        object.put("widgetStyle", defaultStringValue( "" ));
+                    } 
                     if (object.containsKey("options")) {
                         validateRepeat_2147483638(object.get("options"));
                     } 
@@ -564,6 +588,12 @@ public abstract class Validator {
                     else {
                         String msg = String.format("Missing object element: '%s'.", "increment");
                         throw new MalformedCommandException(msg);
+                    } 
+                    if (object.containsKey("widgetStyle")) {
+                        validateString(object.get("widgetStyle"));
+                    } 
+                    else {
+                        object.put("widgetStyle", defaultStringValue( "" ));
                     } 
                     if (object.containsKey("inline")) {
                         validateBoolean(object.get("inline"));
@@ -756,14 +786,6 @@ public abstract class Validator {
     }
 
     protected void validateArray(Value value) throws MalformedCommandException {
-        Object obj = value.asJavaObject();
-        if (!(obj instanceof ArrayList<?>)) {
-            String msg = String.format("Value '%s' is not Array.", value);
-            throw new MalformedCommandException(msg);
-        }
-    }
-
-    protected void validateAlternative(Value value) throws MalformedCommandException {
         Object obj = value.asJavaObject();
         if (!(obj instanceof ArrayList<?>)) {
             String msg = String.format("Value '%s' is not Array.", value);

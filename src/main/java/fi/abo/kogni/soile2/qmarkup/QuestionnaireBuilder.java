@@ -48,7 +48,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 		this.paragraphOpenTag = tag.toString();
 		this.paragraphCloseTag = Tag.closingTag(tag);
 		this.body = new JsonArray();
-        this.currentBody = this.body;        
+		this.currentBody = this.body;        
 		this.questionnaireId = "";
 		this.encryptionKey = "";
 		this.currentLine = 0;
@@ -176,6 +176,9 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 					optional = ((BooleanValue) value.getValue("optional")).asBoolean();
 				}
 				tmpl.add("id", id);
+				String styleString = (String) value.getValue("widgetStyle").asJavaObject();
+				JsonObject style = parseStyle(styleString);				
+				tmpl.add("widgetStyle", style.encode());
 				String label = value.getValue("label").toString();
 				if (label.isEmpty() == true) {
 					label = null;
@@ -210,7 +213,9 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 				String id = idGen.generate();
 				tmpl.add("id", id);
 				tmpl.add("name", nameGen.generate());
-
+				String styleString = (String) value.getValue("widgetStyle").asJavaObject();
+				JsonObject style = parseStyle(styleString);				
+				tmpl.add("widgetStyle", style.encode());
 				String label = String.valueOf(value.getValue("label"));
 				if(label.length()==0) {
 					tmpl.add("label", false);
@@ -236,7 +241,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 				Value incr = value.getValue("increment");
 				//Can be empty if optional==true
 				//Empty meaning that no value is set and that the field isn't required
-				
+
 				Boolean optional = false;
 				if(value.getValue("optional") != null)
 				{
@@ -278,7 +283,9 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 					horizontal = ((BooleanValue) value.getValue("horizontal")).asBoolean();
 				}
 				tmpl.add("horizontal", horizontal);
-
+				String styleString = (String) value.getValue("widgetStyle").asJavaObject();
+				JsonObject style = parseStyle(styleString);				
+				tmpl.add("widgetStyle", style.encode());
 				int numColumns = options.size();
 				//                int width = CONTENT_WIDTH_PX  / numColumns;
 				//                width -= 5;
@@ -356,7 +363,9 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 				}
 				tmpl.add("horizontal", horizontal);
 				tmpl.add("optional", optional);
-
+				String styleString = (String) value.getValue("widgetStyle").asJavaObject();
+				JsonObject style = parseStyle(styleString);				
+				tmpl.add("widgetStyle", style.encode());
 				if(!inline){
 					closeParagraph();
 				}
@@ -440,31 +449,11 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 				{
 					e.printStackTrace(System.out);
 				}
-				JsonObject style; 
-				try {
-					if(value.getValue("style") == null)
-					{
-						style = new JsonObject().put("width","400px");						
-					}
-					else
-					{
-						String styleString = (String) value.getValue("style").asJavaObject();
-						style = new JsonObject();
-						String[] entries = styleString.split(";");
-						for(String entry : entries)
-						{
-							String[] entryAndValue = entry.split(":");
-							style.put(entryAndValue[0].trim(), entryAndValue[1].trim());
-						}
-						
-					}
-				}
-				catch(Exception e)
-				{
-					e.printStackTrace(System.out);
-					style = new JsonObject().put("width","400px");					
-				}                
-				tmpl.add("style", style.encode());
+				JsonObject style = new JsonObject().put("width","400px"); 
+				String styleString = (String) value.getValue("widgetStyle").asJavaObject();
+				JsonObject userStyle = parseStyle(styleString);
+				style.mergeIn(userStyle);
+				tmpl.add("widgetStyle", style.encode());
 				tmpl.add("minimum", min);
 				tmpl.add("maximum", max);
 				tmpl.add("increment", incr);
@@ -601,19 +590,19 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 				textAsArgument = true;
 			}
 			break;
-        case "personalLink":
-        	closeTag();
-        	currentTag = new JsonObject().put("inline", true);
-        	currentTag.put("type", "personalLink");        	
-            if (args.size() >= 1) {
-                currentTag.put("href", args.get(0));                                
-                textAsArgument = true;
-            }
-            if (args.size() == 2) {
-            	currentTag.put("class", args.get(1));
-                textAsArgument = true;
-            }
-            break;
+		case "personalLink":
+			closeTag();
+			currentTag = new JsonObject().put("inline", true);
+			currentTag.put("type", "personalLink");        	
+			if (args.size() >= 1) {
+				currentTag.put("href", args.get(0));                                
+				textAsArgument = true;
+			}
+			if (args.size() == 2) {
+				currentTag.put("class", args.get(1));
+				textAsArgument = true;
+			}
+			break;
 		case "p":           // "Paragraph"
 			closeParagraph();
 
@@ -656,6 +645,32 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 		}
 	}
 
+	private JsonObject parseStyle(String styleString) throws MalformedCommandException
+	{
+
+		try {
+			JsonObject style = new JsonObject();
+			if(styleString.equals(""))
+			{
+				return style;
+			}
+			String[] entries = styleString.split(";");			
+			for(String entry : entries)
+			{
+				
+				String[] entryAndValue = entry.split(":");
+				style.put(entryAndValue[0].trim(), entryAndValue[1].trim());
+			}
+			return style;
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace(System.out);
+			throw new MalformedCommandException("Style string: " + styleString + " is not a valid style format");					
+		}
+
+	}
+
 	@Override
 	public void processText(String text) {
 
@@ -669,7 +684,7 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 		addText(text);
 		if (textAsArgument) {
 			// this is a tag that needs the nextline as argument (like titles or links). 
-        	// Thus we need to close it, adding styles.
+			// Thus we need to close it, adding styles.
 			closeTag();
 			textAsArgument = false;
 		}
@@ -722,28 +737,28 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 		//        questionnaire.remove("title");
 		questionnaire = questionnaireST();
 		questionnaire = questionnaireST();
-        this.currentTable = null;
-        this.currentTableColumn = null;
-        this.currentTableRow = null;
-        this.body = new JsonArray();
-        this.currentBody = this.body;
-        this.questionnaireId = "";
-        this.encryptionKey = "";
-        this.currentLine = 0;
-        this.inParagraph = false;
-        this.textAsArgument = false;
-        this.expectPageTitle = false;
-        this.addSpacer = false;
-        this.textStyle = new JsonObject();
-        this.currentTag = newTag();
-        this.blockStyle = new JsonObject();
-        this.currentStyle = new StringBuilder();
-        AtomicInteger counter = UniqueStringGenerator.createCounter();
-        this.idGen = new UniqueStringGenerator("id");
-        this.idGen.setCounter(counter);
-        this.nameGen = new UniqueStringGenerator("name");
-        this.nameGen.setCounter(counter); 	
-        this.styleChanged = false;
+		this.currentTable = null;
+		this.currentTableColumn = null;
+		this.currentTableRow = null;
+		this.body = new JsonArray();
+		this.currentBody = this.body;
+		this.questionnaireId = "";
+		this.encryptionKey = "";
+		this.currentLine = 0;
+		this.inParagraph = false;
+		this.textAsArgument = false;
+		this.expectPageTitle = false;
+		this.addSpacer = false;
+		this.textStyle = new JsonObject();
+		this.currentTag = newTag();
+		this.blockStyle = new JsonObject();
+		this.currentStyle = new StringBuilder();
+		AtomicInteger counter = UniqueStringGenerator.createCounter();
+		this.idGen = new UniqueStringGenerator("id");
+		this.idGen.setCounter(counter);
+		this.nameGen = new UniqueStringGenerator("name");
+		this.nameGen.setCounter(counter); 	
+		this.styleChanged = false;
 	}
 
 
@@ -794,12 +809,12 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 		addAndClearCurrentElement(current);    	
 		JsonObject widget = new JsonObject(WidgetJson);		
 		JsonObject style = new JsonObject();
-    	style.mergeIn(blockStyle);
-    	style.mergeIn(textStyle);
-    	// highest priority
+		style.mergeIn(blockStyle);
+		style.mergeIn(textStyle);
+		// highest priority
 		style.mergeIn(widget.getJsonObject("style",new JsonObject()));
-    	// add style definitions
-    	widget.put("style",style);
+		// add style definitions
+		widget.put("style",style);
 		current.add(new JsonObject().put("type", widget.getString("type")).put("data",widget));
 	}
 
@@ -808,11 +823,11 @@ public class QuestionnaireBuilder implements QuestionnaireProcessor {
 		// add only if this actually is non empty
 		if(!currentTag.getString("text","").equals(""))
 		{
-				JsonObject style = new JsonObject();
-    	    	style.mergeIn(blockStyle);
-    	    	style.mergeIn(textStyle);
-    	    	currentTag.put("style", style);
-    			target.add(new JsonObject().put("type", "html").put("data", currentTag));    			    				
+			JsonObject style = new JsonObject();
+			style.mergeIn(blockStyle);
+			style.mergeIn(textStyle);
+			currentTag.put("style", style);
+			target.add(new JsonObject().put("type", "html").put("data", currentTag));    			    				
 		}
 		String type = currentTag.getString("type","");
 		currentTag = newTag();

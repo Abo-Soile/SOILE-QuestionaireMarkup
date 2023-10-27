@@ -60,7 +60,7 @@ qdata_validate_widget(id) ::= <<
 >>
 
 
-dropdownmenu(id, label, optional, options, inline) ::= <<
+dropdownmenu(id, label, optional, options, inline, widgetStyle) ::= <<
 
 { 
  "type": "dropdownmenu", 
@@ -71,6 +71,7 @@ $if(label)$  "label" : "$label$", $else$ $endif$
  "options": [
   $options:{op | { "value" : "$op.short$", "text" : "$op.long$" \} }; separator=",\n"$
   ]
+  $if(widgetStyle)$  ,"widgetStyle" : $widgetStyle$ $endif$
  }
 
 
@@ -86,7 +87,8 @@ numberfield(id,
       optional,
       increment,
       separator,
-      inline) ::= <<
+      inline, 
+      widgetStyle) ::= <<
 
 
 { 
@@ -102,6 +104,7 @@ $if(label)$  "label" : "$label$", $else$ $endif$
 "increment" : $increment$,
 "separator" : "$separator$",
 "inline" : $inline$
+$if(widgetStyle)$  ,"widgetStyle" : $widgetStyle$ $endif$
 
 }
 
@@ -138,7 +141,7 @@ textarea(id, text, rows, columns, label, maxlength, optional, separator) ::= <<
 
 >>
 
-slider(id, labels, minimum, maximum, increment, select, count, optional, style) ::= <<
+slider(id, labels, minimum, maximum, increment, select, count, optional, widgetStyle) ::= <<
 
 { 
 "type" : "slider",
@@ -150,28 +153,30 @@ slider(id, labels, minimum, maximum, increment, select, count, optional, style) 
 "count" : $count$, 
 "select" : $select$,
 "optional" : $optional$
-$if(style)$  ,"style" : $style$ $endif$
+$if(widgetStyle)$  ,"widgetStyle" : $widgetStyle$ $endif$
 }
 
 >>
 
-select(columns, horizontal) ::= <<
+select(columns, horizontal, widgetStyle) ::= <<
 
 {
 "type" : "select",
 "horizontal" : $horizontal$,
 "options" : [ $columns:{col | $col.content$}; separator=","$ ]
+$if(widgetStyle)$  ,"widgetStyle" : $widgetStyle$ $endif$
 }
 
 >>
 
-selectradio(columns, optional, horizontal) ::= <<
+selectradio(columns, optional, horizontal, widgetStyle) ::= <<
 
 {
 "type" : "selectradio",
 "horizontal" : $horizontal$,
 "options" : [ $columns:{col | $col.content$}; separator=","$ ],
 "optional" : $optional$
+$if(widgetStyle)$  ,"widgetStyle" : $widgetStyle$ $endif$
 }
 >>
 
