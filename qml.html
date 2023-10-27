@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Questionnaire Docs &#8212; Soile 1.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/bootstrap-sphinx.css?v=284a2d1d" />
+    <script src="_static/documentation_options.js?v=56dcb7b8"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Welcome to Soile’s Questionaire Markup documentation!" href="index.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="_static/js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+<script type="text/javascript" src="_static/bootstrap-3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-inverse navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">
+          Soile</a>
+        <span class="navbar-text navbar-version pull-left"><b>1.1</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Soile Document <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Questionnaire Docs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#plain-text">Plain text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#stack-arguments">Stack arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#text-styles">Text styles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#widgets">Widgets</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
+<li><a class="reference internal" href="#">Questionnaire Docs</a><ul>
+<li><a class="reference internal" href="#plain-text">Plain text</a></li>
+<li><a class="reference internal" href="#stack-arguments">Stack arguments</a></li>
+<li><a class="reference internal" href="#text-styles">Text styles</a><ul>
+<li><a class="reference internal" href="#bs">/bs</a></li>
+<li><a class="reference internal" href="#lb">/lb</a></li>
+<li><a class="reference internal" href="#p">/p</a></li>
+<li><a class="reference internal" href="#pagetitle">/pagetitle</a></li>
+<li><a class="reference internal" href="#title">/title</a></li>
+<li><a class="reference internal" href="#subtitle">/subtitle</a></li>
+<li><a class="reference internal" href="#pb">/pb</a></li>
+<li><a class="reference internal" href="#ts">/ts</a></li>
+<li><a class="reference internal" href="#link">/link</a></li>
+<li><a class="reference internal" href="#peronallink">/peronalLink</a></li>
+<li><a class="reference internal" href="#table">/table</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#widgets">Widgets</a><ul>
+<li><a class="reference internal" href="#object-arguments">Object arguments</a></li>
+<li><a class="reference internal" href="#dropdownmenu">/dropdownmenu</a></li>
+<li><a class="reference internal" href="#multiselect">/multiselect</a></li>
+<li><a class="reference internal" href="#numberfield">/numberfield</a></li>
+<li><a class="reference internal" href="#singleselect">/singleselect</a></li>
+<li><a class="reference internal" href="#slider">/slider</a></li>
+<li><a class="reference internal" href="#textarea">/textarea</a></li>
+<li><a class="reference internal" href="#textbox">/textbox</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    <div class="body col-md-9 content" role="main">
+      
+  <section id="questionnaire-docs">
+<h1>Questionnaire Docs<a class="headerlink" href="#questionnaire-docs" title="Link to this heading">¶</a></h1>
+<section id="plain-text">
+<h2>Plain text<a class="headerlink" href="#plain-text" title="Link to this heading">¶</a></h2>
+<p>There are several commands available to format plain text. They are the subject of this section.</p>
+<p>Next-line arguments</p>
+<p>When we say that a command accepts a “next-line argument,” we mean that the argument to the command is on the next line of the markup.</p>
+<p>To demonstrate, the following command could be used to produce the title of this section. (<em>/title</em> requires a next-line argument.)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">title</span>
+<span class="n">Next</span><span class="o">-</span><span class="n">line</span> <span class="n">arguments</span>
+</pre></div>
+</div>
+</section>
+<section id="stack-arguments">
+<h2>Stack arguments<a class="headerlink" href="#stack-arguments" title="Link to this heading">¶</a></h2>
+<p>Two commands - <em>/ts</em> and <em>/bs</em> - operate on <strong>stacks</strong>. They differ in their scope. The scope of <em>/ts</em> is always a single paragraph, whereas the scope of <em>/bs</em> may be several paragraphs. As it has a more restricted scope, <em>/ts</em> has a higher precedence than <em>/bs</em> when they conflict with each other.</p>
+<p>There are three fundamental stack operations - <em>push</em>, <em>pop</em>, and <em>empty</em>. All of these operations involve <a class="reference internal" href="#text-style-ref"><span class="std std-ref">text styles.</span></a></p>
+<p><strong>push</strong> places a style on top of the stack. <em>push</em> can be abbreviated as “+”.</p>
+<p><strong>pop</strong> removes the style off of the stack, which was inserted (i.e. pushed) last. <em>pop</em> can be abbreviated as “-”</p>
+<p><strong>empty</strong> clears the whole stack; i.e., it basically calls <em>pop</em> repeatedly, until there is nothing more to <em>pop</em>. <em>empty</em> can be abbreviated as “!”.</p>
+<p>In the example to follow, ‘[]’ denotes an empty stack. (Do not mistake it for an array, however.) The leftmost element is considered the top of the stack.</p>
+<style>
+    .blue {
+        color: blue;
+    }
+    .blar {
+        color: blue;
+        font-size:120%;
+    }
+    .bluu {
+        color: blue;
+        text-decoration: underline;
+    }
+</style><table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Command</p></th>
+<th class="head"><p>Stack</p></th>
+<th class="head"><p>Rendering</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td></td>
+<td></td>
+<td><p>Text</p></td>
+</tr>
+<tr class="row-odd"><td><p>push “blue”</p></td>
+<td><p>[“blue”]</p></td>
+<td><p><span class="blue">Text</span></p></td>
+</tr>
+<tr class="row-even"><td><p>push “large”</p></td>
+<td><p>[“large”, “blue”]</p></td>
+<td><p><span class="blar">Text</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>pop</p></td>
+<td><p>[“blue”]</p></td>
+<td><p><span class="blue">Text</span></p></td>
+</tr>
+<tr class="row-even"><td><p>push “uppercase”</p></td>
+<td><p>[“uppercase”, “blue”]</p></td>
+<td><p><span class="blue">TEXT</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>push “underline”</p></td>
+<td><p>[“underline”, “uppercase”, “blue”]</p></td>
+<td><p><span class="bluu">TEXT</span></p></td>
+</tr>
+<tr class="row-even"><td><p>empty</p></td>
+<td><p>[]</p></td>
+<td><p>Text</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="text-styles">
+<span id="text-style-ref"></span><h2>Text styles<a class="headerlink" href="#text-styles" title="Link to this heading">¶</a></h2>
+<p>Below, the text style command name displays its formatting effect. For instance, ‘monospace’ has been formatted in a monospace font; ‘large’ has been displayed in a large font size; and so on. It is noteworthy, too, that text style names are always in lower case regardless how they have been rendered below.</p>
+<style>
+.monospace   {font-style: monospace;}
+.sanserif    {font-style: sanserif;}
+.serif       {font-style: serif;}
+.underline   {text-decoration: underline;}
+.linethrough {text-decoration: line-through;}
+.overline    {text-decoration: overline;}
+.small       {font-size: 80%;}
+.large       {font-style: 120%;}
+.aqua        {color: aqua;}
+.black       {color: black;}
+.blue        {color: blue;}
+.fuchsia     {color: fuchsia;}
+.gray        {color: gray;}
+.green       {color: green;}
+.lime        {color: lime;}
+.maroon      {color: maroon;}
+.navy        {color: navy;}
+.olive       {color: olive;}
+.orange      {color: orange;}
+.purple      {color: purple;}
+.red         {color: red;}
+.silver      {color: silver;}
+.teal        {color: teal;}
+</style><table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><ul class="simple">
+<li><p><span class="monospace">monospace</span></p></li>
+<li><p><span class="sanserif">sanserif</span></p></li>
+<li><p><span class="serif">serif</span></p></li>
+<li><p><span class="underline">underline</span></p></li>
+<li><p><span class="linethrough">linethrough</span></p></li>
+<li><p><span class="overline">overline</span></p></li>
+<li><p>UPPERCASE</p></li>
+<li><p>lowercase</p></li>
+<li><p>Capitalize</p></li>
+<li><p><span class="small">small</span></p></li>
+<li><p><span class="large">large</span></p></li>
+<li><p><span class="aqua">aqua</span></p></li>
+<li><p><span class="black">black</span></p></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li><p><span class="blue">blue</span></p></li>
+<li><p><span class="fuchsia">fuchsia</span></p></li>
+<li><p><span class="gray">gray</span></p></li>
+<li><p><span class="green">green</span></p></li>
+<li><p><span class="lime">lime</span></p></li>
+<li><p><span class="maroon">maroon</span></p></li>
+<li><p><span class="navy">navy</span></p></li>
+<li><p><span class="olive">olive</span></p></li>
+<li><p><span class="orange">orange</span></p></li>
+<li><p><span class="purple">purple</span></p></li>
+<li><p><span class="red">red</span></p></li>
+<li><p><span class="silver">silver</span></p></li>
+<li><p><span class="teal">teal</span></p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<section id="bs">
+<h3>/bs<a class="headerlink" href="#bs" title="Link to this heading">¶</a></h3>
+<p>This command accepts stack arguments.</p>
+<p>Mnemonic: “bs” stands for block style.</p>
+</section>
+<section id="lb">
+<h3>/lb<a class="headerlink" href="#lb" title="Link to this heading">¶</a></h3>
+<p>Inserts a linebreak into a paragraph.</p>
+<p>This command does not accept any arguments.</p>
+</section>
+<section id="p">
+<h3>/p<a class="headerlink" href="#p" title="Link to this heading">¶</a></h3>
+<p>Opens a new paragraph, and if necessary closes the previous paragraph.</p>
+<p>This command does not accept any arguments.</p>
+<p>This command implicitly calls the commands /ts empty, and /pb.</p>
+</section>
+<section id="pagetitle">
+<h3>/pagetitle<a class="headerlink" href="#pagetitle" title="Link to this heading">¶</a></h3>
+<p>Sets the title of the questionnaire.</p>
+<p>This command requires a “next-line argument”.</p>
+</section>
+<section id="title">
+<h3>/title<a class="headerlink" href="#title" title="Link to this heading">¶</a></h3>
+<p>Creates a title.</p>
+<p>This command requires a “next-line argument”.</p>
+</section>
+<section id="subtitle">
+<h3>/subtitle<a class="headerlink" href="#subtitle" title="Link to this heading">¶</a></h3>
+<p>Creates a subtitle.</p>
+<p>Titles created with this command are logically on a lower level than those created with This command /title.</p>
+<p>This command requires a “next-line argument”.</p>
+</section>
+<section id="pb">
+<h3>/pb<a class="headerlink" href="#pb" title="Link to this heading">¶</a></h3>
+<p>Closes the currently open paragraph explicitly.</p>
+<p>Note that /p closes the currently open paragraph implicitly.</p>
+<p>This command does not accept any arguments.</p>
+<p>Mnemonic: “pb” stands for paragraph break.</p>
+</section>
+<section id="ts">
+<h3>/ts<a class="headerlink" href="#ts" title="Link to this heading">¶</a></h3>
+<p>This command accepts stack arguments.</p>
+<p>Mnemonic: “ts” stands for text style.</p>
+</section>
+<section id="link">
+<h3>/link<a class="headerlink" href="#link" title="Link to this heading">¶</a></h3>
+<p>This command creates a hyperlink.</p>
+<p>This command is unique in that it requires two arguments: one argument given next to the command (the URL), and a “next-line argument” (the link text).</p>
+<p>This is how a link to the Åbo Akademi homepage would be created.</p>
+<blockquote>
+<div><p>/link <a class="reference external" href="http://www.abo.fi/">http://www.abo.fi/</a>
+Åbo Akademi</p>
+</div></blockquote>
+<p>This would produce
+Åbo Akademi.</p>
+</section>
+<section id="peronallink">
+<h3>/peronalLink<a class="headerlink" href="#peronallink" title="Link to this heading">¶</a></h3>
+<p>This command creates a personalised hyperlink for the current participant.</p>
+<p>Like a link it needs a target in line and a Text in the next line.</p>
+<p>A Link like this gets then extended (in the front-end) by the participant ID. This means the link</p>
+<blockquote>
+<div><p>/link <a class="reference external" href="http://www.abo.fi/?userID=">http://www.abo.fi/?userID=</a></p>
+</div></blockquote>
+<p>Will get extended to <a class="reference external" href="http://www.abo.fi/?userID=sdaoensiv123ni">http://www.abo.fi/?userID=sdaoensiv123ni</a> with sdaoensiv123ni being the userID of the current participant.</p>
+</section>
+<section id="table">
+<h3>/table<a class="headerlink" href="#table" title="Link to this heading">¶</a></h3>
+<p>This commands sets up a table for all following data. It must be used in conjunction with the /tableRow, /tableColumn and /endTable commands.
+The table command can be supplemented by a style parameter ( /table { style=”border:1px; background:green;” } )</p>
+<ul class="simple">
+<li><p>/table opens a table</p></li>
+<li><p>/tableRow opens a row in the table and closes the previous row</p></li>
+<li><p>/tableColumn opens a table column within the current table row and closes the previous column.</p></li>
+<li><p>/endTable closes the table</p></li>
+</ul>
+<p>Tables must be closed (i.e. must be ended by /endtable) otherwise the layout can fail.</p>
+</section>
+</section>
+<section id="widgets">
+<h2>Widgets<a class="headerlink" href="#widgets" title="Link to this heading">¶</a></h2>
+<p>The purpose of widget elements is to accept and receive input from readers of a questionnaire.</p>
+<section id="object-arguments">
+<h3>Object arguments<a class="headerlink" href="#object-arguments" title="Link to this heading">¶</a></h3>
+<p>Every “widget command” requires an object argument. It is fully deliberate that the object arguments resemble the JSON data interchange format. (The only difference, again fully deliberate, is that in our object argument notation fewer double quote characters are required. The purpose is to improve user-friendliness.)</p>
+<p>To understand object arguments, or objects for short, one needs to understand simple value types first. (Simple value types can be called atomic value types, too.) There are three kinds of simple value types: strings, integers, and booleans.</p>
+<p>Basically, a string consists of characters enclosed in double quote (”) characters (e.g., “this is a string”). A boolean value is either true or false. Integers are just numbers (e.g., 1234, and 543).</p>
+<p>Arrays and objects are compound values. An array is a collection of zero or more elements, which can be either simple values, or compound values. Objects are a collection of one or more ‘properties’, which are name-value pairs. Names are strings (with the possibility of omitting double quote characters, if the string does not contain any whitespace characters), and values are either simple values, or compound values.</p>
+<p>An example of a basic array (by ‘basic’ we mean that the elements of the array are simple values):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s2">&quot;a string&quot;</span><span class="p">,</span> <span class="n">true</span><span class="p">,</span> <span class="mi">123</span><span class="p">,</span> <span class="n">false</span><span class="p">,</span> <span class="s2">&quot;another string&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>An example of a basic object which has three properties—‘title’, ‘published’, and ‘copyrighted’.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="n">title</span><span class="p">:</span> <span class="s2">&quot;Javascript&quot;</span><span class="p">,</span> <span class="n">published</span><span class="p">:</span> <span class="mi">2011</span><span class="p">,</span> <span class="n">copyrighted</span><span class="p">:</span> <span class="n">true</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>An example of a more complicated object:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="n">books</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="n">title</span><span class="p">:</span> <span class="s2">&quot;Psychology vol. I&quot;</span><span class="p">,</span>
+      <span class="n">year</span><span class="p">:</span> <span class="mi">1890</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="n">title</span><span class="p">:</span> <span class="s2">&quot;Psychology vol. II&quot;</span><span class="p">,</span>
+      <span class="n">year</span><span class="p">:</span> <span class="mi">1895</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="n">author</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">firstname</span><span class="p">:</span> <span class="s2">&quot;John&quot;</span><span class="p">,</span>
+    <span class="n">lastname</span><span class="p">:</span> <span class="s2">&quot;Doe&quot;</span><span class="p">,</span>
+    <span class="n">pennames</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;jdoe&quot;</span><span class="p">,</span> <span class="s2">&quot;johnd&quot;</span><span class="p">]</span>
+  <span class="p">},</span>
+  <span class="n">pages</span><span class="p">:</span> <span class="mi">1500</span><span class="p">,</span>
+  <span class="n">bestseller</span><span class="p">:</span> <span class="n">false</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Specifying object types</p>
+<p>Suppose we specify an argument to a command as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="n">title</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span>
+    <span class="n">year</span><span class="p">:</span> <span class="n">Integer</span><span class="p">,</span>
+    <span class="n">paperback</span><span class="p">:</span> <span class="n">Boolean</span><span class="p">,</span>
+    <span class="n">reviews</span><span class="p">:</span>
+      <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="n">user</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span>
+          <span class="n">rating</span><span class="p">:</span> <span class="n">Integer</span><span class="p">,</span>
+          <span class="n">review</span><span class="p">:</span> <span class="n">String</span>
+        <span class="p">}</span>
+      <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This is interpreted as follows.</p>
+<ul class="simple">
+<li><p>The argument itself is an object.</p></li>
+<li><p>The object has a property ‘title’, which must be a string.</p></li>
+<li><p>The object has a property ‘year’, which must be an integer.</p></li>
+<li><p>The object has a property ‘paperback’, which must be a boolean.</p></li>
+<li><p>The object has a property ‘reviews’, which must be an array.</p></li>
+<li><p>The elements of the ‘reviews’ array must be objects with three properties:  the property ‘user’ must be a string, the property ‘rating’ must be an integer, and the property ‘review’ must be a string.</p></li>
+</ul>
+<p>The following object is valid with respect to the above specification.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="n">title</span><span class="p">:</span> <span class="s2">&quot;Cooking&quot;</span><span class="p">,</span>
+    <span class="n">year</span><span class="p">:</span> <span class="mi">2013</span><span class="p">,</span>
+    <span class="n">paperback</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+    <span class="n">reviews</span><span class="p">:</span>
+      <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="n">user</span><span class="p">:</span> <span class="s2">&quot;reader1&quot;</span><span class="p">,</span>
+          <span class="n">rating</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+          <span class="n">review</span><span class="p">:</span> <span class="s2">&quot;Love this book!&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="n">user</span><span class="p">:</span> <span class="s2">&quot;reader2&quot;</span><span class="p">,</span>
+          <span class="n">rating</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+          <span class="n">review</span><span class="p">:</span> <span class="s2">&quot;Hate this book!&quot;</span>
+        <span class="p">}</span>
+      <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="dropdownmenu">
+<h3>/dropdownmenu<a class="headerlink" href="#dropdownmenu" title="Link to this heading">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="n">dbcolumn</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span>
+    <span class="n">optional</span><span class="p">:</span> <span class="n">boolean</span><span class="p">,</span> <span class="c1"># (optional), default : false , whether this field is optional</span>
+    <span class="n">numeric</span><span class="p">:</span> <span class="n">boolean</span><span class="p">,</span>
+    <span class="n">label</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span>
+    <span class="n">options</span><span class="p">:</span>
+      <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="n">dbvalue</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span>
+          <span class="n">text</span><span class="p">:</span> <span class="n">String</span>
+        <span class="p">}</span>
+      <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">dropdownmenu</span> <span class="p">{</span>
+ <span class="n">dbcolumn</span><span class="p">:</span> <span class="s2">&quot;continent&quot;</span><span class="p">,</span>
+ <span class="n">label</span><span class="p">:</span> <span class="s2">&quot;Select Continent&quot;</span><span class="p">,</span>
+ <span class="n">options</span><span class="p">:</span> <span class="p">[{</span><span class="n">dbvalue</span><span class="p">:</span> <span class="s2">&quot;EU&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="s2">&quot;Europe&quot;</span><span class="p">},</span>
+           <span class="p">{</span><span class="n">dbvalue</span><span class="p">:</span> <span class="s2">&quot;AM&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="s2">&quot;America&quot;</span><span class="p">},</span>
+           <span class="p">{</span><span class="n">dbvalue</span><span class="p">:</span> <span class="s2">&quot;AS&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="s2">&quot;Asia&quot;</span><span class="p">},</span>
+           <span class="p">{</span><span class="n">dbvalue</span><span class="p">:</span> <span class="s2">&quot;AU&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="s2">&quot;Australia&quot;</span><span class="p">},</span>
+           <span class="p">{</span><span class="n">dbvalue</span><span class="p">:</span> <span class="s2">&quot;AF&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="s2">&quot;Africa&quot;</span><span class="p">}</span>
+           <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="multiselect">
+<h3>/multiselect<a class="headerlink" href="#multiselect" title="Link to this heading">¶</a></h3>
+<p>By its very nature this is the only widget that cannot be optional, as it allows selection of all or none of its options.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="n">numeric</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+    <span class="n">default_value</span><span class="p">:</span> <span class="n">String</span>
+    <span class="n">horizontal</span><span class="p">:</span> <span class="n">false</span> <span class="c1"># (optional) Whether to print this as a horizontal multi-select option</span>
+    <span class="n">options</span><span class="p">:</span>
+      <span class="p">[</span>
+        <span class="p">[</span>
+          <span class="p">{</span>
+            <span class="n">dbcolumn</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span>
+            <span class="n">dbvalue</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span>
+            <span class="n">text</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span>
+            <span class="n">checked</span><span class="p">:</span> <span class="n">Boolean</span>
+          <span class="p">}</span>
+        <span class="p">]</span>
+      <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">multiselect</span> <span class="p">{</span>
+    <span class="n">default_value</span><span class="p">:</span> <span class="s2">&quot;no&quot;</span><span class="p">,</span>
+    <span class="n">dbcolumn</span><span class="p">:</span> <span class="s2">&quot;vehicle&quot;</span><span class="p">,</span>
+    <span class="n">options</span><span class="p">:</span> <span class="p">[</span> <span class="p">[</span>
+          <span class="p">{</span>
+            <span class="n">dbcolumn</span><span class="p">:</span> <span class="s2">&quot;Bike&quot;</span><span class="p">,</span>
+            <span class="n">dbvalue</span><span class="p">:</span> <span class="s2">&quot;yes&quot;</span><span class="p">,</span>
+            <span class="n">text</span><span class="p">:</span> <span class="s2">&quot;Bike&quot;</span><span class="p">,</span>
+            <span class="n">checked</span><span class="p">:</span> <span class="n">true</span>
+          <span class="p">},</span>
+            <span class="p">{</span>
+            <span class="n">dbcolumn</span><span class="p">:</span> <span class="s2">&quot;Car&quot;</span><span class="p">,</span>
+            <span class="n">dbvalue</span><span class="p">:</span> <span class="s2">&quot;yes&quot;</span><span class="p">,</span>
+            <span class="n">text</span><span class="p">:</span> <span class="s2">&quot;Car&quot;</span><span class="p">,</span>
+            <span class="n">checked</span><span class="p">:</span> <span class="n">false</span>
+          <span class="p">},</span>
+          <span class="p">{</span>
+            <span class="n">dbcolumn</span><span class="p">:</span> <span class="s2">&quot;Motorbike&quot;</span><span class="p">,</span>
+            <span class="n">dbvalue</span><span class="p">:</span> <span class="s2">&quot;yes&quot;</span><span class="p">,</span>
+            <span class="n">text</span><span class="p">:</span> <span class="s2">&quot;Motorbike&quot;</span><span class="p">,</span>
+            <span class="n">checked</span><span class="p">:</span> <span class="n">false</span>
+          <span class="p">}]</span> <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="numberfield">
+<h3>/numberfield<a class="headerlink" href="#numberfield" title="Link to this heading">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="n">dbcolumn</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span>
+    <span class="n">numeric</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+    <span class="n">label</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span>
+    <span class="n">value</span><span class="p">:</span> <span class="n">Integer</span><span class="p">,</span>
+    <span class="n">minimum</span><span class="p">:</span> <span class="n">Integer</span><span class="p">,</span>
+    <span class="n">maximum</span><span class="p">:</span> <span class="n">Integer</span><span class="p">,</span>
+    <span class="n">optional</span><span class="p">:</span> <span class="n">boolean</span><span class="p">,</span> <span class="c1"># optional, default: false - whether this field can be omitted</span>
+    <span class="n">increment</span><span class="p">:</span> <span class="n">Integer</span> <span class="ow">or</span> <span class="s2">&quot;Decimal value&quot;</span>
+    <span class="n">inline</span><span class="p">:</span> <span class="n">false</span> <span class="c1"># (optional) whether the field should be just printed within the text.</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Increment can be either an integer(5) or a decimal value(3.6).Note that decimal values must be surrounded by quotes(“5.5”). If not it’s interpreted as an integer.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">numberfield</span> <span class="p">{</span>
+    <span class="n">dbcolumn</span><span class="p">:</span> <span class="s2">&quot;age&quot;</span><span class="p">,</span>
+    <span class="n">label</span><span class="p">:</span> <span class="s2">&quot;Enter your age&quot;</span><span class="p">,</span>
+    <span class="n">value</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">minimum</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">maximum</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="n">increment</span><span class="p">:</span> <span class="mi">1</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="singleselect">
+<h3>/singleselect<a class="headerlink" href="#singleselect" title="Link to this heading">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="n">numeric</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+    <span class="n">default_value</span><span class="p">:</span> <span class="n">String</span>
+    <span class="n">horizontal</span><span class="p">:</span> <span class="n">boolean</span>  <span class="c1"># (optional) default: false,  Whether to display the select options horizontally</span>
+    <span class="n">optional</span><span class="p">:</span> <span class="n">boolean</span> <span class="c1"># (optional) default: false, whether the select is optional.</span>
+    <span class="n">options</span><span class="p">:</span>
+      <span class="p">[</span>
+        <span class="p">[</span>
+          <span class="p">{</span>
+            <span class="n">dbcolumn</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span>
+            <span class="n">dbvalue</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span>
+            <span class="n">text</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span>
+            <span class="n">checked</span><span class="p">:</span> <span class="n">Boolean</span>
+          <span class="p">}</span>
+        <span class="p">]</span>
+      <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">singleselect</span> <span class="p">{</span>
+   <span class="n">default_value</span><span class="p">:</span> <span class="s2">&quot;-1&quot;</span><span class="p">,</span>
+   <span class="n">dbcolumn</span><span class="p">:</span> <span class="s2">&quot;Yes/No/maybe&quot;</span><span class="p">,</span>
+   <span class="n">options</span><span class="p">:</span> <span class="p">[[{</span><span class="n">dbvalue</span><span class="p">:</span> <span class="s2">&quot;yes&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="s2">&quot;Yes&quot;</span><span class="p">,</span> <span class="n">checked</span><span class="p">:</span> <span class="n">true</span><span class="p">},</span>
+             <span class="p">{</span><span class="n">dbvalue</span><span class="p">:</span> <span class="s2">&quot;no&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="s2">&quot;No&quot;</span><span class="p">},</span>
+             <span class="p">{</span><span class="n">dbvalue</span><span class="p">:</span> <span class="s2">&quot;maybe&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="s2">&quot;Maybe&quot;</span><span class="p">}]]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="slider">
+<h3>/slider<a class="headerlink" href="#slider" title="Link to this heading">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="n">dbcolumn</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span>
+    <span class="n">numeric</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+    <span class="n">labels</span><span class="p">:</span>
+      <span class="p">[</span>
+        <span class="n">Integer</span>
+      <span class="p">],</span>
+    <span class="n">minimum</span><span class="p">:</span> <span class="n">Float</span><span class="p">,</span>
+    <span class="n">maximum</span><span class="p">:</span> <span class="n">Float</span><span class="p">,</span>
+    <span class="n">increment</span><span class="p">:</span> <span class="n">Float</span><span class="p">,</span>
+    <span class="n">select</span><span class="p">:</span> <span class="n">Float</span> <span class="c1"># needs to be provided. If this is outside the minimum/maximum range, no value will be selected on the slider initially</span>
+    <span class="n">optional</span><span class="p">:</span> <span class="n">boolean</span> <span class="c1"># (optional) default: false, whether a selection is optional.</span>
+    <span class="n">style</span><span class="p">:</span> <span class="n">String</span> <span class="c1"># (optional) style information passed on to the slider element, mainly for e.g. fixing the width to align to an image.</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">slider</span> <span class="p">{</span>
+   <span class="n">dbcolumn</span><span class="p">:</span> <span class="s2">&quot;Slider 0-6&quot;</span><span class="p">,</span>
+   <span class="n">numeric</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+   <span class="n">dbtype</span><span class="p">:</span> <span class="s2">&quot;int&quot;</span><span class="p">,</span>
+   <span class="n">labels</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">],</span>
+   <span class="n">minimum</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+   <span class="n">maximum</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+   <span class="n">increment</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+   <span class="n">select</span><span class="p">:</span> <span class="mi">0</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="textarea">
+<h3>/textarea<a class="headerlink" href="#textarea" title="Link to this heading">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="n">dbcolumn</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span>
+    <span class="n">rows</span><span class="p">:</span> <span class="n">Integer</span><span class="p">,</span>
+    <span class="n">columns</span><span class="p">:</span> <span class="n">Integer</span><span class="p">,</span>
+    <span class="n">label</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span>
+    <span class="n">text</span><span class="p">:</span> <span class="n">String</span>
+    <span class="n">maxlength</span><span class="p">:</span> <span class="n">Number</span> <span class="c1"># Maximal number of characters.</span>
+    <span class="n">optional</span><span class="p">:</span> <span class="n">true</span> <span class="c1"># (optional) whether there has to be text in the area</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The Optional field is not required and can be left out, the default value for it is false</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">textarea</span> <span class="p">{</span>
+   <span class="n">dbcolumn</span><span class="p">:</span> <span class="s2">&quot;story&quot;</span><span class="p">,</span>
+   <span class="n">rows</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+   <span class="n">length</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span>
+   <span class="n">label</span><span class="p">:</span> <span class="s2">&quot;Tell us a story&quot;</span><span class="p">,</span>
+   <span class="n">text</span><span class="p">:</span> <span class="s2">&quot;Enter your story here.&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="textbox">
+<h3>/textbox<a class="headerlink" href="#textbox" title="Link to this heading">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="n">dbcolumn</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span>
+    <span class="n">label</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span>
+    <span class="n">linebreak</span><span class="p">:</span> <span class="n">Boolean</span><span class="p">,</span>
+    <span class="n">length</span><span class="p">:</span> <span class="n">Integer</span><span class="p">,</span>
+    <span class="n">text</span><span class="p">:</span> <span class="n">String</span>
+    <span class="n">optional</span><span class="p">:</span> <span class="n">true</span> <span class="c1"># (optional) whether the textbox can be left empty.</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The Optional field is not required and can be left out, the default value for it is false</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">textbox</span> <span class="p">{</span>
+   <span class="n">dbcolumn</span><span class="p">:</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+   <span class="n">label</span><span class="p">:</span> <span class="s2">&quot;Enter you name&quot;</span><span class="p">,</span>
+   <span class="n">linebreak</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+   <span class="n">length</span><span class="p">:</span> <span class="mi">40</span><span class="p">,</span>
+   <span class="n">text</span><span class="p">:</span> <span class="s2">&quot;Enter your name here&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+        <br/>
+        
+<div id="sourcelink">
+  <a href="_sources/qml.rst.txt"
+     rel="nofollow">Source</a>
+</div>
+      
+    </p>
+    <p>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.2.6.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
